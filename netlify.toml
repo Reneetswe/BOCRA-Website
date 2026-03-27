@@ -1,0 +1,22 @@
+[build]
+  publish = "."
+  command = "echo 'No build command needed for PHP site'"
+
+[build.environment]
+  PHP_VERSION = "7.4"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/api/.php"
+  status = 200
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+[context.production.environment]
+  NODE_VERSION = "18"
+
+[context.deploy-preview.environment]
+  NODE_VERSION = "18"

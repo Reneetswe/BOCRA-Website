@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Portals - BOCRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--charcoal);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            font-family: 'Forum', serif;
+            font-size: 2rem;
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 400;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--charcoal);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--teal) 0%, var(--teal-dark) 100%);
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-family: 'Forum', serif;
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Portals Grid */
+        .portals-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Forum', serif;
+            font-size: 2.5rem;
+            color: var(--charcoal);
+            margin-bottom: 3rem;
+        }
+
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .portal-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .portal-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--teal);
+        }
+
+        .portal-card h3 {
+            font-family: 'Forum', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--charcoal);
+        }
+
+        .portal-card p {
+            color: var(--mid);
+            margin-bottom: 1.5rem;
+        }
+
+        .portal-btn {
+            background: var(--teal);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 25px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.3s;
+            font-weight: 500;
+        }
+
+        .portal-btn:hover {
+            background: var(--teal-dark);
+        }
+
+        .portal-btn.disabled {
+            background: var(--light);
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        /* Notice */
+        .notice {
+            background: var(--teal-light);
+            border-left: 4px solid var(--teal);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .notice h4 {
+            color: var(--teal);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--charcoal);
+            color: white;
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-family: 'Forum', serif;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .footer-section a:hover {
+            opacity: 1;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.8;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .portals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">BOCRA</a>
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="news-events.html">News & Events</a></li>
+                        <li><a href="internal-portals.html">Portals</a></li>
+                        <li><a href="complaints.html">Complaints</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Internal Portals</h1>
+            <p>Secure access for BOCRA staff and registered partners</p>
+        </div>
+    </section>
+
+    <!-- Portals Section -->
+    <section class="portals-section">
+        <div class="container">
+            <h2 class="section-title">Staff & Partner Portals</h2>
+            
+            <div class="notice">
+                <h4>🔒 Secure Access Required</h4>
+                <p>These portals require authentication. For production deployment, please use a PHP-compatible hosting service to enable full functionality.</p>
+            </div>
+
+            <div class="portals-grid">
+                <!-- BOCRA Admin Portal -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>BOCRA Admin</h3>
+                    <p>Complete administrative dashboard for BOCRA staff including user management, system monitoring, and oversight functions.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('admin')">Login Required</a>
+                </div>
+
+                <!-- Complaints Admin -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <h3>Complaints Management</h3>
+                    <p>Handle and track consumer complaints, assign cases, and manage resolution workflows efficiently.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('complaints')">Login Required</a>
+                </div>
+
+                <!-- Cybersecurity Admin -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Cybersecurity</h3>
+                    <p>Monitor and respond to cybersecurity incidents, manage threat intelligence, and coordinate security responses.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('cyber')">Login Required</a>
+                </div>
+
+                <!-- Licensing Admin -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Licensing</h3>
+                    <p>Process and manage license applications, renewals, and compliance monitoring for telecommunications services.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('licensing')">Login Required</a>
+                </div>
+
+                <!-- Registrar Portal -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Registrar Portal</h3>
+                    <p>Domain registration and management portal for accredited registrars to manage client applications and domains.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('registrar')">Login Required</a>
+                </div>
+
+                <!-- Analytics Portal -->
+                <div class="portal-card">
+                    <div class="portal-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytics & Reports</h3>
+                    <p>Comprehensive analytics dashboard for monitoring system performance, generating reports, and data analysis.</p>
+                    <a href="#" class="portal-btn disabled" onclick="showNotice('analytics')">Login Required</a>
+                </div>
+            </div>
+
+            <!-- Deployment Notice -->
+            <div class="notice">
+                <h4>📋 Deployment Information</h4>
+                <p><strong>Current Status:</strong> Static demo version deployed on Netlify</p>
+                <p><strong>Full Functionality:</strong> Requires PHP hosting service</p>
+                <p><strong>Recommended Hosting:</strong> Hostinger, DigitalOcean, or Heroku for complete portal access</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>BOCRA</h3>
+                    <p>Botswana Communications Regulatory Authority - Regulating telecommunications for a connected future.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About BOCRA</a></li>
+                        <li><a href="complaints.html">File Complaint</a></li>
+                        <li><a href="regulations.html">Regulations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul>
+                        <li><a href="licensing-portal.html">Licensing</a></li>
+                        <li><a href="cyber-compliance.html">Cybersecurity</a></li>
+                        <li><a href="data-insights.html">Data & Insights</a></li>
+                        <li><a href="internal-portals.html">Internal Portals</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +267 395-7755</li>
+                        <li><i class="fas fa-envelope"></i> info@bocra.org.bw</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Gaborone, Botswana</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 BOCRA. All rights reserved. | Privacy Policy | Terms of Service</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function showNotice(portal) {
+            const messages = {
+                admin: 'BOCRA Admin Portal requires PHP hosting for full functionality.',
+                complaints: 'Complaints Management requires PHP backend for case processing.',
+                cyber: 'Cybersecurity Portal needs PHP for incident reporting and management.',
+                licensing: 'Licensing Portal requires PHP for application processing.',
+                registrar: 'Registrar Portal needs PHP for domain management.',
+                analytics: 'Analytics Portal requires PHP for data processing and reporting.'
+            };
+            
+            alert(`🔒 ${messages[portal]}\n\nFor full access, deploy to a PHP-compatible hosting service like Hostinger or DigitalOcean.`);
+        }
+
+        // Add some interactivity
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.portal-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-10px)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-5px)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
