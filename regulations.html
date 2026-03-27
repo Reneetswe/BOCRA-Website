@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BOCRA — Regulated Sectors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="assets/css/regulations.css"/>
+</head>
+<body>
+
+  <!-- ── TOP BAR ─────────────────────────────────────── -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="topbar-left">
+        <span><i class="fas fa-phone"></i> +267 3957755</span>
+        <span class="sep">|</span>
+        <span><i class="fas fa-envelope"></i> info@bocra.org.bw</span>
+      </div>
+      <div class="topbar-right">
+        <a href="#">Setswana</a>
+        <span class="sep">|</span>
+        <a href="#">Site Map</a>
+        <span class="sep">|</span>
+        <a href="#">Accessibility</a>
+        <span class="sep">|</span>
+        <a href="login.php">Internal Portals</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HEADER ──────────────────────────────────────── -->
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo-area">
+        <img src="assets/images/bocra-logo.png" alt="BOCRA Logo" class="logo-img">
+        <div class="logo-divider"></div>
+        <div class="logo-text-group">
+          <span class="logo-name">BOCRA</span>
+          <span class="logo-sub">Botswana Communications Regulatory Authority</span>
+        </div>
+      </div>
+      <div class="search-bar">
+        <input type="text" placeholder="Search regulations, services, documents..."/>
+        <button><i class="fas fa-search"></i></button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── NAV ─────────────────────────────────────────── -->
+  <nav class="mainnav">
+    <div class="nav-inner">
+      <a href="index.html">Home</a>
+      <div class="nav-item dropdown">
+        <a href="#">About BOCRA <i class="fas fa-chevron-down"></i></a>
+        <div class="drop-menu">
+          <a href="#">Our Mandate</a>
+          <a href="#">Leadership</a>
+          <a href="#">Governance</a>
+        </div>
+      </div>
+      <div class="nav-item dropdown">
+        <a href="#">Licensing <i class="fas fa-chevron-down"></i></a>
+        <div class="drop-menu">
+          <a href="#">Apply for License</a>
+          <a href="#">License Types</a>
+          <a href="#">Track Application</a>
+          <a href="#">Renewal Services</a>
+        </div>
+      </div>
+      <a href="#">Complaints</a>
+      <div class="nav-item dropdown active-nav">
+        <a href="regulations.html">Regulations <i class="fas fa-chevron-down"></i></a>
+        <div class="drop-menu">
+          <a href="#telecom" class="active-drop">Telecommunications</a>
+          <a href="#broadcasting">Broadcasting</a>
+          <a href="#postal">Postal</a>
+          <a href="#internet">Internet</a>
+        </div>
+      </div>
+      <a href="cyber-compliance.html">Cybersecurity</a>
+      <div class="nav-item dropdown">
+        <a href="#">Data &amp; Insights <i class="fas fa-chevron-down"></i></a>
+        <div class="drop-menu">
+          <a href="#">Telecom Statistics</a>
+          <a href="#">Spectrum Data</a>
+        </div>
+      </div>
+      <a href="#">News &amp; Events</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <!-- ── BREADCRUMB ───────────────────────────────────── -->
+  <div class="breadcrumb">
+    <div class="breadcrumb-inner">
+      <a href="index.html">Home</a>
+      <i class="fas fa-chevron-right"></i>
+      <span>Regulations</span>
+    </div>
+  </div>
+
+  <!-- ── PAGE HERO ────────────────────────────────────── -->
+  <section class="page-hero">
+    <div class="page-hero-inner">
+      <div class="hero-label">REGULATORY FRAMEWORK</div>
+      <h1>Regulated Sectors</h1>
+      <p>BOCRA is a converged regulator responsible for regulatory oversight of Botswana's telecommunications, broadcasting, postal and internet services — ensuring quality, fairness and access for all Batswana.</p>
+      <div class="sector-jump-btns">
+        <a href="#telecom" class="jump-btn" data-sector="telecom">
+          <i class="fas fa-tower-cell"></i> Telecommunications
+        </a>
+        <a href="#broadcasting" class="jump-btn" data-sector="broadcasting">
+          <i class="fas fa-broadcast-tower"></i> Broadcasting
+        </a>
+        <a href="#postal" class="jump-btn" data-sector="postal">
+          <i class="fas fa-envelope"></i> Postal
+        </a>
+        <a href="#internet" class="jump-btn" data-sector="internet">
+          <i class="fas fa-globe"></i> Internet
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════
+       MAIN SECTORS CONTENT
+  ════════════════════════════════════════════════════ -->
+  <main class="sectors-main">
+
+    <!-- ────────────────────────────────────────────────
+         SECTOR 1 — TELECOMMUNICATIONS
+    ─────────────────────────────────────────────────── -->
+    <section class="sector-section" id="telecom" data-color="teal">
+      <div class="sector-header" onclick="toggleSector('telecom')">
+        <div class="sector-header-left">
+          <div class="sector-icon teal-icon"><i class="fas fa-tower-cell"></i></div>
+          <div>
+            <div class="sector-tag">REGULATED SECTOR</div>
+            <h2>Telecommunications</h2>
+          </div>
+        </div>
+        <div class="sector-header-right">
+          <span class="sector-toggle-hint">Explore sector</span>
+          <div class="toggle-arrow" id="telecom-arrow"><i class="fas fa-chevron-down"></i></div>
+        </div>
+      </div>
+
+      <div class="sector-body open" id="telecom-body">
+
+        <!-- Intro summary card -->
+        <div class="sector-intro-card teal-card">
+          <p>Under the Communications Regulatory Authority Act 2012, BOCRA has authority — within the guidelines established by the 1995 Telecommunication Policy — to regulate telecommunications, among other communications sub-sectors. The telecommunications sector, spurred by mobile technology, continues to experience significant growth in total number of consumers and variety of services.</p>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="sector-tabs" id="telecom-tabs">
+          <button class="stab active" onclick="showTab('telecom','overview')">Overview</button>
+          <button class="stab" onclick="showTab('telecom','operators')">Market &amp; Operators</button>
+          <button class="stab" onclick="showTab('telecom','licensing')">Licensing Framework</button>
+          <button class="stab" onclick="showTab('telecom','reforms')">Reforms &amp; History</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="stab-content active" id="telecom-overview">
+          <div class="content-cols">
+            <div class="content-col">
+              <h4>Sector Overview</h4>
+              <p>The Telecommunications/ICT sector has undergone numerous reforms since the introduction of competition in 1998. Currently three Public Telecommunication Operators (PTOs) provide local, international, national and mobile services.</p>
+              <p>The market structure for local services, domestic long distance services, international long distance services and mobile services has been partly liberalised.</p>
+              <p>The market for private networks is fully liberalised as Value Added Services (VANS) may provide services using any technology including Very Small Aperture Terminals (VSAT). The market for terminal equipment trade is also fully liberalised — no telecommunications licence is required to sell terminal equipment, however, vendors for radio equipment must be approved by BOCRA.</p>
+            </div>
+            <div class="content-col">
+              <h4>Key Facts</h4>
+              <div class="facts-grid">
+                <div class="fact-item">
+                  <div class="fact-num teal-num">3</div>
+                  <div class="fact-label">Public Telecom Operators (PTOs)</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num teal-num">1998</div>
+                  <div class="fact-label">Year competition was introduced</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num teal-num">2</div>
+                  <div class="fact-label">New licence categories (NFP &amp; SAP)</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num teal-num">2015</div>
+                  <div class="fact-label">New converged framework implemented</div>
+                </div>
+              </div>
+              <div class="highlight-box teal-highlight">
+                <i class="fas fa-info-circle"></i>
+                <p>In addition, Private Telecommunications Network Licences (PTNL) have been issued to entities to build private networks for internal business use.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Operators -->
+        <div class="stab-content" id="telecom-operators">
+          <h4>Market Structure &amp; Operators</h4>
+          <p>The telecommunications market is dominated by three operators which operate under Public Telecommunications Operator (PTO) licence:</p>
+          <div class="operators-grid">
+            <div class="operator-card">
+              <div class="op-icon teal-op"><i class="fas fa-building"></i></div>
+              <h5>Botswana Telecommunications Corporation Limited (BTCL)</h5>
+              <p>Provides both fixed and mobile telephony services including data network services, providing access and connectivity. On 1 November 2012, BTC was converted from a statutory body into a public company limited by shares, renamed Botswana Telecommunications Corporation Limited.</p>
+              <div class="op-tags">
+                <span>Fixed &amp; Mobile</span>
+                <span>Data Networks</span>
+                <span>Internet Access</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon teal-op"><i class="fas fa-mobile-screen"></i></div>
+              <h5>Mascom Wireless Botswana (Pty) Ltd</h5>
+              <p>Continues to offer mobile telephony services only, including mobile internet and value-added services.</p>
+              <div class="op-tags">
+                <span>Mobile Only</span>
+                <span>Mobile Internet</span>
+                <span>Value-Add Services</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon teal-op"><i class="fas fa-signal"></i></div>
+              <h5>Orange Botswana (Pty) Ltd</h5>
+              <p>Continues to offer mobile telephony services only, including mobile internet and value-added services.</p>
+              <div class="op-tags">
+                <span>Mobile Only</span>
+                <span>Mobile Internet</span>
+                <span>Value-Add Services</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon teal-op"><i class="fas fa-network-wired"></i></div>
+              <h5>Botswana Fibre Networks (BoFiNet)</h5>
+              <p>Issued an interim licence to provide wholesale services beginning 1 April 2013. BoFiNet started offering services in October 2013, serving as a wholesale provider of national and international telecommunication infrastructure.</p>
+              <div class="op-tags">
+                <span>Wholesale Provider</span>
+                <span>National Infrastructure</span>
+                <span>International Links</span>
+              </div>
+            </div>
+          </div>
+          <div class="info-note">
+            <i class="fas fa-lightbulb"></i>
+            <p>Other major market players are the Value Added Network Services (VANS) providers. The market for Internet telephony is fully liberalised, and VANS are allowed to provide Voice over Internet Protocol (VoIP) services. The number of PTOs has been restricted to three as a policy decision.</p>
+          </div>
+        </div>
+
+        <!-- Tab: Licensing -->
+        <div class="stab-content" id="telecom-licensing">
+          <h4>Licensing Framework</h4>
+          <p>BOCRA reviewed the old ICT licensing framework that had been in operation since 2007 and began implementation of the new and converged framework in September 2015. The new ICT licensing framework was designed to create a more conducive environment for ICT development, motivated by the need to meet demand for real-time high quality and affordable services, and to accommodate emerging players for increased competitiveness.</p>
+          <div class="licence-cats">
+            <div class="licence-cat teal-cat">
+              <div class="lc-header">
+                <i class="fas fa-tower-broadcast"></i>
+                <h5>Network Facilities Provider (NFP) Licence</h5>
+              </div>
+              <p>Replaces the old Public Telecommunications Operator (PTO) licence category. Authorises the deployment and operation of telecommunications network infrastructure including physical network elements and associated facilities.</p>
+              <ul>
+                <li>Fixed network infrastructure</li>
+                <li>Mobile network infrastructure</li>
+                <li>Wholesale network services</li>
+                <li>International gateway facilities</li>
+              </ul>
+            </div>
+            <div class="licence-cat teal-cat">
+              <div class="lc-header">
+                <i class="fas fa-layer-group"></i>
+                <h5>Services &amp; Applications Provider (SAP) Licence</h5>
+              </div>
+              <p>Replaces the old VANS and PTNL licence categories. Authorises the provision of communications services and applications over licensed network facilities.</p>
+              <ul>
+                <li>Voice and data services</li>
+                <li>Internet services</li>
+                <li>Value-added services</li>
+                <li>VoIP services (fully liberalised)</li>
+                <li>Private network services</li>
+              </ul>
+            </div>
+          </div>
+          <div class="previous-framework">
+            <h5>Previous Framework (pre-2015)</h5>
+            <p>The previous licensing framework had three categories: <strong>PTO</strong> (Public Telecommunications Operator), <strong>VANS</strong> (Value Added Network Services), and <strong>PTNL</strong> (Private Telecommunications Network Licence). The revised framework consolidates these into two categories for greater flexibility and market responsiveness.</p>
+          </div>
+        </div>
+
+        <!-- Tab: Reforms -->
+        <div class="stab-content" id="telecom-reforms">
+          <h4>Sector Reforms &amp; History</h4>
+          <div class="timeline">
+            <div class="tl-item">
+              <div class="tl-year">1995</div>
+              <div class="tl-content">
+                <h5>Telecommunications Policy</h5>
+                <p>Government establishes the 1995 Telecommunication Policy, setting guidelines within which BOCRA (formerly BTA) was empowered to regulate the sector.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">1998</div>
+              <div class="tl-content">
+                <h5>Introduction of Competition</h5>
+                <p>The telecommunications sector begins liberalisation with the introduction of competition, enabling multiple operators to enter the market.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2006</div>
+              <div class="tl-content">
+                <h5>Decision to Privatise BTC</h5>
+                <p>The Government of Botswana decides to privatise the incumbent, Botswana Telecommunications Corporation (BTC), leading to major structural changes.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2008</div>
+              <div class="tl-content">
+                <h5>BTC Transition Act &amp; beMOBILE</h5>
+                <p>Parliament enacts the BTC (Transition) Act to assist the privatisation process. Botswana Fibre Networks (BoFiNet) is created as a wholesale provider. BTC introduces its mobile network, beMOBILE.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2012</div>
+              <div class="tl-content">
+                <h5>BTCL Incorporated</h5>
+                <p>On 1 November 2012, BTC is converted from a statutory body into a public company limited by shares, in accordance with the Transition Act and Companies Act, and renamed Botswana Telecommunications Corporation Limited (BTCL).</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2013</div>
+              <div class="tl-content">
+                <h5>BoFiNet Begins Operations</h5>
+                <p>BoFiNet is issued an interim licence to provide wholesale services beginning 1 April 2013. BoFiNet starts offering services in October 2013.</p>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-year">2015</div>
+              <div class="tl-content">
+                <h5>New Converged Licensing Framework</h5>
+                <p>BOCRA implements the new and converged ICT licensing framework in September 2015, introducing NFP and SAP licence categories to replace the previous three-category framework.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /sector-body -->
+    </section>
+
+    <!-- ────────────────────────────────────────────────
+         SECTOR 2 — BROADCASTING
+    ─────────────────────────────────────────────────── -->
+    <section class="sector-section" id="broadcasting" data-color="gold">
+      <div class="sector-header" onclick="toggleSector('broadcasting')">
+        <div class="sector-header-left">
+          <div class="sector-icon gold-icon"><i class="fas fa-broadcast-tower"></i></div>
+          <div>
+            <div class="sector-tag">REGULATED SECTOR</div>
+            <h2>Broadcasting</h2>
+          </div>
+        </div>
+        <div class="sector-header-right">
+          <span class="sector-toggle-hint">Explore sector</span>
+          <div class="toggle-arrow" id="broadcasting-arrow"><i class="fas fa-chevron-down"></i></div>
+        </div>
+      </div>
+
+      <div class="sector-body" id="broadcasting-body">
+
+        <div class="sector-intro-card gold-card">
+          <p>The CRA Act mandates BOCRA to regulate all broadcasting, subscription management services and re-broadcasting activities, save for the state broadcasting. It is in this light that BOCRA regulates Yarona FM, Duma FM, Gabz FM and eBotswana.</p>
+        </div>
+
+        <div class="sector-tabs" id="broadcasting-tabs">
+          <button class="stab active" onclick="showTab('broadcasting','overview')">Overview</button>
+          <button class="stab" onclick="showTab('broadcasting','licensees')">Licensed Broadcasters</button>
+          <button class="stab" onclick="showTab('broadcasting','requirements')">Licence Requirements</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="stab-content active" id="broadcasting-overview">
+          <div class="content-cols">
+            <div class="content-col">
+              <h4>Sector Overview</h4>
+              <p>Commercial radio stations — namely Yarona FM, Duma FM and Gabz FM — are all available in most major towns and villages in Botswana. The stations have extended access to their services through online broadcasting transmission, which makes them accessible worldwide.</p>
+              <p>eBotswana television station is currently available in Gaborone and surrounding villages within a 60km radius of Gaborone through terrestrial broadcasting. eBotswana will in the future introduce a satellite broadcast service in order to achieve national coverage.</p>
+              <p>Broadcasters are required to promote music tracks by local artists. Broadcasters' licences specify a certain percentage of local content with which they must comply.</p>
+              <div class="external-link-box">
+                <i class="fas fa-external-link-alt"></i>
+                <div>
+                  <strong>National Broadcasting Board Audience Survey</strong>
+                  <p>Click the link for the National Broadcasting Board Audience Survey for the Broadcasting Sector in Botswana.</p>
+                  <a href="https://www.bocra.org.bw/sites/default/files/NBB_Audience_Survey_Report_Volume_I.pdf" target="_blank" class="text-link">
+                    Access the Survey Report <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="content-col">
+              <h4>At a Glance</h4>
+              <div class="facts-grid">
+                <div class="fact-item">
+                  <div class="fact-num gold-num">3</div>
+                  <div class="fact-label">Licensed commercial radio stations</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num gold-num">1</div>
+                  <div class="fact-label">Licensed commercial TV station</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num gold-num">60km</div>
+                  <div class="fact-label">eBotswana terrestrial coverage radius</div>
+                </div>
+                <div class="fact-item">
+                  <div class="fact-num gold-num">🌍</div>
+                  <div class="fact-label">Radio stations accessible worldwide online</div>
+                </div>
+              </div>
+              <div class="highlight-box gold-highlight">
+                <i class="fas fa-music"></i>
+                <p>All licensed broadcasters must comply with local content requirements, including promotion of music tracks by Batswana artists.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Licensees -->
+        <div class="stab-content" id="broadcasting-licensees">
+          <h4>Licensed Broadcasters</h4>
+          <div class="operators-grid">
+            <div class="operator-card">
+              <div class="op-icon gold-op"><i class="fas fa-radio"></i></div>
+              <h5>
+                <a href="https://yaronafm.co.bw/" target="_blank">
+                  Yarona FM <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+              </h5>
+              <p>Commercial radio station available in most major towns and villages in Botswana. Accessible worldwide through online broadcasting transmission.</p>
+              <div class="op-tags gold-tags">
+                <span>Commercial Radio</span>
+                <span>National Coverage</span>
+                <span>Online Streaming</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon gold-op"><i class="fas fa-radio"></i></div>
+              <h5>
+                <a href="https://dumafm.co.bw/" target="_blank">
+                  Duma FM <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+              </h5>
+              <p>Commercial radio station available in most major towns and villages in Botswana. Accessible worldwide through online broadcasting transmission.</p>
+              <div class="op-tags gold-tags">
+                <span>Commercial Radio</span>
+                <span>National Coverage</span>
+                <span>Online Streaming</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon gold-op"><i class="fas fa-radio"></i></div>
+              <h5>
+                <a href="https://tunein.com/radio/Gabz-FM-962-s47666/" target="_blank">
+                  Gabz FM <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+              </h5>
+              <p>Commercial radio station available in most major towns and villages in Botswana. Accessible worldwide through online broadcasting transmission.</p>
+              <div class="op-tags gold-tags">
+                <span>Commercial Radio</span>
+                <span>National Coverage</span>
+                <span>Online Streaming</span>
+              </div>
+            </div>
+            <div class="operator-card">
+              <div class="op-icon gold-op"><i class="fas fa-tv"></i></div>
+              <h5>
+                <a href="http://www.ebotswana.co.bw/" target="_blank">
+                  eBotswana <i class="fas fa-arrow-up-right-from-square"></i>
+                </a>
+              </h5>
+              <p>Television station currently available in Gaborone and surrounding villages within a 60km radius through terrestrial broadcasting. Future plans include introduction of a satellite broadcast service to achieve national coverage.</p>
+              <div class="op-tags gold-tags">
+                <span>Commercial TV</span>
+                <span>Terrestrial Broadcast</span>
+                <span>Satellite (Future)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Requirements -->
+        <div class="stab-content" id="broadcasting-requirements">
+          <h4>Licence Requirements &amp; Obligations</h4>
+          <div class="content-cols">
+            <div class="content-col">
+              <h5>Local Content Obligations</h5>
+              <p>All licensed broadcasters in Botswana are required to:</p>
+              <ul class="styled-list">
+                <li>Promote music tracks by local (Batswana) artists</li>
+                <li>Comply with the prescribed percentage of local content as specified in their licence conditions</li>
+                <li>Submit regular compliance reports to BOCRA on local content broadcast</li>
+                <li>Ensure content standards meet the requirements of the CRA Act 2012</li>
+              </ul>
+            </div>
+            <div class="content-col">
+              <h5>General Broadcasting Obligations</h5>
+              <ul class="styled-list">
+                <li>Operate within the terms and conditions of the broadcast licence issued by BOCRA</li>
+                <li>Comply with subscription management services regulations</li>
+                <li>Adhere to re-broadcasting activity requirements</li>
+                <li>Maintain technical broadcast standards as prescribed by BOCRA</li>
+                <li>Pay annual licence fees as determined by BOCRA</li>
+              </ul>
+            </div>
+          </div>
+          <div class="info-note gold-note">
+            <i class="fas fa-info-circle"></i>
+            <p>State broadcasting services fall outside BOCRA's direct mandate under the CRA Act. BOCRA regulates all commercial, community and subscription broadcasting services.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────
+         SECTOR 3 — POSTAL
+    ─────────────────────────────────────────────────── -->
+    <section class="sector-section" id="postal" data-color="rose">
+      <div class="sector-header" onclick="toggleSector('postal')">
+        <div class="sector-header-left">
+          <div class="sector-icon rose-icon"><i class="fas fa-envelope"></i></div>
+          <div>
+            <div class="sector-tag">REGULATED SECTOR</div>
+            <h2>Postal Services</h2>
+          </div>
+        </div>
+        <div class="sector-header-right">
+          <span class="sector-toggle-hint">Explore sector</span>
+          <div class="toggle-arrow" id="postal-arrow"><i class="fas fa-chevron-down"></i></div>
+        </div>
+      </div>
+
+      <div class="sector-body" id="postal-body">
+
+        <div class="sector-intro-card rose-card">
+          <p>The CRA Act 2012 ushered in a new dawn of regulation for the postal sector as BOCRA assumed the mandate of supervising the provision of postal services in Botswana. The CRA Act prohibits any person from providing postal services without a valid licence issued by BOCRA. The Authority is also mandated to ensure that there is provision of safe, reliable, efficient and affordable postal services throughout Botswana.</p>
+        </div>
+
+        <div class="sector-tabs" id="postal-tabs">
+          <button class="stab active" onclick="showTab('postal','overview')">Overview</button>
+          <button class="stab" onclick="showTab('postal','market')">Market Structure</button>
+          <button class="stab" onclick="showTab('postal','licensing')">Licensing Framework</button>
+          <button class="stab" onclick="showTab('postal','designation')">Designation of Operator</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="stab-content active" id="postal-overview">
+          <div class="content-cols">
+            <div class="content-col">
+              <h4>Sector Overview</h4>
+              <p>In line with its mandate, the Authority has prepared the ground for regulation of postal services by putting in place regulatory instruments and tools that allow ease of market entry and support innovation for the provision of varied postal service offerings.</p>
+              <p>These regulatory instruments include, among others, the 
+                <a href="https://www.bocra.org.bw/sites/default/files/POSTAL_SECTOR_LICENSING_FRAMEWORK.pdf" target="_blank">
+                  Postal Sector Licensing Framework <i class="fas fa-file-pdf"></i>
+                </a> 
+                to guide the provision of postal services in the country and 
+                <a href="https://www.bocra.org.bw/sites/default/files/COURIER_OR_COMMERCIAL_LICENCE_APPLICATION_REQUIREMENTS.pdf" target="_blank">
+                  Licence Application Requirements <i class="fas fa-file-pdf"></i>
+                </a> 
+                for licensing of courier service providers.
+              </p>
+            </div>
+            <div class="content-col">
+              <h4>BOCRA's Mandate in Postal</h4>
+              <div class="mandate-list">
+                <div class="mandate-item rose-m">
+                  <i class="fas fa-ban"></i>
+                  <p>Prohibit provision of postal services without a valid BOCRA licence</p>
+                </div>
+                <div class="mandate-item rose-m">
+                  <i class="fas fa-shield-halved"></i>
+                  <p>Ensure safe, reliable, efficient and affordable postal services throughout Botswana</p>
+                </div>
+                <div class="mandate-item rose-m">
+                  <i class="fas fa-door-open"></i>
+                  <p>Enable ease of market entry through appropriate regulatory instruments</p>
+                </div>
+                <div class="mandate-item rose-m">
+                  <i class="fas fa-lightbulb"></i>
+                  <p>Support innovation for varied postal service offerings</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Market -->
+        <div class="stab-content" id="postal-market">
+          <h4>Current Market Structure</h4>
+          <p>The Botswana postal market comprises two main categories of postal services:</p>
+          <div class="market-cards">
+            <div class="market-card rose-market">
+              <div class="mc-badge">Category i</div>
+              <h5>Ordinary Mail Services<br><span>(Universal Postal Services)</span></h5>
+              <p>Mail services provided nation-wide, under the same conditions for all citizens and customers, and delivered to the P.O. Box.</p>
+              <div class="mc-detail">
+                <strong>Provider:</strong> Exclusively provided by the Designated Public Postal Operator
+              </div>
+              <div class="mc-detail">
+                <strong>Reach:</strong> Nation-wide, same conditions for all
+              </div>
+              <div class="mc-detail">
+                <strong>Delivery:</strong> P.O. Box delivery
+              </div>
+              <div class="mc-current">
+                <i class="fas fa-star"></i> Current Designated Operator: <strong>Botswana Postal Services Limited</strong>
+              </div>
+            </div>
+            <div class="market-card rose-market">
+              <div class="mc-badge">Category ii</div>
+              <h5>Courier Services<br><span>(Value-added Services)</span></h5>
+              <p>Services provided on a commercial basis and delivered directly to the addressee.</p>
+              <div class="mc-detail">
+                <strong>Providers:</strong> Mainly courier service providers; the Designated Public Postal Operator may also provide these commercially
+              </div>
+              <div class="mc-detail">
+                <strong>Reach:</strong> Commercial basis
+              </div>
+              <div class="mc-detail">
+                <strong>Delivery:</strong> Direct to addressee
+              </div>
+              <div class="mc-open">
+                <i class="fas fa-unlock"></i> Open market — no limit on number of licensed operators
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Licensing -->
+        <div class="stab-content" id="postal-licensing">
+          <h4>Licensing of Postal Operators</h4>
+          <p>The licensing framework for the Postal Sector in Botswana comprises two licence categories:</p>
+          <div class="licence-cats">
+            <div class="licence-cat rose-cat">
+              <div class="lc-header">
+                <i class="fas fa-stamp"></i>
+                <h5>Public Postal Operator Licence</h5>
+              </div>
+              <p>This licence is issued to only one postal service provider, designated by the Minister responsible for the Communication Sector.</p>
+              <div class="lc-details">
+                <div class="lc-detail-item">
+                  <span class="lc-label">Validity</span>
+                  <span class="lc-value">15 years (renewable)</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Number of Licensees</span>
+                  <span class="lc-value">One only (exclusive)</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Current Licensee</span>
+                  <span class="lc-value">Botswana Postal Services Limited</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Designated By</span>
+                  <span class="lc-value">Minister responsible for Communications</span>
+                </div>
+              </div>
+            </div>
+            <div class="licence-cat rose-cat">
+              <div class="lc-header">
+                <i class="fas fa-truck"></i>
+                <h5>Commercial Postal Operator Licence</h5>
+              </div>
+              <p>This licence is issued to operators providing courier services or value-added services.</p>
+              <div class="lc-details">
+                <div class="lc-detail-item">
+                  <span class="lc-label">Validity</span>
+                  <span class="lc-value">10 years (renewable)</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Applications</span>
+                  <span class="lc-value">Open at any time</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Number of Licensees</span>
+                  <span class="lc-value">No limit</span>
+                </div>
+                <div class="lc-detail-item">
+                  <span class="lc-label">Services Covered</span>
+                  <span class="lc-value">Courier &amp; value-added services</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Designation -->
+        <div class="stab-content" id="postal-designation">
+          <h4>Designation of a Public Postal Operator</h4>
+          <div class="designation-block">
+            <div class="desig-icon rose-desig"><i class="fas fa-landmark"></i></div>
+            <div class="desig-content">
+              <h5>Legal Basis</h5>
+              <p>Pursuant to Section 67 of the CRA Act, the Minister responsible for Communications shall, on the recommendation of the Authority, designate one postal service provider as a Public Postal Operator.</p>
+            </div>
+          </div>
+          <div class="designation-block">
+            <div class="desig-icon rose-desig"><i class="fas fa-globe-africa"></i></div>
+            <div class="desig-content">
+              <h5>Universal Service Obligations</h5>
+              <p>A Public Postal Operator carries a number of universal service obligations aimed at ensuring that, so far as it is practicable, postal services reach all inhabitants of Botswana. This mandate includes provision of universal postal services in areas that are not commercially viable.</p>
+            </div>
+          </div>
+          <div class="designation-block">
+            <div class="desig-icon rose-desig"><i class="fas fa-handshake"></i></div>
+            <div class="desig-content">
+              <h5>Postal Service Operators Offering Interconnection</h5>
+              <p>BOCRA facilitates interconnection arrangements between postal service operators in order to ensure seamless delivery of postal services across Botswana. Operators may apply to BOCRA for guidance on interconnection requirements and obligations.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ────────────────────────────────────────────────
+         SECTOR 4 — INTERNET
+    ─────────────────────────────────────────────────── -->
+    <section class="sector-section" id="internet" data-color="blue">
+      <div class="sector-header" onclick="toggleSector('internet')">
+        <div class="sector-header-left">
+          <div class="sector-icon blue-icon"><i class="fas fa-globe"></i></div>
+          <div>
+            <div class="sector-tag">REGULATED SECTOR</div>
+            <h2>Internet &amp; ICT</h2>
+          </div>
+        </div>
+        <div class="sector-header-right">
+          <span class="sector-toggle-hint">Explore sector</span>
+          <div class="toggle-arrow" id="internet-arrow"><i class="fas fa-chevron-down"></i></div>
+        </div>
+      </div>
+
+      <div class="sector-body" id="internet-body">
+
+        <div class="sector-intro-card blue-card">
+          <p>The preamble of the Communications Regulatory Authority Act 2012 establishes BOCRA as responsible for regulation of the communications sector in Botswana, comprising among others the Internet and Information and Communications Technologies (ICTs). As a converged regulator, BOCRA is responsible for regulatory oversight of broadcasting, internet, postal and telecommunications services.</p>
+        </div>
+
+        <div class="sector-tabs" id="internet-tabs">
+          <button class="stab active" onclick="showTab('internet','overview')">Overview</button>
+          <button class="stab" onclick="showTab('internet','providers')">Internet Service Providers</button>
+          <button class="stab" onclick="showTab('internet','standards')">Quality Standards</button>
+          <button class="stab" onclick="showTab('internet','bandwidth')">Bandwidth &amp; Pricing</button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div class="stab-content active" id="internet-overview">
+          <div class="content-cols">
+            <div class="content-col">
+              <h4>Sector Overview</h4>
+              <p>BOCRA facilitates the growth of the Internet market as part of its role to facilitate the uptake of ICTs. The use of smartphones has led to an increased number of people with access to mobile internet, especially among the youth.</p>
+              <p>In a bid to improve the performance of the Internet, BOCRA issued 
+                <a href="https://www.bocra.org.bw/sites/default/files/BOCRA%20Minimum%20Internet%20Connectivity.pdf" target="_blank">
+                  Guidelines on Minimum Requirements for Internet Connectivity <i class="fas fa-file-pdf"></i>
+                </a> 
+                in Hospitality Facilities, which set minimum standards for Internet connectivity in the industry.
+              </p>
+              <p>These regulations are supported by the 
+                <a href="https://www.bocra.org.bw/sites/default/files/Communications%20Regulatory%20Authority%20Act%202012.pdf" target="_blank">
+                  Communications Regulatory Authority Act 2012 <i class="fas fa-file-pdf"></i>
+                </a>, which provides the legal framework for BOCRA's oversight of ICT services.
+              </p>
+              <div class="external-link-box">
+                <i class="fas fa-file-download"></i>
+                <div>
+                  <strong>Internet & ICT Resources</strong>
+                  <p>Download official BOCRA guidelines and regulatory documents.</p>
+                  <a href="https://www.bocra.org.bw/sites/default/files/BOCRA%20Minimum%20Internet%20Connectivity.pdf" target="_blank" class="text-link">
+                    Minimum Internet Connectivity Guidelines <i class="fas fa-arrow-right"></i>
+                  </a><br>
+                  <a href="https://www.bocra.org.bw/sites/default/files/Communications%20Regulatory%20Authority%20Act%202012.pdf" target="_blank" class="text-link">
+                    Communications Regulatory Authority Act 2012 <i class="fas fa-arrow-right"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="content-col">
+              <h4>BOCRA's Internet Mandate</h4>
+              <div class="mandate-list">
+                <div class="mandate-item blue-m">
+                  <i class="fas fa-chart-line"></i>
+                  <p>Facilitate growth of the Internet market and uptake of ICTs across Botswana</p>
+                </div>
+                <div class="mandate-item blue-m">
+                  <i class="fas fa-star"></i>
+                  <p>Set and enforce minimum quality standards for Internet connectivity</p>
+                </div>
+                <div class="mandate-item blue-m">
+                  <i class="fas fa-tags"></i>
+                  <p>Oversee wholesale Internet bandwidth pricing and tariff trends</p>
+                </div>
+                <div class="mandate-item blue-m">
+                  <i class="fas fa-shield-halved"></i>
+                  <p>Ensure regulatory oversight as a converged regulator across all digital services</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: ISP Providers -->
+        <div class="stab-content" id="internet-providers">
+          <h4>Licensed Internet Service Providers</h4>
+          <p>BOCRA licenses and regulates Internet Service Providers (ISPs) operating in Botswana. Below is the list of licensed ISPs:</p>
+          
+          <div id="isp-loading" style="text-align: center; padding: 2rem;">
+            <i class="fas fa-spinner fa-spin" style="font-size: 2rem; color: var(--teal);"></i>
+            <p>Loading Internet Service Providers...</p>
+          </div>
+          
+          <div id="isp-container" style="display: none;">
+            <!-- ISPs will be loaded here via JavaScript -->
+          </div>
+        </div>
+
+        <!-- Tab: Standards -->
+        <div class="stab-content" id="internet-standards">
+          <h4>Internet Quality &amp; Connectivity Standards</h4>
+          <div class="content-cols">
+            <div class="content-col">
+              <h5>Guidelines for Hospitality Facilities</h5>
+              <p>BOCRA has issued Guidelines on Minimum Requirements for Internet Connectivity in Hospitality Facilities. These guidelines set minimum standards for Internet connectivity in the hospitality industry. The Guidelines are intended to provide guidance for:</p>
+              <ul class="styled-list">
+                <li>The quality of Internet services in hospitality facilities</li>
+                <li>Minimum bandwidth requirements for hospitality operations</li>
+                <li>Standards to be adopted by Hospitality Facilities and their Service Providers</li>
+                <li>Ensuring guests and visitors receive a minimum level of Internet quality</li>
+              </ul>
+            </div>
+            <div class="content-col">
+              <h5>General Internet QoS Framework</h5>
+              <p>As part of its broader Quality of Service mandate, BOCRA monitors Internet service quality delivered by licensed ISPs, including:</p>
+              <ul class="styled-list">
+                <li>Minimum download and upload speed standards</li>
+                <li>Latency and packet loss thresholds</li>
+                <li>Availability and uptime requirements</li>
+                <li>Transparent disclosure of speeds to consumers</li>
+                <li>Compliance with net neutrality principles</li>
+              </ul>
+              <div class="highlight-box blue-highlight">
+                <i class="fas fa-mobile-screen-button"></i>
+                <p>The proliferation of smartphones has significantly increased mobile Internet penetration in Botswana, particularly among the youth.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab: Bandwidth -->
+        <div class="stab-content" id="internet-bandwidth">
+          <h4>Wholesale Internet Bandwidth Prices</h4>
+          <div class="bandwidth-intro">
+            <p>Wholesale Internet bandwidth prices/tariffs have been declining. The decline in wholesale Internet bandwidth prices is influenced by:</p>
+          </div>
+          <div class="bandwidth-cards">
+            <div class="bw-card blue-bw">
+              <div class="bw-icon"><i class="fas fa-water"></i></div>
+              <h5>East Africa Sub Marine System (EASSy)</h5>
+              <p>Botswana's acquisition of Internet bandwidth capacity through the EASSy undersea cable system has significantly contributed to declining wholesale bandwidth prices, improving connectivity options for operators.</p>
+            </div>
+            <div class="bw-card blue-bw">
+              <div class="bw-icon"><i class="fas fa-anchor"></i></div>
+              <h5>West Africa Cable System (WACS)</h5>
+              <p>Access to bandwidth capacity through the WACS undersea cable system provides an additional source of international Internet bandwidth, contributing to competitive pricing and improved resilience.</p>
+            </div>
+            <div class="bw-card blue-bw">
+              <div class="bw-icon"><i class="fas fa-globe"></i></div>
+              <h5>International Trends</h5>
+              <p>The decline in wholesale Internet bandwidth prices is also in keeping with global trends, as global fibre infrastructure expands and the cost per unit of bandwidth continues to fall internationally.</p>
+            </div>
+          </div>
+          <div class="info-note blue-note">
+            <i class="fas fa-info-circle"></i>
+            <p>BOCRA monitors wholesale bandwidth pricing as part of its mandate to ensure fair and competitive pricing for consumers and businesses. Operators are required to file tariff information with BOCRA in accordance with licensing conditions.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── FOOTER ───────────────────────────────────────── -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="f-logo">BOCRA</div>
+        <p>Botswana Communications Regulatory Authority<br>Plot No. 206/207, Independence Avenue<br>Private Bag 00495, Gaborone</p>
+      </div>
+      <div class="footer-col">
+        <h6>Regulations</h6>
+        <a href="#telecom">Telecommunications</a>
+        <a href="#broadcasting">Broadcasting</a>
+        <a href="#postal">Postal</a>
+        <a href="#internet">Internet &amp; ICT</a>
+      </div>
+      <div class="footer-col">
+        <h6>Services</h6>
+        <a href="#">Licensing</a>
+        <a href="#">Complaints</a>
+        <a href="#">Domain Registry</a>
+        <a href="#">Cybersecurity</a>
+      </div>
+      <div class="footer-col">
+        <h6>Contact</h6>
+        <a href="tel:+2673957755"><i class="fas fa-phone"></i> +267 395 7755</a>
+        <a href="fax:+2673957976"><i class="fas fa-fax"></i> +267 395 7976</a>
+        <a href="mailto:info@bocra.org.bw"><i class="fas fa-envelope"></i> info@bocra.org.bw</a>
+        <a href="#"><i class="fas fa-globe"></i> www.bocra.org.bw</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; 2025 Botswana Communications Regulatory Authority. All rights reserved.</span>
+      <div class="footer-socials">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-x-twitter"></i></a>
+        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="assets/js/regulations.js"></script>
+</body>
+</html>

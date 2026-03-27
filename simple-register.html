@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOCRA Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Lato', sans-serif; 
+            background: #F7F7F5; 
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        h1 { color: #006B5E; margin-bottom: 10px; text-align: center; }
+        h2 { color: #2C2C2C; margin-bottom: 20px; text-align: center; font-size: 20px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 6px; font-weight: 600; color: #2C2C2C; font-size: 14px; }
+        input, select { 
+            width: 100%; 
+            padding: 12px; 
+            border: 1.5px solid #DDD; 
+            border-radius: 6px; 
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #006B5E;
+            box-shadow: 0 0 0 3px #E8F4F2;
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            background: #006B5E;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .btn:hover { background: #004D43; }
+        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+        .hidden { display: none; }
+        .qr-section {
+            text-align: center;
+            padding: 20px 0;
+        }
+        .qr-section img {
+            border: 2px solid #DDD;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .secret-code {
+            background: #F9F9F9;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 15px 0;
+            font-family: monospace;
+            font-size: 16px;
+            letter-spacing: 2px;
+            word-break: break-all;
+        }
+        .otp-container {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        .otp-box {
+            width: 50px;
+            height: 56px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: 600;
+            border: 2px solid #DDD;
+            border-radius: 8px;
+        }
+        .otp-box:focus {
+            outline: none;
+            border-color: #006B5E;
+            box-shadow: 0 0 0 3px #E8F4F2;
+        }
+        .success { color: #27AE60; text-align: center; margin: 20px 0; font-weight: 600; }
+        .error { color: #CC2936; text-align: center; margin: 20px 0; }
+        .info { color: #555; text-align: center; margin: 10px 0; font-size: 14px; }
+        .countdown { font-size: 18px; color: #006B5E; font-weight: 600; margin-top: 10px; }
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #E0E0E0;
+        }
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .tab.active {
+            color: #006B5E;
+            border-bottom-color: #006B5E;
+        }
+        .tab:hover {
+            color: #006B5E;
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Step 1: Registration/Login Forms -->
+        <div id="step1">
+            <h1>BOCRA</h1>
+            <h2>Licensing Portal</h2>
+            
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('register')">Register</button>
+                <button class="tab" onclick="switchTab('login')">Log In</button>
+            </div>
+            
+            <!-- Register Tab -->
+            <div id="registerTab" class="tab-content active">
+            
+            <form id="regForm">
+                <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" id="lastName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Phone</label>
+                    <input type="tel" id="phone" placeholder="+267 7X XXX XXX">
+                </div>
+                
+                <div class="form-group">
+                    <label>Account Type</label>
+                    <select id="accountType" required>
+                        <option value="">Select type</option>
+                        <option value="individual">Individual</option>
+                        <option value="company">Company</option>
+                        <option value="government">Government</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Password (min 8 characters)</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="confirmPassword" required>
+                </div>
+                
+                <button type="submit" class="btn" id="regBtn">Create Account</button>
+            </form>
+            </div>
+            
+            <!-- Login Tab -->
+            <div id="loginTab" class="tab-content">
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    
+                    <button type="submit" class="btn" id="loginBtn">Log In</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Step 2: 2FA Setup (Registration) -->
+        <div id="step2" class="hidden">
+            <h1>BOCRA</h1>
+            <h2>Set Up Two-Factor Authentication</h2>
+            
+            <div class="qr-section">
+                <p class="info">Scan this QR code with Microsoft Authenticator:</p>
+                <img id="qrImage" src="" alt="QR Code" width="200" height="200">
+                
+                <p class="info">Or enter this secret code manually in your app:</p>
+                <div class="secret-code" id="secretCode"></div>
+                <p class="info" style="font-size: 12px; color: #888;">Account: <span id="accountEmail"></span></p>
+            </div>
+            
+            <p class="info">Enter the 6-digit code from Microsoft Authenticator:</p>
+            <div class="otp-container">
+                <input type="text" class="otp-box" maxlength="1" id="otp1">
+                <input type="text" class="otp-box" maxlength="1" id="otp2">
+                <input type="text" class="otp-box" maxlength="1" id="otp3">
+                <input type="text" class="otp-box" maxlength="1" id="otp4">
+                <input type="text" class="otp-box" maxlength="1" id="otp5">
+                <input type="text" class="otp-box" maxlength="1" id="otp6">
+            </div>
+            
+            <div id="verifyError" class="error hidden"></div>
+            
+            <button class="btn" id="verifyBtn" onclick="verify2FA()">Verify & Complete Registration</button>
+        </div>
+        
+        <!-- Step 2b: 2FA Verify (Login) -->
+        <div id="step2b" class="hidden">
+            <h1>BOCRA</h1>
+            <h2>Two-Factor Authentication</h2>
+            
+            <div class="info" style="margin: 20px 0;">Enter the 6-digit code from your authenticator app:</div>
+            
+            <div class="otp-container">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp1">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp2">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp3">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp4">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp5">
+                <input type="text" class="otp-box" maxlength="1" id="loginOtp6">
+            </div>
+            
+            <div id="loginVerifyError" class="error hidden"></div>
+            
+            <button class="btn" id="loginVerifyBtn" onclick="verifyLogin()">Verify & Access Dashboard</button>
+        </div>
+
+        <!-- Step 3: Success -->
+        <div id="step3" class="hidden">
+            <h1>BOCRA</h1>
+            <h2>✓ Registration Successful!</h2>
+            
+            <div class="success">
+                <p>Your account has been created and verified.</p>
+                <p style="margin-top: 10px;">Redirecting to login portal...</p>
+                <div class="countdown" id="countdown">5</div>
+            </div>
+            
+            <div class="info" style="margin-top: 20px;">
+                <p>If not redirected, <a href="../../xampp/htdocs/bocra-website/licensing-portal.html" style="color: #006B5E; font-weight: 600;">click here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost/bocra-website/backend/api';
+        let userData = {};
+        let userEmail = '';
+        let loginToken = '';
+        
+        // Check if user is already logged in
+        (async function checkAuth() {
+            const token = localStorage.getItem('bocra_website_token');
+            if (token) {
+                try {
+                    const response = await fetch(`${API_BASE}/me.php`, {
+                        headers: { 'Authorization': `Bearer ${token}` }
+                    });
+                    if (response.ok) {
+                        // User is already logged in, redirect to dashboard
+                        window.location.href = 'dashboard.html';
+                        return;
+                    } else {
+                        // Token is invalid, remove it
+                        localStorage.removeItem('bocra_website_token');
+                    }
+                } catch (error) {
+                    console.error('Auth check error:', error);
+                    localStorage.removeItem('bocra_website_token');
+                }
+            }
+        })();
+        
+        // Tab Switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(t => t.classList.remove('active'));
+            tabContents.forEach(tc => tc.classList.remove('active'));
+            
+            if (tab === 'register') {
+                tabs[0].classList.add('active');
+                document.getElementById('registerTab').classList.add('active');
+            } else {
+                tabs[1].classList.add('active');
+                document.getElementById('loginTab').classList.add('active');
+            }
+        }
+
+        // Registration
+        document.getElementById('regForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters!');
+                return;
+            }
+            
+            const btn = document.getElementById('regBtn');
+            btn.disabled = true;
+            btn.textContent = 'Creating account...';
+            
+            userEmail = document.getElementById('email').value;
+            
+            try {
+                const response = await fetch(API_BASE + '/register.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        first_name: document.getElementById('firstName').value,
+                        last_name: document.getElementById('lastName').value,
+                        email: userEmail,
+                        phone: document.getElementById('phone').value,
+                        password: password,
+                        confirm_password: confirmPassword,
+                        account_type: document.getElementById('accountType').value,
+                        company_name: ''
+                    })
+                });
+                
+                const json = await response.json();
+                
+                if (json.success) {
+                    userData = json.data;
+                    
+                    // Display REAL QR code from backend
+                    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + 
+                                  encodeURIComponent(json.data.qr_code_url);
+                    document.getElementById('qrImage').src = qrUrl;
+                    
+                    // Display REAL secret from backend
+                    document.getElementById('secretCode').textContent = json.data.secret;
+                    document.getElementById('accountEmail').textContent = userEmail;
+                    
+                    // Switch to step 2
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2').classList.remove('hidden');
+                    
+                    // Setup OTP boxes
+                    setupOTPBoxes();
+                } else {
+                    alert(json.error || 'Registration failed');
+                    btn.disabled = false;
+                    btn.textContent = 'Create Account';
+                }
+            } catch (error) {
+                alert('Network error. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Create Account';
+            }
+        });
+
+        // OTP Box Navigation
+        function setupOTPBoxes() {
+            const boxes = [
+                document.getElementById('otp1'),
+                document.getElementById('otp2'),
+                document.getElementById('otp3'),
+                document.getElementById('otp4'),
+                document.getElementById('otp5'),
+                document.getElementById('otp6')
+            ];
+            
+            boxes.forEach((box, index) => {
+                box.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1 && index < 5) {
+                        boxes[index + 1].focus();
+                    }
+                });
+                
+                box.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                        boxes[index - 1].focus();
+                    }
+                });
+            });
+            
+            // Focus first box
+            boxes[0].focus();
+        }
+        
+        // Setup Login OTP Boxes
+        function setupLoginOTPBoxes() {
+            const boxes = [
+                document.getElementById('loginOtp1'),
+                document.getElementById('loginOtp2'),
+                document.getElementById('loginOtp3'),
+                document.getElementById('loginOtp4'),
+                document.getElementById('loginOtp5'),
+                document.getElementById('loginOtp6')
+            ];
+            
+            boxes.forEach((box, index) => {
+                box.addEventListener('input', (e) => {
+                    if (e.target.value.length === 1 && index < 5) {
+                        boxes[index + 1].focus();
+                    }
+                });
+                
+                box.addEventListener('keydown', (e) => {
+                    if (e.key === 'Backspace' && e.target.value === '' && index > 0) {
+                        boxes[index - 1].focus();
+                    }
+                });
+            });
+            
+            boxes[0].focus();
+        }
+
+        // Verify 2FA
+        async function verify2FA() {
+            const code = 
+                document.getElementById('otp1').value +
+                document.getElementById('otp2').value +
+                document.getElementById('otp3').value +
+                document.getElementById('otp4').value +
+                document.getElementById('otp5').value +
+                document.getElementById('otp6').value;
+            
+            if (code.length !== 6) {
+                document.getElementById('verifyError').textContent = 'Please enter all 6 digits';
+                document.getElementById('verifyError').classList.remove('hidden');
+                return;
+            }
+            
+            const btn = document.getElementById('verifyBtn');
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+            
+            // For now, show success and redirect
+            // In production, this would verify the code with backend
+            setTimeout(() => {
+                document.getElementById('step2').classList.add('hidden');
+                document.getElementById('step3').classList.remove('hidden');
+                
+                // Countdown and redirect
+                let seconds = 5;
+                const countdownEl = document.getElementById('countdown');
+                
+                const interval = setInterval(() => {
+                    seconds--;
+                    countdownEl.textContent = seconds;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(interval);
+                        window.location.href = '../../xampp/htdocs/bocra-website/licensing-portal.html';
+                    }
+                }, 1000);
+            }, 1000);
+        }
+        
+        // Login Form
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            const btn = document.getElementById('loginBtn');
+            btn.disabled = true;
+            btn.textContent = 'Logging in...';
+            
+            console.log('Attempting login for:', email);
+            console.log('API endpoint:', API_BASE + '/login.php');
+            
+            try {
+                const response = await fetch(API_BASE + '/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                
+                console.log('Response status:', response.status);
+                
+                const json = await response.json();
+                console.log('Response data:', json);
+                
+                if (json.success) {
+                    loginToken = json.data.token;
+                    localStorage.setItem('bocra_website_token', loginToken);
+                    console.log('Login successful, token stored:', loginToken);
+                    
+                    // Switch to 2FA verification
+                    document.getElementById('step1').classList.add('hidden');
+                    document.getElementById('step2b').classList.remove('hidden');
+                    setupLoginOTPBoxes();
+                } else {
+                    console.error('Login failed:', json.error || json.message);
+                    alert(json.error || json.message || 'Login failed');
+                    btn.disabled = false;
+                    btn.textContent = 'Log In';
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                alert('Network error: ' + error.message + '\n\nPlease check:\n1. XAMPP is running\n2. MySQL is started\n3. Database exists');
+                btn.disabled = false;
+                btn.textContent = 'Log In';
+            }
+        });
+        
+        // Verify Login 2FA
+        async function verifyLogin() {
+            const code = 
+                document.getElementById('loginOtp1').value +
+                document.getElementById('loginOtp2').value +
+                document.getElementById('loginOtp3').value +
+                document.getElementById('loginOtp4').value +
+                document.getElementById('loginOtp5').value +
+                document.getElementById('loginOtp6').value;
+            
+            if (code.length !== 6) {
+                document.getElementById('loginVerifyError').textContent = 'Please enter all 6 digits';
+                document.getElementById('loginVerifyError').classList.remove('hidden');
+                return;
+            }
+            
+            const btn = document.getElementById('loginVerifyBtn');
+            btn.disabled = true;
+            btn.textContent = 'Verifying...';
+            
+            console.log('Verifying 2FA code:', code);
+            console.log('Using token:', loginToken);
+            
+            try {
+                const response = await fetch(API_BASE + '/verify-otp.php', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + loginToken
+                    },
+                    body: JSON.stringify({ code })
+                });
+                
+                console.log('Verify response status:', response.status);
+                
+                const json = await response.json();
+                
+                if (json.success) {
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                } else {
+                    document.getElementById('loginVerifyError').textContent = json.error || 'Invalid code';
+                    document.getElementById('loginVerifyError').classList.remove('hidden');
+                    btn.disabled = false;
+                    btn.textContent = 'Verify & Access Dashboard';
+                }
+            } catch (error) {
+                document.getElementById('loginVerifyError').textContent = 'Network error. Please try again.';
+                document.getElementById('loginVerifyError').classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = 'Verify & Access Dashboard';
+            }
+        }
+    </script>
+</body>
+</html>

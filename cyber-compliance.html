@@ -1,0 +1,1590 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cybersecurity Compliance & Risk Assessment - BOCRA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --teal: #006B5E;
+  --teal-dark: #004D43;
+  --teal-light: #E8F4F2;
+  --gold: #C9A227;
+  --gold-light: #FDF6E3;
+  --charcoal: #2C2C2C;
+  --mid: #555555;
+  --light: #888888;
+  --border: #DDDDDD;
+  --bg: #F7F7F5;
+  --white: #FFFFFF;
+  --error: #CC2936;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Lato", sans-serif; color: var(--charcoal); background: var(--bg); line-height: 1.65; }
+
+h1, h2, h3, h4 { font-family: "Forum", serif; line-height: 1.25; }
+
+.topbar {
+  background: var(--teal-dark);
+  padding: 7px 40px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.topbar-left { display: flex; gap: 20px; }
+.topbar-left span { display: flex; align-items: center; gap: 6px; }
+.topbar-right { display: flex; gap: 15px; }
+.topbar a { color: rgba(255,255,255,0.65); text-decoration: none; transition: color 0.2s; }
+.topbar a:hover { color: white; }
+.topbar-sep { color: rgba(255,255,255,0.3); }
+
+.header {
+  background: white;
+  height: 72px;
+  border-bottom: 2px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: box-shadow 0.3s;
+}
+.header.scrolled { box-shadow: 0 2px 8px rgba(0,0,0,0.07); }
+
+.logo { display: flex; align-items: center; gap: 12px; }
+.logo img { height: 44px; }
+.logo-divider { width: 1px; height: 36px; background: var(--border); }
+.logo-text-container { display: flex; flex-direction: column; }
+.logo-text { font-family: "Lato", sans-serif; font-weight: 700; font-size: 12px; color: var(--charcoal); }
+.logo-sub { font-family: "Lato", sans-serif; font-weight: 300; font-size: 11px; color: var(--mid); max-width: 280px; }
+
+.search-bar {
+  position: relative;
+  max-width: 380px;
+  flex: 1;
+  margin: 0 30px;
+}
+.search-bar input {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 40px 9px 14px;
+  font-family: "Lato", sans-serif;
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.search-bar input:focus { border-color: var(--teal); }
+.search-btn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: var(--teal);
+  border: none;
+  border-radius: 0 6px 6px 0;
+  padding: 0 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.search-btn svg { width: 16px; height: 16px; stroke: white; fill: none; stroke-width: 2; }
+
+.navbar {
+  background: var(--teal);
+  padding: 0 40px;
+  display: flex;
+  gap: 0;
+}
+.nav-link {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  padding: 13px 18px;
+  font-size: 14px;
+  font-weight: 400;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.nav-link:hover { color: white; border-bottom-color: var(--gold); }
+.nav-link.active { color: white; border-bottom-color: var(--gold); }
+
+.breadcrumb {
+  background: white;
+  border-bottom: 1px solid var(--border);
+  padding: 10px 40px;
+  font-size: 12px;
+  color: var(--mid);
+}
+.breadcrumb a { color: var(--teal); font-weight: 700; text-decoration: none; }
+
+.hero {
+  background: var(--teal-dark);
+  position: relative;
+  overflow: hidden;
+  padding: 60px 60px;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0,77,67,0.95) 0%, rgba(0,107,94,0.80) 100%);
+  z-index: 1;
+}
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  z-index: 2;
+}
+.hero-content { position: relative; z-index: 3; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+.hero-left { max-width: 600px; }
+
+.service-tag {
+  background: rgba(201,162,39,0.2);
+  border: 1px solid rgba(201,162,39,0.4);
+  color: var(--gold);
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 5px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  margin-bottom: 20px;
+}
+
+.hero h1 {
+  font-family: "Forum", serif;
+  font-size: 48px;
+  color: white;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+}
+
+.hero-sub {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 16px;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.75;
+  max-width: 520px;
+  margin-bottom: 32px;
+}
+
+.hero-stats {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.stat-pill {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
+  padding: 12px 18px;
+}
+.stat-value {
+  font-family: "Lato", sans-serif;
+  font-weight: 900;
+  font-size: 22px;
+  color: white;
+  display: block;
+}
+.stat-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255,255,255,0.6);
+}
+
+.hero-decoration {
+  position: absolute;
+  right: 60px;
+  width: 200px;
+  height: 240px;
+}
+.shield-outer {
+  position: absolute;
+  width: 200px;
+  height: 240px;
+  opacity: 0.04;
+}
+.shield-inner {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 160px;
+  height: 200px;
+  opacity: 0.12;
+  fill: var(--gold);
+}
+.shield-lock {
+  position: absolute;
+  top: 80px;
+  left: 70px;
+  width: 60px;
+  height: 60px;
+  opacity: 0.15;
+  fill: white;
+}
+.ring {
+  position: absolute;
+  border: 1px solid rgba(255,255,255,0.03);
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.ring-1 { width: 220px; height: 260px; }
+.ring-2 { width: 260px; height: 300px; }
+.ring-3 { width: 300px; height: 340px; }
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 48px 40px 80px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.section-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 36px 40px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  animation: fadeUp 0.4s ease both;
+}
+.section-card:nth-child(1) { animation-delay: 0s; }
+.section-card:nth-child(2) { animation-delay: 0.08s; }
+.section-card:nth-child(3) { animation-delay: 0.16s; }
+.section-card:nth-child(4) { animation-delay: 0.24s; }
+
+.section-header {
+  margin-bottom: 28px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+}
+.section-num {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: "Forum", serif;
+  font-size: 22px;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+.section-desc {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+.form-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--charcoal);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 7px;
+}
+.required { color: var(--teal); font-size: 14px; font-weight: 400; }
+
+.form-input, .form-select, .form-textarea {
+  width: 100%;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  font-family: "Lato", sans-serif;
+  font-size: 14px;
+  color: var(--charcoal);
+  background: var(--bg);
+  transition: all 0.2s;
+  outline: none;
+}
+.form-input:hover, .form-select:hover, .form-textarea:hover { border-color: rgba(0,107,94,0.4); }
+.form-input:focus, .form-select:focus, .form-textarea:focus {
+  border-color: var(--teal);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0,107,94,0.1);
+}
+.form-input.error, .form-select.error, .form-textarea.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(204,41,54,0.1);
+}
+
+.form-select {
+  appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23555555' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 40px;
+}
+
+.form-textarea {
+  min-height: 160px;
+  resize: vertical;
+  line-height: 1.7;
+}
+
+.error-message {
+  font-family: "Lato", sans-serif;
+  font-size: 12px;
+  color: var(--error);
+  margin-top: 5px;
+  display: none;
+}
+.error-message.show { display: block; }
+
+.char-counter {
+  font-family: "Lato", sans-serif;
+  font-size: 11px;
+  color: var(--light);
+  text-align: right;
+  margin-top: 5px;
+}
+
+.service-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.service-card {
+  background: var(--white);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 22px;
+  cursor: pointer;
+  transition: all 0.22s;
+  position: relative;
+  user-select: none;
+}
+.service-card:hover {
+  border-color: rgba(0,107,94,0.4);
+  background: var(--bg);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+}
+.service-card.selected {
+  border-color: var(--teal);
+  background: var(--teal-light);
+  box-shadow: 0 0 0 1px var(--teal);
+}
+
+.service-checkbox {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.service-card.selected .service-checkbox {
+  background: var(--teal);
+  border-color: var(--teal);
+}
+.service-checkmark {
+  width: 12px;
+  height: 12px;
+  stroke: white;
+  stroke-width: 2;
+  fill: none;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.service-card.selected .service-checkmark { opacity: 1; }
+
+.service-icon-box {
+  width: 44px;
+  height: 44px;
+  border-radius: 9px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  transition: all 0.2s;
+}
+.service-card.selected .service-icon-box {
+  background: var(--teal-light);
+  border-color: rgba(0,107,94,0.3);
+}
+.service-icon {
+  width: 20px;
+  height: 20px;
+  stroke: var(--teal);
+  fill: none;
+  stroke-width: 2;
+}
+
+.service-card-title {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--charcoal);
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+.service-card.selected .service-card-title { color: var(--teal-dark); }
+
+.service-card-desc {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.6;
+  transition: color 0.2s;
+}
+.service-card.selected .service-card-desc { color: rgba(0,107,94,0.75); }
+
+.priority-grid {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.priority-card {
+  flex: 1;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
+}
+.priority-card:hover {
+  border-color: var(--teal);
+  background: var(--bg);
+}
+.priority-card.selected {
+  border-color: var(--teal);
+  background: var(--teal-light);
+}
+.priority-card input[type="radio"] { display: none; }
+.priority-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--charcoal);
+  display: block;
+}
+.priority-sub {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 11px;
+  color: var(--mid);
+}
+
+.info-box {
+  background: rgba(201,162,39,0.08);
+  border: 1px solid rgba(201,162,39,0.25);
+  border-left: 4px solid var(--gold);
+  border-radius: 6px;
+  padding: 12px 16px;
+  margin-top: 12px;
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.6;
+  display: none;
+}
+.info-box.show { display: block; }
+
+.declaration-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--bg);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.declaration-row:hover { background: rgba(0,107,94,0.03); }
+.declaration-row.checked {
+  background: var(--teal-light);
+  border-color: rgba(0,107,94,0.2);
+}
+.declaration-checkbox {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  accent-color: var(--teal);
+  cursor: pointer;
+}
+.declaration-label {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--charcoal);
+  line-height: 1.6;
+  cursor: pointer;
+  flex: 1;
+}
+
+.data-notice {
+  background: rgba(0,107,94,0.06);
+  border: 1px solid rgba(0,107,94,0.15);
+  border-left: 4px solid var(--teal);
+  border-radius: 8px;
+  padding: 16px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.notice-icon {
+  width: 18px;
+  height: 18px;
+  stroke: var(--teal);
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+}
+.notice-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.6;
+}
+
+.submit-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px 40px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+}
+
+.submit-left h4 {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--charcoal);
+  margin-bottom: 4px;
+}
+.submit-left p {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: var(--mid);
+}
+.submit-meta {
+  display: flex;
+  gap: 16px;
+  margin-top: 10px;
+}
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.meta-icon {
+  width: 12px;
+  height: 12px;
+  stroke: var(--teal);
+  fill: none;
+  stroke-width: 2;
+}
+.meta-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: var(--mid);
+}
+
+.submit-btn {
+  background: var(--teal);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 36px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  min-width: 240px;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.submit-btn:hover {
+  background: var(--teal-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,107,94,0.25);
+}
+.submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+.submit-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  display: none;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.submit-arrow {
+  width: 16px;
+  height: 16px;
+  stroke: white;
+  fill: none;
+  stroke-width: 2;
+}
+
+#successSection {
+  display: none;
+  animation: fadeUp 0.5s ease;
+}
+#successSection.show { display: block; }
+
+.success-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 60px 52px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  text-align: center;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+.success-check-ring {
+  width: 84px;
+  height: 84px;
+  background: var(--teal-light);
+  border: 2px solid rgba(0,107,94,0.3);
+  border-radius: 50%;
+  margin: 0 auto 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: popIn 0.5s ease;
+}
+.success-check {
+  width: 40px;
+  height: 40px;
+  stroke: var(--teal);
+  fill: none;
+  stroke-width: 2.5;
+}
+
+.ref-number {
+  display: inline-block;
+  font-family: "Lato", monospace;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--teal-dark);
+  background: var(--teal-light);
+  border: 1px solid rgba(0,107,94,0.2);
+  border-radius: 6px;
+  padding: 6px 16px;
+  letter-spacing: 0.08em;
+  margin-bottom: 18px;
+}
+
+.success-title {
+  font-family: "Forum", serif;
+  font-size: 30px;
+  color: var(--charcoal);
+  margin-bottom: 12px;
+}
+
+.success-message {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 15px;
+  color: var(--mid);
+  max-width: 500px;
+  margin: 0 auto 32px;
+  line-height: 1.75;
+}
+
+.next-steps {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 36px;
+  flex-wrap: wrap;
+}
+
+.step-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 16px;
+  width: 200px;
+  text-align: left;
+}
+.step-num {
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 5px;
+}
+.step-text {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-size: 13px;
+  color: var(--mid);
+  line-height: 1.55;
+}
+
+.reset-btn {
+  background: none;
+  color: var(--teal);
+  border: 1.5px solid var(--teal);
+  border-radius: 7px;
+  padding: 11px 28px;
+  font-family: "Lato", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.reset-btn:hover { background: var(--teal-light); }
+
+.footer {
+  background: var(--charcoal);
+  color: rgba(255,255,255,0.5);
+  padding: 50px 40px 0;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+.footer-logo {
+  height: 38px;
+  filter: brightness(0) invert(1);
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+.footer-about {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  max-width: 240px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.footer h4 {
+  font-family: "Forum", serif;
+  font-size: 16px;
+  color: white;
+  margin-bottom: 16px;
+}
+.footer-links {
+  list-style: none;
+}
+.footer-links li {
+  margin-bottom: 10px;
+}
+.footer-links a {
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 13px;
+  color: rgba(255,255,255,0.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: white; }
+
+.footer-bottom {
+  background: rgba(0,0,0,0.25);
+  padding: 16px 40px;
+  text-align: center;
+  font-family: "Lato", sans-serif;
+  font-weight: 300;
+  font-size: 12px;
+  color: rgba(255,255,255,0.4);
+}
+
+@media (max-width: 768px) {
+  .topbar-left { display: none; }
+  .header { padding: 0 20px; }
+  .navbar { padding: 0 20px; overflow-x: auto; }
+  .hero { padding: 40px 20px; }
+  .hero-stats { flex-wrap: wrap; gap: 12px; }
+  .hero-decoration { display: none; }
+  .container { padding: 28px 20px 60px; }
+  .section-card { padding: 24px 20px; }
+  .form-grid { grid-template-columns: 1fr; }
+  .service-grid { grid-template-columns: 1fr; }
+  .priority-grid { flex-direction: column; }
+  .submit-card { flex-direction: column; }
+  .submit-btn { width: 100%; }
+  .success-card { padding: 40px 24px; }
+  .next-steps { flex-direction: column; }
+  .step-card { width: 100%; }
+  .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span>+267 3957755</span>
+    <span class="topbar-sep">|</span>
+    <span>info@bocra.org.bw</span>
+  </div>
+  <div class="topbar-right">
+    <a href="index.html">Setswana</a>
+    <span class="topbar-sep">|</span>
+    <a href="index.html">Site Map</a>
+    <span class="topbar-sep">|</span>
+    <a href="index.html">Accessibility</a>
+  </div>
+</div>
+
+<header class="header" id="header">
+  <div class="logo">
+    <img src="assets/images/bocra_logo.png" alt="BOCRA">
+    <div class="logo-divider"></div>
+    <div class="logo-text-container">
+      <div class="logo-text">BOCRA</div>
+      <div class="logo-sub">Botswana Communications Regulatory Authority</div>
+    </div>
+  </div>
+  
+  <div class="search-bar">
+    <input type="text" placeholder="Search regulations, services...">
+    <button class="search-btn">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+  </div>
+</header>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-link">Home</a>
+  <a href="index.html" class="nav-link">About BOCRA</a>
+  <a href="simple-register.html" class="nav-link">Apply for License</a>
+  <a href="complaints.html" class="nav-link">Complaints</a>
+  <a href="index.html" class="nav-link">Regulations</a>
+  <a href="cyber-compliance.html" class="nav-link active">Cybersecurity</a>
+  <a href="index.html" class="nav-link">Domain Registry</a>
+  <a href="index.html" class="nav-link">Data & Insights</a>
+  <a href="index.html" class="nav-link">Contact</a>
+</nav>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> › Cybersecurity › Compliance & Risk Assessment
+</div>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-left">
+      <div class="service-tag">Regulatory Support Service</div>
+      <h1>Cybersecurity Compliance & Risk Assessment</h1>
+      <p class="hero-sub">Request regulatory cybersecurity support, compliance guidance, or risk assessment services from BOCRA. Our specialist team will review your request and respond within 3 business days.</p>
+      <div class="hero-stats">
+        <div class="stat-pill">
+          <span class="stat-value">3 Days</span>
+          <span class="stat-label">Average response time</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value">100%</span>
+          <span class="stat-label">Secure & confidential</span>
+        </div>
+        <div class="stat-pill">
+          <span class="stat-value">Free</span>
+          <span class="stat-label">No fee for this service</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-decoration">
+      <svg class="shield-outer" viewBox="0 0 200 240" fill="white">
+        <path d="M100 10 L180 50 L180 120 Q180 180 100 230 Q20 180 20 120 L20 50 Z"/>
+      </svg>
+      <svg class="shield-inner" viewBox="0 0 160 200">
+        <path d="M80 10 L140 40 L140 100 Q140 150 80 190 Q20 150 20 100 L20 40 Z"/>
+      </svg>
+      <svg class="shield-lock" viewBox="0 0 24 24">
+        <rect x="5" y="11" width="14" height="10" rx="2"/>
+        <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      </svg>
+      <div class="ring ring-1"></div>
+      <div class="ring ring-2"></div>
+      <div class="ring ring-3"></div>
+    </div>
+  </div>
+</section><main class="container">
+  <div id="formSections">
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">Section 01</div>
+        <h2 class="section-title">Your Details</h2>
+        <p class="section-desc">Provide your personal and organisational information. Fields marked with an asterisk are required.</p>
+      </div>
+      
+      <div class="form-grid">
+        <div class="form-group">
+          <label class="form-label">Full Name <span class="required">*</span></label>
+          <input type="text" id="fullName" class="form-input" placeholder="e.g. Naledi Dube">
+          <div class="error-message" id="fullNameError">Full name is required</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Email Address <span class="required">*</span></label>
+          <input type="email" id="email" class="form-input" placeholder="your@email.co.bw">
+          <div class="error-message" id="emailError">Valid email address is required</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Phone Number <span class="required">*</span></label>
+          <input type="tel" id="phone" class="form-input" placeholder="+267 7X XXX XXX">
+          <div class="error-message" id="phoneError">Phone number is required</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Organisation Name</label>
+          <input type="text" id="organisation" class="form-input" placeholder="e.g. Kalahari Telecom Ltd">
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Account Type <span class="required">*</span></label>
+          <select id="accountType" class="form-select">
+            <option value="">— Select account type —</option>
+            <option value="individual">Individual</option>
+            <option value="company">Company</option>
+            <option value="government">Government Entity</option>
+            <option value="nonprofit">Non-Profit Organisation</option>
+            <option value="academic">Academic Institution</option>
+          </select>
+          <div class="error-message" id="accountTypeError">Please select an account type</div>
+        </div>
+        
+        <div class="form-group">
+          <label class="form-label">Industry Sector <span class="required">*</span></label>
+          <select id="industrySector" class="form-select">
+            <option value="">— Select industry sector —</option>
+            <option value="telecommunications">Telecommunications</option>
+            <option value="broadcasting">Broadcasting & Media</option>
+            <option value="financial">Financial Services</option>
+            <option value="government">Government & Public Sector</option>
+            <option value="healthcare">Healthcare</option>
+            <option value="education">Education</option>
+            <option value="mining">Mining & Resources</option>
+            <option value="retail">Retail & E-Commerce</option>
+            <option value="transport">Transport & Logistics</option>
+            <option value="other">Other</option>
+          </select>
+          <div class="error-message" id="industrySectorError">Please select an industry sector</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">Section 02</div>
+        <h2 class="section-title">Select Services</h2>
+        <p class="section-desc">Choose one or more cybersecurity services you are requesting from BOCRA. You may select multiple options.</p>
+      </div>
+      
+      <div class="service-grid">
+        <div class="service-card" onclick="toggleService(this, 'risk_assessment')">
+          <div class="service-checkbox">
+            <svg class="service-checkmark" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="service-icon-box">
+            <svg class="service-icon" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <path d="m9 12 2 2 4-4"/>
+            </svg>
+          </div>
+          <h3 class="service-card-title">Cybersecurity Risk Assessment</h3>
+          <p class="service-card-desc">A comprehensive evaluation of your organisation's security posture, vulnerabilities, and exposure to cyber threats across critical systems and infrastructure.</p>
+        </div>
+        
+        <div class="service-card" onclick="toggleService(this, 'compliance_review')">
+          <div class="service-checkbox">
+            <svg class="service-checkmark" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="service-icon-box">
+            <svg class="service-icon" viewBox="0 0 24 24">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+          </div>
+          <h3 class="service-card-title">Compliance Review</h3>
+          <p class="service-card-desc">Assessment of your compliance with Botswana's Data Protection Act 2024, the Communications Regulatory Authority Act, and applicable international cyber frameworks.</p>
+        </div>
+        
+        <div class="service-card" onclick="toggleService(this, 'awareness_training')">
+          <div class="service-checkbox">
+            <svg class="service-checkmark" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="service-icon-box">
+            <svg class="service-icon" viewBox="0 0 24 24">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+          </div>
+          <h3 class="service-card-title">Awareness Training Request</h3>
+          <p class="service-card-desc">Structured cybersecurity awareness and capacity-building training for your organisation's staff, IT teams, and leadership personnel.</p>
+        </div>
+        
+        <div class="service-card" onclick="toggleService(this, 'security_consultation')">
+          <div class="service-checkbox">
+            <svg class="service-checkmark" viewBox="0 0 24 24">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+          </div>
+          <div class="service-icon-box">
+            <svg class="service-icon" viewBox="0 0 24 24">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+            </svg>
+          </div>
+          <h3 class="service-card-title">Security Consultation</h3>
+          <p class="service-card-desc">A direct advisory session with a BOCRA cybersecurity specialist to address specific concerns, incidents, or security planning needs.</p>
+        </div>
+      </div>
+      
+      <div class="error-message" id="servicesError">Please select at least one service to continue.</div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">Section 03</div>
+        <h2 class="section-title">Describe Your Request</h2>
+        <p class="section-desc">Provide any context, details, or background relevant to your cybersecurity request.</p>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">Additional Information</label>
+        <textarea id="additionalInfo" class="form-textarea" maxlength="1200" placeholder="Briefly describe your cybersecurity concern, compliance requirement, or the support you are requesting. Include relevant details such as recent incidents, systems involved, regulatory obligations, or any specific guidance needed."></textarea>
+        <div class="char-counter" id="charCounter">0 / 1200 characters</div>
+      </div>
+      
+      <div class="form-group" style="margin-top: 24px;">
+        <label class="form-label">Request Priority Level</label>
+        <div class="priority-grid">
+          <div class="priority-card selected" onclick="selectPriority('standard', this)">
+            <input type="radio" name="priority" value="standard" checked>
+            <span class="priority-label">Standard</span>
+            <span class="priority-sub">Response within 3 days</span>
+          </div>
+          
+          <div class="priority-card" onclick="selectPriority('urgent', this)">
+            <input type="radio" name="priority" value="urgent">
+            <span class="priority-label">Urgent</span>
+            <span class="priority-sub">Active security incident</span>
+          </div>
+          
+          <div class="priority-card" onclick="selectPriority('critical', this)">
+            <input type="radio" name="priority" value="critical">
+            <span class="priority-label">Critical</span>
+            <span class="priority-sub">Imminent threat or breach</span>
+          </div>
+        </div>
+        
+        <div class="info-box" id="urgentInfo">
+          For active security incidents, BOCRA's Cyber Incident Response team will prioritise your case. You may also report directly to our 24-hour incident line: +267 3957755.
+        </div>
+        
+        <div class="info-box" id="criticalInfo">
+          For imminent threats or active breaches, do not wait for this form — call BOCRA's emergency cyber hotline immediately: +267 3957755 (available 24/7).
+        </div>
+      </div>
+    </div>
+
+    <div class="section-card">
+      <div class="section-header">
+        <div class="section-num">Section 04</div>
+        <h2 class="section-title">Confirm and Declare</h2>
+        <p class="section-desc">Please read and confirm the following declarations before submitting your request.</p>
+      </div>
+      
+      <div class="declaration-row" onclick="toggleDeclaration(this, 'declaration1')">
+        <input type="checkbox" id="declaration1" class="declaration-checkbox">
+        <label for="declaration1" class="declaration-label">I confirm that the information provided in this form is accurate and complete to the best of my knowledge.</label>
+      </div>
+      
+      <div class="declaration-row" onclick="toggleDeclaration(this, 'declaration2')">
+        <input type="checkbox" id="declaration2" class="declaration-checkbox">
+        <label for="declaration2" class="declaration-label">I consent to BOCRA processing my personal data for the purpose of providing the requested cybersecurity service, in accordance with the Botswana Data Protection Act 2024.</label>
+      </div>
+      
+      <div class="declaration-row" onclick="toggleDeclaration(this, 'declaration3')">
+        <input type="checkbox" id="declaration3" class="declaration-checkbox">
+        <label for="declaration3" class="declaration-label">I would like to receive updates and advisories from BOCRA's Cybersecurity team on regulatory changes and threat intelligence.</label>
+      </div>
+      
+      <div class="error-message" id="declarationError">Please confirm the required declarations above to continue.</div>
+    </div>
+
+    <div class="data-notice">
+      <svg class="notice-icon" viewBox="0 0 24 24">
+        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+      </svg>
+      <p class="notice-text">Data Protection Notice: Information submitted through this form is processed by BOCRA under the Botswana Data Protection Act 2024 solely for the purpose of delivering the requested regulatory service. Your data will not be disclosed to third parties without your explicit consent.</p>
+    </div>
+
+    <div class="submit-card">
+      <div class="submit-left">
+        <h4>Your request is protected and confidential.</h4>
+        <p>BOCRA will acknowledge within 1 business day and respond within 3 business days.</p>
+        <div class="submit-meta">
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <span class="meta-text">Encrypted submission</span>
+          </div>
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <span class="meta-text">Confidential review</span>
+          </div>
+          <div class="meta-item">
+            <svg class="meta-icon" viewBox="0 0 24 24">
+              <line x1="12" y1="1" x2="12" y2="23"/>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+            </svg>
+            <span class="meta-text">No charge applies</span>
+          </div>
+        </div>
+      </div>
+      
+      <button type="button" class="submit-btn" id="submitBtn" onclick="handleSubmit()">
+        <span id="submitText">Submit Compliance Request</span>
+        <div class="submit-spinner" id="submitSpinner"></div>
+        <svg class="submit-arrow" id="submitArrow" viewBox="0 0 24 24">
+          <line x1="5" y1="12" x2="19" y2="12"/>
+          <polyline points="12 5 19 12 12 19"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div id="successSection">
+    <div class="success-card">
+      <div class="success-check-ring">
+        <svg class="success-check" viewBox="0 0 24 24">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </div>
+      
+      <div class="ref-number" id="refNumber">BOCRA/CYB/2026/0000</div>
+      
+      <h2 class="success-title">Request Submitted Successfully</h2>
+      
+      <p class="success-message">Your cybersecurity compliance request has been submitted to BOCRA. A member of our specialist team will review your case and contact you with the next steps within 3 business days.</p>
+      
+      <div class="next-steps">
+        <div class="step-card">
+          <div class="step-num">Step 01</div>
+          <p class="step-text">BOCRA acknowledges receipt and assigns a dedicated case officer</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-num">Step 02</div>
+          <p class="step-text">Initial review and service scoping within 3 business days of submission</p>
+        </div>
+        
+        <div class="step-card">
+          <div class="step-num">Step 03</div>
+          <p class="step-text">Scheduled engagement, site visit, or remote session as appropriate</p>
+        </div>
+      </div>
+      
+      <button class="reset-btn" onclick="resetForm()">Submit Another Request</button>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-grid">
+    <div>
+      <img src="assets/images/bocra_logo.png" alt="BOCRA" class="footer-logo">
+      <p class="footer-about">Botswana Communications Regulatory Authority — regulating telecommunications, internet, broadcasting and postal services for the benefit of all Batswana.</p>
+    </div>
+    
+    <div>
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Licensing Portal</a></li>
+        <li><a href="index.html">Consumer Complaints</a></li>
+        <li><a href="index.html">Domain Registry</a></li>
+        <li><a href="index.html">Cyber Incidents</a></li>
+        <li><a href="index.html">Spectrum Map</a></li>
+        <li><a href="index.html">Device Approval</a></li>
+      </ul>
+    </div>
+    
+    <div>
+      <h4>About</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">About BOCRA</a></li>
+        <li><a href="index.html">Board & Leadership</a></li>
+        <li><a href="index.html">Strategic Plan</a></li>
+        <li><a href="index.html">Annual Reports</a></li>
+        <li><a href="index.html">Careers</a></li>
+        <li><a href="index.html">Tenders</a></li>
+      </ul>
+    </div>
+    
+    <div>
+      <h4>Resources</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">FAQ</a></li>
+        <li><a href="index.html">Regulations Library</a></li>
+        <li><a href="index.html">Open Data</a></li>
+        <li><a href="index.html">Developer API</a></li>
+        <li><a href="index.html">Privacy Policy</a></li>
+        <li><a href="index.html">Accessibility</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="footer-bottom">
+    © 2026 Botswana Communications Regulatory Authority. All rights reserved.
+  </div>
+</footer>
+
+<script>
+const API_BASE = 'backend/api';
+let selectedServices = [];
+let selectedPriority = 'standard';
+
+window.addEventListener('scroll', () => {
+  const header = document.getElementById('header');
+  if (window.scrollY > 10) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
+
+function toggleService(card, serviceId) {
+  card.classList.toggle('selected');
+  
+  if (selectedServices.includes(serviceId)) {
+    selectedServices = selectedServices.filter(s => s !== serviceId);
+  } else {
+    selectedServices.push(serviceId);
+  }
+  
+  if (selectedServices.length > 0) {
+    document.getElementById('servicesError').classList.remove('show');
+  }
+}
+
+function selectPriority(level, card) {
+  document.querySelectorAll('.priority-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedPriority = level;
+  
+  document.getElementById('urgentInfo').classList.remove('show');
+  document.getElementById('criticalInfo').classList.remove('show');
+  
+  if (level === 'urgent') {
+    document.getElementById('urgentInfo').classList.add('show');
+  } else if (level === 'critical') {
+    document.getElementById('criticalInfo').classList.add('show');
+  }
+}
+
+function toggleDeclaration(row, checkboxId) {
+  const checkbox = document.getElementById(checkboxId);
+  checkbox.checked = !checkbox.checked;
+  
+  if (checkbox.checked) {
+    row.classList.add('checked');
+  } else {
+    row.classList.remove('checked');
+  }
+  
+  if (document.getElementById('declaration1').checked && document.getElementById('declaration2').checked) {
+    document.getElementById('declarationError').classList.remove('show');
+  }
+}
+
+document.getElementById('additionalInfo').addEventListener('input', (e) => {
+  const length = e.target.value.length;
+  document.getElementById('charCounter').textContent = `${length} / 1200 characters`;
+  
+  if (length > 1200) {
+    e.target.value = e.target.value.substring(0, 1200);
+  }
+});
+
+['fullName', 'email', 'phone', 'accountType', 'industrySector'].forEach(id => {
+  const element = document.getElementById(id);
+  element.addEventListener('input', () => {
+    element.classList.remove('error');
+    document.getElementById(id + 'Error').classList.remove('show');
+  });
+  element.addEventListener('change', () => {
+    element.classList.remove('error');
+    document.getElementById(id + 'Error').classList.remove('show');
+  });
+});
+
+function validateForm() {
+  let isValid = true;
+  
+  const fullName = document.getElementById('fullName');
+  if (!fullName.value.trim()) {
+    fullName.classList.add('error');
+    document.getElementById('fullNameError').classList.add('show');
+    isValid = false;
+  }
+  
+  const email = document.getElementById('email');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!email.value.trim() || !emailRegex.test(email.value)) {
+    email.classList.add('error');
+    document.getElementById('emailError').classList.add('show');
+    isValid = false;
+  }
+  
+  const phone = document.getElementById('phone');
+  if (!phone.value.trim() || phone.value.trim().length < 7) {
+    phone.classList.add('error');
+    document.getElementById('phoneError').classList.add('show');
+    isValid = false;
+  }
+  
+  const accountType = document.getElementById('accountType');
+  if (!accountType.value) {
+    accountType.classList.add('error');
+    document.getElementById('accountTypeError').classList.add('show');
+    isValid = false;
+  }
+  
+  const industrySector = document.getElementById('industrySector');
+  if (!industrySector.value) {
+    industrySector.classList.add('error');
+    document.getElementById('industrySectorError').classList.add('show');
+    isValid = false;
+  }
+  
+  if (selectedServices.length === 0) {
+    document.getElementById('servicesError').classList.add('show');
+    isValid = false;
+  }
+  
+  const declaration1 = document.getElementById('declaration1');
+  const declaration2 = document.getElementById('declaration2');
+  if (!declaration1.checked || !declaration2.checked) {
+    document.getElementById('declarationError').classList.add('show');
+    isValid = false;
+  }
+  
+  if (!isValid) {
+    const firstError = document.querySelector('.error, .error-message.show');
+    if (firstError) {
+      firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }
+  
+  return isValid;
+}
+
+async function handleSubmit() {
+  if (!validateForm()) {
+    return;
+  }
+  
+  const submitBtn = document.getElementById('submitBtn');
+  const submitText = document.getElementById('submitText');
+  const submitSpinner = document.getElementById('submitSpinner');
+  const submitArrow = document.getElementById('submitArrow');
+  
+  submitBtn.disabled = true;
+  submitText.style.display = 'none';
+  submitArrow.style.display = 'none';
+  submitSpinner.style.display = 'block';
+  
+  const formData = {
+    contact_person: document.getElementById('fullName').value.trim(),
+    contact_email: document.getElementById('email').value.trim(),
+    contact_phone: document.getElementById('phone').value.trim(),
+    organization_name: document.getElementById('organisation').value.trim() || 'N/A',
+    organization_size: document.getElementById('accountType').value,
+    sector: document.getElementById('industrySector').value,
+    service_type: selectedServices.join(', '),
+    description: document.getElementById('additionalInfo').value.trim() || 'Cybersecurity service request',
+    urgency: selectedPriority,
+    specific_requirements: 'Services: ' + selectedServices.join(', ')
+  };
+  
+  try {
+    const response = await fetch('api/submit-cybersecurity-request.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    });
+    
+    const result = await response.json();
+    
+    if (result.success) {
+      setTimeout(() => {
+        document.getElementById('formSections').style.display = 'none';
+        document.getElementById('successSection').classList.add('show');
+        document.getElementById('refNumber').textContent = result.request_number;
+        document.getElementById('successSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 500);
+    } else {
+      alert('Error: ' + result.message);
+      submitBtn.disabled = false;
+      submitText.style.display = 'inline';
+      submitArrow.style.display = 'block';
+      submitSpinner.style.display = 'none';
+    }
+  } catch (error) {
+    alert('An error occurred while submitting your request. Please try again.');
+    submitBtn.disabled = false;
+    submitText.style.display = 'inline';
+    submitArrow.style.display = 'block';
+    submitSpinner.style.display = 'none';
+  }
+}
+
+function resetForm() {
+  document.getElementById('fullName').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('phone').value = '';
+  document.getElementById('organisation').value = '';
+  document.getElementById('accountType').value = '';
+  document.getElementById('industrySector').value = '';
+  document.getElementById('additionalInfo').value = '';
+  document.getElementById('charCounter').textContent = '0 / 1200 characters';
+  
+  document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+  selectedServices = [];
+  
+  document.querySelectorAll('.priority-card').forEach(card => card.classList.remove('selected'));
+  document.querySelector('.priority-card').classList.add('selected');
+  selectedPriority = 'standard';
+  
+  document.getElementById('urgentInfo').classList.remove('show');
+  document.getElementById('criticalInfo').classList.remove('show');
+  
+  document.getElementById('declaration1').checked = false;
+  document.getElementById('declaration2').checked = false;
+  document.getElementById('declaration3').checked = false;
+  document.querySelectorAll('.declaration-row').forEach(row => row.classList.remove('checked'));
+  
+  document.querySelectorAll('.error').forEach(el => el.classList.remove('error'));
+  document.querySelectorAll('.error-message').forEach(el => el.classList.remove('show'));
+  
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.disabled = false;
+  document.getElementById('submitText').style.display = 'inline';
+  document.getElementById('submitArrow').style.display = 'block';
+  document.getElementById('submitSpinner').style.display = 'none';
+  
+  document.getElementById('successSection').classList.remove('show');
+  document.getElementById('formSections').style.display = 'block';
+  
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
+
+<!--
+  TO LINK FROM INDEX.HTML:
+
+  1. In the "Cybersecurity" nav link:
+     <a href="cyber-compliance.html" class="nav-link has-dropdown">Cybersecurity</a>
+
+  2. In the quick links bar "Report Cyber Incident":
+     onclick="window.location.href='cyber-compliance.html'"
+
+  3. In the "What BOCRA Offers" services section, the Cybersecurity service card "Report Incident" link:
+     <a href="cyber-compliance.html" class="service-link">Report Incident</a>
+-->

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documents - BOCRA</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/data-insights.css">
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="nav-brand">
+                <a href="index.html" class="logo-link">
+                    <img src="assets/images/bocra-logo.png" alt="BOCRA Logo" class="logo">
+                    <div class="brand-text">
+                        <span class="brand-name">BOCRA</span>
+                        <span class="brand-tagline">Botswana Communications Regulatory Authority</span>
+                    </div>
+                </a>
+            </div>
+            
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <i class="fas fa-bars"></i>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="data-insights.html" class="active">Documents</a></li>
+                <li><a href="news.html">News & Media</a></li>
+                <li><a href="contact.html">Contact</a></li>
+                <li><a href="login.php" class="btn-login">Portal Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <i class="fas fa-chart-line"></i>
+                <span>Official Resource Repository</span>
+            </div>
+            <h1 class="hero-title">
+                <span class="highlight">Documents</span>
+            </h1>
+            <p class="hero-description">
+                Access comprehensive regulatory documents, industry reports, and data-driven insights governing Botswana's communications sector.
+            </p>
+            <div class="hero-actions">
+                <button class="btn btn-primary" id="openSearchBtn">
+                    <i class="fas fa-search"></i>
+                    Quick Search
+                </button>
+                <a href="#documents" class="btn btn-outline">
+                    <i class="fas fa-arrow-down"></i>
+                    Browse Resources
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content" id="documents">
+        <div class="container">
+            <!-- Featured Documents -->
+            <section class="featured-section" id="featuredSection">
+                <div class="section-header">
+                    <div>
+                        <h2 class="section-title">
+                            <i class="fas fa-star"></i>
+                            Related Resources
+                        </h2>
+                        <p class="section-subtitle">Discover interconnected regulatory documents</p>
+                    </div>
+                </div>
+                <div class="featured-grid" id="featuredGrid"></div>
+            </section>
+
+            <!-- Filters & Controls -->
+            <div class="filters-card">
+                <div class="filters-header">
+                    <div class="category-pills" id="categoryPills"></div>
+                    <div class="view-controls">
+                        <div class="view-mode-toggle">
+                            <button class="view-btn active" data-view="list" id="listViewBtn">
+                                <i class="fas fa-list"></i>
+                            </button>
+                            <button class="view-btn" data-view="grid" id="gridViewBtn">
+                                <i class="fas fa-th"></i>
+                            </button>
+                        </div>
+                        <div class="sort-control">
+                            <i class="fas fa-sort"></i>
+                            <select id="sortSelect" class="sort-select">
+                                <option value="newest">Newest First</option>
+                                <option value="oldest">Oldest First</option>
+                                <option value="alphabetical">A - Z</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Header -->
+            <div class="results-header">
+                <div>
+                    <div class="breadcrumb">
+                        <span>Resources</span>
+                        <span id="breadcrumbCategory"></span>
+                    </div>
+                    <h2 class="results-title">
+                        <span id="resultsCategory">All Resources</span>
+                        <span class="results-count" id="resultsCount">0</span>
+                    </h2>
+                </div>
+                <button class="btn-clear" id="clearFiltersBtn" style="display: none;">
+                    <i class="fas fa-times"></i>
+                    Clear Filters
+                </button>
+            </div>
+
+            <!-- Documents Grid -->
+            <section class="documents-section">
+                <div class="documents-grid list-view" id="documentsGrid"></div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-top"></div>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-brand">
+                        <img src="assets/images/bocra-logo.png" alt="BOCRA" class="footer-logo">
+                        <h3>BOCRA</h3>
+                        <p class="footer-tagline">Botswana Communications Regulatory Authority</p>
+                    </div>
+                    <p class="footer-description">
+                        Regulating the communications sector for a digitally inclusive and connected Botswana.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="services.html">Our Services</a></li>
+                        <li><a href="news.html">Latest News</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Resources</h4>
+                    <ul class="footer-links">
+                        <li><a href="data-insights.html">Acts & Regulations</a></li>
+                        <li><a href="data-insights.html">Annual Reports</a></li>
+                        <li><a href="data-insights.html">Guidelines</a></li>
+                        <li><a href="data-insights.html">Industry Reports</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li>
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>Plot 50671, Independence Avenue<br>Gaborone, Botswana</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-phone"></i>
+                            <span>+267 395 7755</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-envelope"></i>
+                            <span>info@bocra.org.bw</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Botswana Communications Regulatory Authority. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Search Modal -->
+    <div class="modal" id="searchModal">
+        <div class="modal-overlay" id="searchModalOverlay"></div>
+        <div class="modal-content search-modal">
+            <div class="search-header">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search documents, acts, policies..." class="search-input">
+                <button class="modal-close" id="closeSearchBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="search-suggestions">
+                    <p class="suggestions-title">Popular Categories</p>
+                    <div class="suggestions-grid" id="suggestionsGrid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Document Detail Modal -->
+    <div class="modal" id="documentModal">
+        <div class="modal-overlay" id="documentModalOverlay"></div>
+        <div class="modal-content document-modal" id="documentModalContent"></div>
+    </div>
+
+    <script type="module" src="assets/js/data-insights.js"></script>
+</body>
+</html>

@@ -1,0 +1,562 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Complaints - BOCRA | Botswana Communications Regulatory Authority</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="complaints-styles.css">
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-inner">
+      <span><i class="fas fa-phone"></i> +267 395 7755</span>
+      <span><i class="fas fa-envelope"></i> info@bocra.org.bw</span>
+      <div class="topbar-links">
+        <a href="index.html">Home</a>
+        <a href="simple-register.html">Licensing Portal</a>
+      </div>
+    </div>
+  </div>
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="logo">
+        <img src="assets/images/bocra-logo.png" alt="BOCRA">
+        <div class="logo-divider"></div>
+        <div class="logo-text-container">
+          <div class="logo-text">BOCRA</div>
+          <div class="logo-sub">Botswana Communications Regulatory Authority</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="index.html#about">About</a>
+        <a href="complaints.html" class="active">Complaints</a>
+        <a href="simple-register.html">Licensing</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">CONSUMER PROTECTION</div>
+      <h1 class="hero-title">Complaints & Consumer Rights</h1>
+      <p class="hero-sub">BOCRA safeguards your rights as a communications consumer in Botswana. We investigate, mediate and resolve disputes between consumers and service providers.</p>
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="showSection('file')">
+          <i class="fas fa-paper-plane"></i> File a Complaint
+        </button>
+        <button class="btn-outline" onclick="showSection('consumer')">
+          Know Your Rights <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Steps Process</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">48h</span>
+          <span class="stat-label">Initial Response</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat">
+          <span class="stat-num">100%</span>
+          <span class="stat-label">Free Service</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="tab-nav">
+    <div class="tab-nav-inner">
+      <button class="tab-btn active" data-section="consumer" onclick="showSection('consumer')">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Consumer Education</span>
+      </button>
+      <button class="tab-btn" data-section="registering" onclick="showSection('registering')">
+        <i class="fas fa-list-check"></i>
+        <span>Registering Complaints</span>
+      </button>
+      <button class="tab-btn" data-section="file" onclick="showSection('file')">
+        <i class="fas fa-file-pen"></i>
+        <span>File a Complaint</span>
+      </button>
+    </div>
+  </div>
+
+  <main>
+  <section class="content-section active" id="consumer">
+    <div class="section-intro">
+      <div class="section-intro-inner">
+        <div class="section-label">BOCRA — Consumer Protection</div>
+        <h2 class="section-title">Consumer Education And Advice</h2>
+        <p class="section-desc">The Botswana Communications Regulatory Authority is empowered by the Communications Regulatory Authority Act 2012 to promote the interests of consumers, purchasers and other users of telecommunication services in respect of price, quality and variety of such services and equipment supplied for provision of the same.</p>
+      </div>
+    </div>
+
+    <div class="rights-section">
+      <div class="rights-header">
+        <div class="section-label-sm">YOUR RIGHTS</div>
+        <h3>Consumer Rights Under the CRA Act 2012</h3>
+        <p>BOCRA has listed some rights which every consumer of telecommunications services is entitled to, irrespective of his or her status in life.</p>
+      </div>
+
+      <div class="rights-grid">
+        <div class="right-card" data-color="blue">
+          <div class="right-card-icon"><i class="fas fa-info-circle"></i></div>
+          <div class="right-card-num">01</div>
+          <h4>The Right To Be Informed</h4>
+          <p>This right impels service providers to factually and comprehensively inform consumers about products or services devoid of falsehood, deceit, misleading information and advertisement.</p>
+          <div class="right-card-footer">
+            <span class="right-tag">Transparency</span>
+            <span class="right-tag">Accuracy</span>
+          </div>
+        </div>
+
+        <div class="right-card" data-color="green">
+          <div class="right-card-icon"><i class="fas fa-scale-balanced"></i></div>
+          <div class="right-card-num">02</div>
+          <h4>The Right To Choice</h4>
+          <p>This has to do with assurance of access to a variety of products and services at competitive prices so that options of which product to buy and which not to, will exist for the different segments of society.</p>
+          <div class="right-card-footer">
+            <span class="right-tag">Competition</span>
+            <span class="right-tag">Variety</span>
+          </div>
+        </div>
+
+        <div class="right-card" data-color="pink">
+          <div class="right-card-icon"><i class="fas fa-microphone"></i></div>
+          <div class="right-card-num">03</div>
+          <h4>The Right To Be Heard</h4>
+          <p>This provides ample opportunities and channels of expressing grievances, opinions, lodging complaints, suggesting ways and means of improving service delivery to customers.</p>
+          <div class="right-card-footer">
+            <span class="right-tag">Voice</span>
+            <span class="right-tag">Grievances</span>
+          </div>
+        </div>
+
+        <div class="right-card" data-color="yellow">
+          <div class="right-card-icon"><i class="fas fa-shield-halved"></i></div>
+          <div class="right-card-num">04</div>
+          <h4>The Right To Safety</h4>
+          <p>This is aimed at protecting consumers against marketing of unwholesome, sub-standard, defective goods and services. Consumers are entitled to products and services that meet quality and safety standards.</p>
+          <div class="right-card-footer">
+            <span class="right-tag">Protection</span>
+            <span class="right-tag">Quality</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="rights-action-box">
+        <div class="rights-action-text">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>Should you feel that any of these rights have not been respected, you need to take it up with the service provider and ultimately with BOCRA.</p>
+        </div>
+        <button class="btn-primary" onclick="showSection('registering')">
+          Learn How to Complain <i class="fas fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="registering">
+    <div class="section-intro">
+      <div class="section-intro-inner">
+        <div class="section-label">BOCRA — Complaint Handling</div>
+        <h2 class="section-title">Registering Complaints</h2>
+        <p class="section-desc">BOCRA continues to monitor the quality of service provided by licensees. BOCRA will investigate a consumer complaint against a service provider if there is sufficient evidence to establish a prima facie case on possible breaches of any provisions under the Communications Regulatory Authority Act 2012.</p>
+      </div>
+    </div>
+
+    <div class="process-section">
+      <div class="process-header">
+        <div class="section-label-sm">5-STEP PROCESS</div>
+        <h3>The Complaint Handling Process</h3>
+        <p>Customers are advised to obtain and familiarise themselves with the complaint handling processes of the respective service providers.</p>
+      </div>
+
+      <div class="steps-timeline">
+        <div class="step-item">
+          <div class="step-indicator">
+            <div class="step-num">01</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><i class="fas fa-building"></i></div>
+            <h4>Address The Complaint To The Service Provider</h4>
+            <p>Consumers will first address their complaints to the appropriate service provider. Consumers should first explore and exhaust all possible channels of remedy available within the operator(s) before any reference to BOCRA.</p>
+            <div class="step-tip">
+              <i class="fas fa-lightbulb"></i> Keep all records of your interactions with the service provider.
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-indicator">
+            <div class="step-num">02</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><i class="fas fa-clock"></i></div>
+            <h4>Ask The Service Provider For Resolution Timeline</h4>
+            <p>Consumers should ask the operator(s) to state the period within which complaints will be resolved. Any deviation should be accompanied by a written explanation to the complainant.</p>
+            <div class="step-tip">
+              <i class="fas fa-lightbulb"></i> Get the timeline in writing wherever possible.
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-indicator">
+            <div class="step-num">03</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><i class="fas fa-folder-open"></i></div>
+            <h4>Keep Copies Of All Correspondence</h4>
+            <p>It is important that complainants keep records of all correspondence between themselves and the operators. Where possible, complainants should request service providers to acknowledge receipt by stamping their copies of the complaint letter.</p>
+            <div class="step-tip">
+              <i class="fas fa-lightbulb"></i> Photograph or scan all documents for safekeeping.
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-indicator">
+            <div class="step-num">04</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><i class="fas fa-arrow-up-right-dots"></i></div>
+            <h4>Escalate Within The Service Provider</h4>
+            <p>If a complaint is not resolved in the first instance, the consumer should request for the complaint to be escalated to a higher level in line with the Operators Guidelines for Handling Complaints.</p>
+            <div class="step-tip">
+              <i class="fas fa-lightbulb"></i> Ask for a supervisor or complaints department specifically.
+            </div>
+          </div>
+        </div>
+
+        <div class="step-item">
+          <div class="step-indicator">
+            <div class="step-num">05</div>
+          </div>
+          <div class="step-card">
+            <div class="step-icon"><i class="fas fa-landmark"></i></div>
+            <h4>Escalate The Complaint To BOCRA</h4>
+            <p>Where the operator has not satisfactorily resolved a complaint, the consumer should refer that complaint to BOCRA.</p>
+            <p style="margin-top:1rem;"><strong>Contact BOCRA:</strong></p>
+            <p style="font-size:0.9rem;margin-top:0.5rem;">Plot No. 206/207, Independence Avenue, Private Bag 00495, Gaborone</p>
+            <p style="font-size:0.9rem;"><i class="fas fa-phone"></i> +267 395 7755 | <i class="fas fa-envelope"></i> info@bocra.org.bw</p>
+            <button class="btn-primary" onclick="showSection('file')" style="margin-top:1rem;">
+              <i class="fas fa-paper-plane"></i> File Your Complaint Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section" id="file">
+    <div class="section-intro">
+      <div class="section-intro-inner">
+        <div class="section-label">BOCRA — Online Submission</div>
+        <h2 class="section-title">File A Complaint</h2>
+        <p class="section-desc">Use the form below to submit your complaint to BOCRA. Please ensure you have already attempted to resolve the matter with your service provider before submitting here.</p>
+      </div>
+    </div>
+
+    <div class="form-layout">
+      <aside class="form-sidebar">
+        <div class="sidebar-card">
+          <div class="sidebar-icon"><i class="fas fa-circle-info"></i></div>
+          <h4>Before You Submit</h4>
+          <ul>
+            <li>Contact your service provider first</li>
+            <li>Keep records of all correspondence</li>
+            <li>Note any reference numbers given</li>
+            <li>Gather all supporting documents</li>
+          </ul>
+        </div>
+        <div class="sidebar-card green-card">
+          <div class="sidebar-icon"><i class="fas fa-headset"></i></div>
+          <h4>Need Help?</h4>
+          <p>Call us directly for guided assistance filing your complaint.</p>
+          <p style="margin-top:0.75rem;font-weight:700;font-size:1rem;">+267 395 7755</p>
+        </div>
+      </aside>
+
+      <div class="form-container">
+        <div class="form-header">
+          <i class="fas fa-file-signature"></i>
+          <div>
+            <h3>Complaint Submission Form</h3>
+            <p>All information provided is kept confidential and used solely for processing your complaint.</p>
+          </div>
+        </div>
+
+        <div class="form-progress">
+          <div class="progress-step active" data-step="1">
+            <div class="ps-icon"><i class="fas fa-user"></i></div>
+            <span>Personal Info</span>
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" data-step="2">
+            <div class="ps-icon"><i class="fas fa-building"></i></div>
+            <span>Provider Details</span>
+          </div>
+          <div class="progress-line"></div>
+          <div class="progress-step" data-step="3">
+            <div class="ps-icon"><i class="fas fa-file-alt"></i></div>
+            <span>Complaint Details</span>
+          </div>
+        </div>
+
+        <form id="complaintForm" novalidate>
+          <div class="form-step active" id="step1">
+            <h4 class="step-title"><span>Step 1</span> Personal Information</h4>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fullName">Full Name *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-user"></i>
+                  <input type="text" id="fullName" name="fullName" placeholder="e.g. Mpho Setlhare" required />
+                </div>
+                <span class="field-error" id="fullName-err"></span>
+              </div>
+              <div class="form-group">
+                <label for="idNumber">National ID / Passport *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-id-card"></i>
+                  <input type="text" id="idNumber" name="idNumber" placeholder="e.g. 123456789" required />
+                </div>
+                <span class="field-error" id="idNumber-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="email">Email Address *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-envelope"></i>
+                  <input type="email" id="email" name="email" placeholder="yourname@email.com" required />
+                </div>
+                <span class="field-error" id="email-err"></span>
+              </div>
+              <div class="form-group">
+                <label for="telephone">Telephone Number *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-phone"></i>
+                  <input type="tel" id="telephone" name="telephone" placeholder="+267 7X XXX XXX" required />
+                </div>
+                <span class="field-error" id="telephone-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="address">Postal / Physical Address *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <input type="text" id="address" name="address" placeholder="P.O. Box or street address" required />
+                </div>
+                <span class="field-error" id="address-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="company">Company / Organisation (if applicable)</label>
+                <div class="input-wrap">
+                  <i class="fas fa-briefcase"></i>
+                  <input type="text" id="company" name="company" placeholder="Company name" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="complaintType">Type of Complainant *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-users"></i>
+                  <select id="complaintType" name="complaintType" required>
+                    <option value="">— Select —</option>
+                    <option value="individual">Individual Consumer</option>
+                    <option value="business">Business / Organisation</option>
+                    <option value="ngo">NGO / Community Group</option>
+                  </select>
+                </div>
+                <span class="field-error" id="complaintType-err"></span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <span></span>
+              <button type="button" class="btn-next" onclick="nextStep(1)">Next: Provider Details <i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="form-step" id="step2">
+            <h4 class="step-title"><span>Step 2</span> Service Provider Details</h4>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="provider">Service Provider *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-tower-broadcast"></i>
+                  <select id="provider" name="provider" required>
+                    <option value="">— Select Provider —</option>
+                    <option value="botswana_telecom">Botswana Telecommunications Corporation (BTC)</option>
+                    <option value="mascom">Mascom Wireless</option>
+                    <option value="orange">Orange Botswana</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <span class="field-error" id="provider-err"></span>
+              </div>
+              <div class="form-group">
+                <label for="serviceType">Sector / Service Type *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-network-wired"></i>
+                  <select id="serviceType" name="serviceType" required>
+                    <option value="">— Select Sector —</option>
+                    <option value="telecom">Telecommunications</option>
+                    <option value="broadcasting">Broadcasting</option>
+                    <option value="postal">Postal / Courier</option>
+                    <option value="internet">Internet / ICT</option>
+                  </select>
+                </div>
+                <span class="field-error" id="serviceType-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="category">Category of Complaint *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-tags"></i>
+                  <select id="category" name="category" required>
+                    <option value="">— Select Category —</option>
+                    <option value="billing">Billing</option>
+                    <option value="internet_speed">Internet Speed</option>
+                    <option value="quality_of_service">Quality of Service</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+                <span class="field-error" id="category-err"></span>
+              </div>
+              <div class="form-group">
+                <label for="complaintDate">Date Complaint Occurred *</label>
+                <div class="input-wrap">
+                  <i class="fas fa-calendar"></i>
+                  <input type="date" id="complaintDate" name="complaintDate" required />
+                </div>
+                <span class="field-error" id="complaintDate-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label>Have you already contacted the service provider about this complaint? *</label>
+                <div class="radio-group">
+                  <label class="radio-label"><input type="radio" name="contacted" value="yes" required /> <span>Yes</span></label>
+                  <label class="radio-label"><input type="radio" name="contacted" value="no" /> <span>No</span></label>
+                  <label class="radio-label"><input type="radio" name="contacted" value="multiple" /> <span>Yes, multiple times</span></label>
+                </div>
+                <span class="field-error" id="contacted-err"></span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="btn-back" onclick="prevStep(2)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button type="button" class="btn-next" onclick="nextStep(2)">Next: Complaint Details <i class="fas fa-arrow-right"></i></button>
+            </div>
+          </div>
+
+          <div class="form-step" id="step3">
+            <h4 class="step-title"><span>Step 3</span> Complaint Details</h4>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="complaintDesc">Complaint Description *</label>
+                <div class="input-wrap">
+                  <textarea id="complaintDesc" name="complaintDesc" rows="6" placeholder="Please describe your complaint clearly..." required></textarea>
+                </div>
+                <span class="char-count" id="charCount">0 / 1000 characters</span>
+                <span class="field-error" id="complaintDesc-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="relief">Relief / Remedy Sought *</label>
+                <div class="input-wrap">
+                  <textarea id="relief" name="relief" rows="3" placeholder="What outcome are you seeking?" required></textarea>
+                </div>
+                <span class="field-error" id="relief-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label for="fileUpload">Supporting Documents</label>
+                <div class="file-upload-zone">
+                  <i class="fas fa-cloud-arrow-up"></i>
+                  <p>Drag & drop files here, or click to browse</p>
+                  <small>Supported: PDF, JPG, PNG (max 10MB each)</small>
+                  <input type="file" id="fileUpload" name="fileUpload" multiple accept=".pdf,.jpg,.jpeg,.png" />
+                </div>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="consent" name="consent" required />
+                  <span>I confirm that the information provided is true and accurate to the best of my knowledge. *</span>
+                </label>
+                <span class="field-error" id="consent-err"></span>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group full">
+                <label class="checkbox-label">
+                  <input type="checkbox" id="privacy" name="privacy" required />
+                  <span>I consent to BOCRA processing my personal data for the purposes of handling this complaint. *</span>
+                </label>
+                <span class="field-error" id="privacy-err"></span>
+              </div>
+            </div>
+
+            <div class="form-nav">
+              <button type="button" class="btn-back" onclick="prevStep(3)"><i class="fas fa-arrow-left"></i> Back</button>
+              <button type="submit" class="btn-submit" id="submitBtn">
+                <i class="fas fa-paper-plane"></i> Submit Complaint
+              </button>
+            </div>
+          </div>
+        </form>
+
+        <div class="success-panel" id="successPanel">
+          <div class="success-icon"><i class="fas fa-circle-check"></i></div>
+          <h3>Complaint Submitted Successfully!</h3>
+          <p>Your complaint has been received by BOCRA. You will receive a confirmation email with your reference number shortly.</p>
+          <div class="success-ref">
+            Reference: <strong id="refNumber"></strong>
+          </div>
+          <button class="btn-primary" onclick="resetForm()"><i class="fas fa-plus"></i> Submit Another</button>
+        </div>
+      </div>
+    </div>
+  </section>
+  </main>
+
+  <script src="complaints-script.js"></script>
+</body>
+</html>

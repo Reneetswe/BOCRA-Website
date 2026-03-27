@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOCRA Regulatory Intelligence Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --gold-light: #FDF6E3;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --success: #27AE60;
+            --warning: #F39C12;
+            --error: #CC2936;
+            --info: #3498DB;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Forum', serif;
+            font-weight: 400;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: white;
+            border-bottom: 2px solid var(--border);
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .navbar-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .logo {
+            height: 45px;
+        }
+
+        .navbar-title {
+            border-left: 2px solid var(--border);
+            padding-left: 20px;
+        }
+
+        .navbar-title h1 {
+            font-size: 20px;
+            color: var(--teal-dark);
+            margin-bottom: 2px;
+        }
+
+        .navbar-title p {
+            font-size: 12px;
+            color: var(--mid);
+            font-weight: 300;
+        }
+
+        .role-switcher {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .role-switcher label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .role-select {
+            padding: 10px 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--teal-dark);
+            background: white;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s;
+            min-width: 200px;
+        }
+
+        .role-select:hover {
+            border-color: var(--teal);
+        }
+
+        .role-select:focus {
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px var(--teal-light);
+        }
+
+        /* MAIN CONTAINER */
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* VIEW SECTIONS */
+        .view-section {
+            display: none;
+        }
+
+        .view-section.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* KPI CARDS */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .kpi-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: all 0.2s;
+        }
+
+        .kpi-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .kpi-value {
+            font-size: 36px;
+            font-weight: 900;
+            color: var(--teal-dark);
+            margin-bottom: 8px;
+        }
+
+        .kpi-trend {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--success);
+        }
+
+        .kpi-trend.negative {
+            color: var(--error);
+        }
+
+        /* SECTION HEADER */
+        .section-header {
+            margin: 40px 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 28px;
+            color: var(--charcoal);
+            margin-bottom: 6px;
+        }
+
+        .section-header p {
+            font-size: 14px;
+            color: var(--mid);
+            font-weight: 300;
+        }
+
+        /* ANALYTICS GRID */
+        .analytics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .chart-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .chart-header {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .chart-header h3 {
+            font-size: 18px;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+
+        .chart-header p {
+            font-size: 12px;
+            color: var(--light);
+            font-weight: 300;
+        }
+
+        .chart-placeholder {
+            height: 280px;
+            background: linear-gradient(135deg, var(--teal-light) 0%, var(--gold-light) 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--mid);
+            font-size: 14px;
+            font-weight: 600;
+            border: 2px dashed var(--border);
+        }
+
+        /* WORKFLOW VISUALIZATION */
+        .workflow-container {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .workflow-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        .workflow-item h4 {
+            font-size: 16px;
+            color: var(--teal-dark);
+            margin-bottom: 15px;
+        }
+
+        .workflow-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .workflow-step {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg);
+            border-radius: 6px;
+            border-left: 3px solid var(--teal);
+        }
+
+        .workflow-step-number {
+            width: 28px;
+            height: 28px;
+            background: var(--teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .workflow-step-text {
+            font-size: 13px;
+            color: var(--charcoal);
+            font-weight: 600;
+        }
+
+        /* PERFORMANCE METRICS */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .metric-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--mid);
+            margin-bottom: 10px;
+        }
+
+        .metric-value {
+            font-size: 28px;
+            font-weight: 900;
+            color: var(--teal-dark);
+        }
+
+        .metric-bar {
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .metric-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--teal) 0%, var(--gold) 100%);
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        /* ACTIVITY FEED */
+        .activity-feed {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 18px;
+            color: var(--teal-dark);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-text {
+            font-size: 14px;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: var(--light);
+            font-weight: 300;
+        }
+
+        /* INSIGHTS PANEL */
+        .insights-panel {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+            border-radius: 10px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 16px rgba(0,107,94,0.2);
+        }
+
+        .insights-header {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .insights-header h3 {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+
+        .insights-header p {
+            font-size: 13px;
+            opacity: 0.85;
+            font-weight: 300;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .insight-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 18px;
+            color: white;
+        }
+
+        .insight-icon {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .insight-text {
+            font-size: 14px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        /* DATA TABLE */
+        .data-table-container {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            overflow-x: auto;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table thead {
+            background: var(--bg);
+        }
+
+        .data-table th {
+            padding: 14px 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .data-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+
+        .data-table tr:hover {
+            background: var(--bg);
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* STATUS BADGES */
+        .status-badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-submitted {
+            background: var(--info);
+            color: white;
+        }
+
+        .status-review {
+            background: var(--warning);
+            color: white;
+        }
+
+        .status-approved {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-issued {
+            background: var(--teal);
+            color: white;
+        }
+
+        .status-new {
+            background: var(--info);
+            color: white;
+        }
+
+        .status-assigned {
+            background: var(--gold);
+            color: white;
+        }
+
+        .status-progress {
+            background: var(--warning);
+            color: white;
+        }
+
+        .status-resolved {
+            background: var(--success);
+            color: white;
+        }
+
+        .status-screening {
+            background: var(--gold);
+            color: white;
+        }
+
+        .status-scheduled {
+            background: var(--warning);
+            color: white;
+        }
+
+        .status-completed {
+            background: var(--success);
+            color: white;
+        }
+
+        /* ACTION BUTTONS */
+        .action-btn {
+            padding: 6px 14px;
+            border: 1.5px solid var(--teal);
+            background: white;
+            color: var(--teal);
+            border-radius: 5px;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .action-btn:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        .action-btn-group {
+            display: flex;
+            gap: 8px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 15px;
+                padding: 20px;
+            }
+
+            .navbar-left {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .navbar-title {
+                border-left: none;
+                border-top: 2px solid var(--border);
+                padding-left: 0;
+                padding-top: 15px;
+            }
+
+            .container {
+                padding: 20px;
+            }
+
+            .kpi-grid,
+            .analytics-grid,
+            .workflow-grid,
+            .metrics-grid,
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table-container {
+                overflow-x: scroll;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img src="assets/images/bocra-logo.png" alt="BOCRA" class="logo">
+            <div class="navbar-title">
+                <h1>BOCRA Regulatory Intelligence Dashboard</h1>
+                <p>Monitor complaints, licensing workflows, cybersecurity requests, and operational performance</p>
+            </div>
+        </div>
+        <div class="role-switcher">
+            <label for="roleSelect">View As:</label>
+            <select id="roleSelect" class="role-select" onchange="switchRole(this.value)">
+                <option value="supervisor">Supervisor</option>
+                <option value="licensing">Licensing Officer</option>
+                <option value="complaints">Complaints Officer</option>
+                <option value="cybersecurity">Cybersecurity Officer</option>
+            </select>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+
+        <!-- SUPERVISOR VIEW -->
+        <div id="supervisorView" class="view-section active">
+            
+            <!-- KPI CARDS -->
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Complaints</div>
+                    <div class="kpi-value">247</div>
+                    <div class="kpi-trend">+12% this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Total License Applications</div>
+                    <div class="kpi-value">189</div>
+                    <div class="kpi-trend">+8% this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Applications Under Review</div>
+                    <div class="kpi-value">42</div>
+                    <div class="kpi-trend negative">-3% this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Approved Applications</div>
+                    <div class="kpi-value">134</div>
+                    <div class="kpi-trend">+15% this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Issued Licenses</div>
+                    <div class="kpi-value">98</div>
+                    <div class="kpi-trend">+10% this month</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Cybersecurity Requests</div>
+                    <div class="kpi-value">63</div>
+                    <div class="kpi-trend">+18% this month</div>
+                </div>
+            </div>
+
+            <!-- SMART INSIGHTS -->
+            <div class="insights-panel">
+                <div class="insights-header">
+                    <h3>Smart Insights</h3>
+                    <p>Real-time intelligence and trend analysis</p>
+                </div>
+                <div class="insights-grid">
+                    <div class="insight-item">
+                        <div class="insight-icon">&#9650;</div>
+                        <div class="insight-text">Complaints increased by 15% this week in Gaborone region, primarily related to network service disruptions.</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-icon">&#9733;</div>
+                        <div class="insight-text">Most requested license type is Type Approval, accounting for 38% of all applications this quarter.</div>
+                    </div>
+                    <div class="insight-item">
+                        <div class="insight-icon">&#9888;</div>
+                        <div class="insight-text">Cybersecurity requests increasing in the education sector, with a 24% rise in compliance assessments.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ANALYTICS SECTION -->
+            <div class="section-header">
+                <h2>Analytics Overview</h2>
+                <p>Visual insights into licensing, complaints, and cybersecurity trends</p>
+            </div>
+
+            <div class="analytics-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Licensing Status Breakdown</h3>
+                        <p>Current distribution of application statuses</p>
+                    </div>
+                    <div class="chart-placeholder">Donut Chart: Status Distribution</div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>License Types Requested</h3>
+                        <p>Most popular license categories</p>
+                    </div>
+                    <div class="chart-placeholder">Bar Chart: License Types</div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Complaints by Category</h3>
+                        <p>Breakdown of complaint types</p>
+                    </div>
+                    <div class="chart-placeholder">Bar Chart: Complaint Categories</div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Monthly Complaint Trends</h3>
+                        <p>Complaint volume over the past 6 months</p>
+                    </div>
+                    <div class="chart-placeholder">Line Chart: Complaint Trends</div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Cybersecurity by Sector</h3>
+                        <p>Requests distributed across industry sectors</p>
+                    </div>
+                    <div class="chart-placeholder">Donut Chart: Sector Distribution</div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3>Cybersecurity Services</h3>
+                        <p>Most requested cybersecurity services</p>
+                    </div>
+                    <div class="chart-placeholder">Bar Chart: Service Types</div>
+                </div>
+            </div>
+
+            <!-- WORKFLOW VISUALIZATION -->
+            <div class="section-header">
+                <h2>Workflow Pipelines</h2>
+                <p>Standard process flows for each operational area</p>
+            </div>
+
+            <div class="workflow-container">
+                <div class="workflow-grid">
+                    <div class="workflow-item">
+                        <h4>Licensing Workflow</h4>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">1</div>
+                                <div class="workflow-step-text">Submitted</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">2</div>
+                                <div class="workflow-step-text">Acknowledged</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">3</div>
+                                <div class="workflow-step-text">Under Review</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">4</div>
+                                <div class="workflow-step-text">Approved</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">5</div>
+                                <div class="workflow-step-text">Issued</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <h4>Complaints Workflow</h4>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">1</div>
+                                <div class="workflow-step-text">New</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">2</div>
+                                <div class="workflow-step-text">Assigned</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">3</div>
+                                <div class="workflow-step-text">In Progress</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">4</div>
+                                <div class="workflow-step-text">Resolved</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">5</div>
+                                <div class="workflow-step-text">Closed</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="workflow-item">
+                        <h4>Cybersecurity Workflow</h4>
+                        <div class="workflow-steps">
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">1</div>
+                                <div class="workflow-step-text">Submitted</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">2</div>
+                                <div class="workflow-step-text">Screening</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">3</div>
+                                <div class="workflow-step-text">Scheduled</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">4</div>
+                                <div class="workflow-step-text">Under Assessment</div>
+                            </div>
+                            <div class="workflow-step">
+                                <div class="workflow-step-number">5</div>
+                                <div class="workflow-step-text">Completed</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PERFORMANCE METRICS -->
+            <div class="section-header">
+                <h2>Performance Metrics</h2>
+                <p>Key operational efficiency indicators</p>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">Average Complaint Resolution Time</div>
+                    <div class="metric-value">4.2 days</div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" style="width: 84%;"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Average License Approval Time</div>
+                    <div class="metric-value">12.5 days</div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" style="width: 71%;"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Completed Applications Rate</div>
+                    <div class="metric-value">87%</div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" style="width: 87%;"></div>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">Overdue Cases</div>
+                    <div class="metric-value">8</div>
+                    <div class="metric-bar">
+                        <div class="metric-bar-fill" style="width: 16%;"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RECENT ACTIVITY -->
+            <div class="section-header">
+                <h2>Recent Activity</h2>
+                <p>Latest actions and updates across all systems</p>
+            </div>
+
+            <div class="activity-feed">
+                <div class="activity-item">
+                    <div class="activity-icon">&#128221;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">New license application submitted by <strong>Kalahari Telecom Ltd</strong> for Type Approval</div>
+                        <div class="activity-time">12 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">&#128276;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Complaint <strong>#C-2026-0847</strong> assigned to Officer Naledi Dube</div>
+                        <div class="activity-time">28 minutes ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">&#128274;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Cybersecurity request received from <strong>Botswana University of Agriculture</strong></div>
+                        <div class="activity-time">1 hour ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">&#9989;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">License <strong>#LIC-2026-0234</strong> approved and issued to Orange Botswana</div>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">&#128276;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Complaint <strong>#C-2026-0845</strong> marked as resolved</div>
+                        <div class="activity-time">3 hours ago</div>
+                    </div>
+                </div>
+                <div class="activity-item">
+                    <div class="activity-icon">&#128274;</div>
+                    <div class="activity-content">
+                        <div class="activity-text">Cybersecurity assessment scheduled for <strong>First National Bank</strong></div>
+                        <div class="activity-time">4 hours ago</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- LICENSING OFFICER VIEW -->
+        <div id="licensingView" class="view-section">
+            <div class="section-header">
+                <h2>License Applications</h2>
+                <p>Manage and review all licensing requests</p>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Application ID</th>
+                            <th>Applicant Name</th>
+                            <th>License Type</th>
+                            <th>Date Submitted</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="licensingTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- COMPLAINTS OFFICER VIEW -->
+        <div id="complaintsView" class="view-section">
+            <div class="section-header">
+                <h2>Consumer Complaints</h2>
+                <p>Track and resolve consumer complaints</p>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Complaint ID</th>
+                            <th>Complaint Title</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Date Filed</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="complaintsTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- CYBERSECURITY OFFICER VIEW -->
+        <div id="cybersecurityView" class="view-section">
+            <div class="section-header">
+                <h2>Cybersecurity Requests</h2>
+                <p>Monitor and manage cybersecurity compliance requests</p>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Organisation</th>
+                            <th>Service Requested</th>
+                            <th>Sector</th>
+                            <th>Date Submitted</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cybersecurityTableBody">
+                        <!-- Populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // MOCK DATA
+        const licensingData = [
+            { id: 'LIC-2026-0245', applicant: 'Kalahari Telecom Ltd', type: 'Type Approval', date: '2026-03-20', status: 'submitted' },
+            { id: 'LIC-2026-0244', applicant: 'Orange Botswana', type: 'Spectrum License', date: '2026-03-18', status: 'review' },
+            { id: 'LIC-2026-0243', applicant: 'Mascom Wireless', type: 'Network Facility', date: '2026-03-15', status: 'approved' },
+            { id: 'LIC-2026-0242', applicant: 'BTC Limited', type: 'Service License', date: '2026-03-12', status: 'issued' },
+            { id: 'LIC-2026-0241', applicant: 'Botswana Fibre Networks', type: 'Infrastructure', date: '2026-03-10', status: 'review' },
+            { id: 'LIC-2026-0240', applicant: 'Econet Telecom', type: 'Type Approval', date: '2026-03-08', status: 'submitted' },
+            { id: 'LIC-2026-0239', applicant: 'Gabz FM', type: 'Broadcasting License', date: '2026-03-05', status: 'approved' },
+            { id: 'LIC-2026-0238', applicant: 'Yarona FM', type: 'Broadcasting License', date: '2026-03-03', status: 'issued' },
+            { id: 'LIC-2026-0237', applicant: 'Duma FM', type: 'Broadcasting License', date: '2026-03-01', status: 'review' },
+            { id: 'LIC-2026-0236', applicant: 'BoFiNet', type: 'Infrastructure', date: '2026-02-28', status: 'approved' }
+        ];
+
+        const complaintsData = [
+            { id: 'C-2026-0847', title: 'Network service disruption', category: 'Service Quality', location: 'Gaborone', date: '2026-03-25', status: 'new' },
+            { id: 'C-2026-0846', title: 'Billing discrepancy', category: 'Billing', location: 'Francistown', date: '2026-03-24', status: 'assigned' },
+            { id: 'C-2026-0845', title: 'Poor internet speed', category: 'Service Quality', location: 'Maun', date: '2026-03-23', status: 'resolved' },
+            { id: 'C-2026-0844', title: 'Unauthorized charges', category: 'Billing', location: 'Gaborone', date: '2026-03-22', status: 'progress' },
+            { id: 'C-2026-0843', title: 'SIM swap fraud', category: 'Fraud', location: 'Palapye', date: '2026-03-21', status: 'assigned' },
+            { id: 'C-2026-0842', title: 'Call drop issues', category: 'Service Quality', location: 'Kasane', date: '2026-03-20', status: 'new' },
+            { id: 'C-2026-0841', title: 'Data bundle not activated', category: 'Technical', location: 'Gaborone', date: '2026-03-19', status: 'progress' },
+            { id: 'C-2026-0840', title: 'Roaming charges dispute', category: 'Billing', location: 'Francistown', date: '2026-03-18', status: 'resolved' },
+            { id: 'C-2026-0839', title: 'Network coverage complaint', category: 'Service Quality', location: 'Serowe', date: '2026-03-17', status: 'assigned' },
+            { id: 'C-2026-0838', title: 'Contract termination issue', category: 'Contract', location: 'Gaborone', date: '2026-03-16', status: 'progress' }
+        ];
+
+        const cybersecurityData = [
+            { id: 'CYB-2026-0089', organisation: 'Botswana University of Agriculture', service: 'Risk Assessment', sector: 'Education', date: '2026-03-25', status: 'submitted' },
+            { id: 'CYB-2026-0088', organisation: 'First National Bank', service: 'Compliance Review', sector: 'Financial', date: '2026-03-23', status: 'scheduled' },
+            { id: 'CYB-2026-0087', organisation: 'Debswana Diamond Company', service: 'Security Consultation', sector: 'Mining', date: '2026-03-21', status: 'screening' },
+            { id: 'CYB-2026-0086', organisation: 'Botswana Power Corporation', service: 'Risk Assessment', sector: 'Government', date: '2026-03-19', status: 'completed' },
+            { id: 'CYB-2026-0085', organisation: 'Choppies Enterprises', service: 'Awareness Training', sector: 'Retail', date: '2026-03-17', status: 'scheduled' },
+            { id: 'CYB-2026-0084', organisation: 'University of Botswana', service: 'Compliance Review', sector: 'Education', date: '2026-03-15', status: 'screening' },
+            { id: 'CYB-2026-0083', organisation: 'Stanbic Bank', service: 'Risk Assessment', sector: 'Financial', date: '2026-03-13', status: 'completed' },
+            { id: 'CYB-2026-0082', organisation: 'Air Botswana', service: 'Security Consultation', sector: 'Transport', date: '2026-03-11', status: 'scheduled' },
+            { id: 'CYB-2026-0081', organisation: 'Botswana Railways', service: 'Awareness Training', sector: 'Transport', date: '2026-03-09', status: 'screening' },
+            { id: 'CYB-2026-0080', organisation: 'Ministry of Health', service: 'Compliance Review', sector: 'Government', date: '2026-03-07', status: 'completed' }
+        ];
+
+        // CURRENT ROLE STATE
+        let currentRole = 'supervisor';
+
+        // SWITCH ROLE FUNCTION
+        function switchRole(role) {
+            currentRole = role;
+            
+            // Hide all views
+            document.querySelectorAll('.view-section').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            if (role === 'supervisor') {
+                document.getElementById('supervisorView').classList.add('active');
+            } else if (role === 'licensing') {
+                document.getElementById('licensingView').classList.add('active');
+                populateLicensingTable();
+            } else if (role === 'complaints') {
+                document.getElementById('complaintsView').classList.add('active');
+                populateComplaintsTable();
+            } else if (role === 'cybersecurity') {
+                document.getElementById('cybersecurityView').classList.add('active');
+                populateCybersecurityTable();
+            }
+        }
+
+        // POPULATE LICENSING TABLE
+        function populateLicensingTable() {
+            const tbody = document.getElementById('licensingTableBody');
+            tbody.innerHTML = '';
+            
+            licensingData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.id}</strong></td>
+                    <td>${item.applicant}</td>
+                    <td>${item.type}</td>
+                    <td>${item.date}</td>
+                    <td><span class="status-badge status-${item.status}">${formatStatus(item.status)}</span></td>
+                    <td>
+                        <div class="action-btn-group">
+                            <button class="action-btn" onclick="alert('Review application ${item.id}')">Review</button>
+                            <button class="action-btn" onclick="alert('Update status for ${item.id}')">Update Status</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // POPULATE COMPLAINTS TABLE
+        function populateComplaintsTable() {
+            const tbody = document.getElementById('complaintsTableBody');
+            tbody.innerHTML = '';
+            
+            complaintsData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.id}</strong></td>
+                    <td>${item.title}</td>
+                    <td>${item.category}</td>
+                    <td>${item.location}</td>
+                    <td>${item.date}</td>
+                    <td><span class="status-badge status-${item.status}">${formatStatus(item.status)}</span></td>
+                    <td>
+                        <div class="action-btn-group">
+                            <button class="action-btn" onclick="alert('Assign complaint ${item.id}')">Assign</button>
+                            <button class="action-btn" onclick="alert('Resolve complaint ${item.id}')">Resolve</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // POPULATE CYBERSECURITY TABLE
+        function populateCybersecurityTable() {
+            const tbody = document.getElementById('cybersecurityTableBody');
+            tbody.innerHTML = '';
+            
+            cybersecurityData.forEach(item => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><strong>${item.id}</strong></td>
+                    <td>${item.organisation}</td>
+                    <td>${item.service}</td>
+                    <td>${item.sector}</td>
+                    <td>${item.date}</td>
+                    <td><span class="status-badge status-${item.status}">${formatStatus(item.status)}</span></td>
+                    <td>
+                        <div class="action-btn-group">
+                            <button class="action-btn" onclick="alert('Review request ${item.id}')">Review</button>
+                            <button class="action-btn" onclick="alert('Schedule assessment for ${item.id}')">Schedule</button>
+                        </div>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // FORMAT STATUS TEXT
+        function formatStatus(status) {
+            const statusMap = {
+                'submitted': 'Submitted',
+                'review': 'Under Review',
+                'approved': 'Approved',
+                'issued': 'Issued',
+                'new': 'New',
+                'assigned': 'Assigned',
+                'progress': 'In Progress',
+                'resolved': 'Resolved',
+                'screening': 'Screening',
+                'scheduled': 'Scheduled',
+                'completed': 'Completed'
+            };
+            return statusMap[status] || status;
+        }
+
+        // INITIALIZE ON LOAD
+        window.addEventListener('DOMContentLoaded', function() {
+            console.log('BOCRA Admin Dashboard loaded');
+            // Supervisor view is active by default
+        });
+    </script>
+
+</body>
+</html>

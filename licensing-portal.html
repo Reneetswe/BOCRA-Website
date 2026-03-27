@@ -1,0 +1,3303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOCRA Licensing Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --error: #CC2936;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #003d35;
+            padding: 8px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+            position: relative;
+            z-index: 10;
+        }
+
+        .topbar-separator {
+            margin: 0 12px;
+            opacity: 0.5;
+        }
+
+        .topbar a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .topbar a:hover {
+            color: white;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+
+        .logo-text .bocra {
+            font-family: 'Forum', serif;
+            font-size: 20px;
+            color: var(--charcoal);
+            font-weight: 400;
+        }
+
+        .logo-text .full-name {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            color: var(--mid);
+            font-weight: 300;
+        }
+
+        .header-right {
+            margin-left: auto;
+        }
+
+        .btn-back {
+            padding: 8px 20px;
+            border: 1.5px solid var(--teal);
+            color: var(--teal);
+            border-radius: 5px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* Main content area */
+        .main-content {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Floating card */
+        .floating-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
+            width: 100%;
+            max-width: 480px;
+            padding: 32px 36px;
+            position: relative;
+            animation: cardIn 0.4s ease forwards;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card header */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .card-title {
+            font-family: 'Forum', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 20px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 12px 0;
+            border: none;
+            background: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            margin-right: 24px;
+        }
+
+        .tab.active {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
+        }
+
+        /* Forms */
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+        }
+
+        /* Form heading inside card */
+        .form-heading {
+            font-family: 'Forum', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--mid);
+            margin-bottom: 20px;
+        }
+
+        /* Form fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--charcoal);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: 7px;
+            padding: 11px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            color: var(--charcoal);
+            background: var(--bg);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--teal);
+            background: white;
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            color: var(--error);
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Account type cards */
+        .account-type-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .account-type-card {
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg);
+        }
+
+        .account-type-card:hover {
+            border-color: var(--teal);
+        }
+
+        .account-type-card.selected {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        .account-type-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--charcoal);
+            margin-bottom: 2px;
+        }
+
+        .account-type-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 9px;
+            color: var(--mid);
+        }
+
+        /* Company fields */
+        .company-fields {
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .company-fields.show {
+            display: block;
+        }
+
+        /* Password input */
+        .password-input {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--light);
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: var(--teal);
+        }
+
+        /* Password strength */
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .strength-weak { background: var(--error); }
+        .strength-fair { background: #ff9800; }
+        .strength-good { background: var(--gold); }
+        .strength-strong { background: var(--teal); }
+
+        .strength-text {
+            font-family: 'Lato', sans-serif;
+            font-size: 10px;
+            color: var(--mid);
+        }
+
+        /* Password match/mismatch */
+        .password-match, .password-mismatch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+        }
+
+        .password-match {
+            color: var(--teal);
+        }
+
+        .password-mismatch {
+            color: var(--error);
+        }
+
+        /* Form options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Checkbox */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--charcoal);
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 3px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark {
+            background: var(--teal);
+            border-color: var(--teal);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Links */
+        .forgot-password {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password:hover {
+            color: var(--teal-dark);
+        }
+
+        /* Submit buttons */
+        .btn-submit {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 7px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-register {
+            background: var(--teal);
+            color: white;
+        }
+
+        .btn-register:hover:not(:disabled) {
+            background: var(--teal-dark);
+        }
+
+        .btn-login {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            background: #b89122;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Success banner */
+        .success-banner {
+            background: var(--teal-light);
+            border-left: 4px solid var(--teal);
+            border-radius: 6px;
+            padding: 12px 14px;
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-banner.show {
+            display: flex;
+        }
+
+        .success-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .success-banner div {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        /* Shake animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Loading state */
+        .btn-submit.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 8px 20px;
+                font-size: 11px;
+            }
+
+            .header {
+                padding: 12px 20px;
+            }
+
+            .main-content {
+                padding: 20px 16px;
+            }
+
+            .floating-card {
+                padding: 24px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+                margin-bottom: 0;
+            }
+
+            .account-type-options {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+
+        /* View transitions */
+        .view-content {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 200ms ease, transform 200ms ease;
+        }
+
+        .view-content.exit {
+            opacity: 0;
+            transform: translateY(-8px);
+        }
+
+        .view-content.enter {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        .view-content.enter-active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Progress indicator */
+        .progress-indicator {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-pill {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            border: 2px solid var(--border);
+            background: white;
+            color: var(--light);
+        }
+
+        .progress-pill.completed {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: white;
+        }
+
+        .progress-pill.active {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .progress-line {
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+            margin: 0 4px;
+        }
+
+        .progress-line.completed {
+            background: var(--teal);
+        }
+
+        /* Shield icon */
+        .shield-icon {
+            width: 56px;
+            height: 56px;
+            background: var(--teal-light);
+            border: 2px solid var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 16px auto;
+        }
+
+        /* Download prompt */
+        .download-prompt {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-radius: 8px;
+            padding: 14px 16px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .download-prompt-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+
+        .download-prompt-text {
+            flex: 1;
+        }
+
+        .download-prompt-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--teal-dark);
+            margin-bottom: 4px;
+        }
+
+        .download-prompt-desc {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            margin-bottom: 8px;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .download-btn {
+            border: 1px solid var(--teal);
+            color: var(--teal);
+            background: white;
+            border-radius: 5px;
+            padding: 4px 10px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* Instruction steps */
+        .instruction-step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .step-number {
+            width: 22px;
+            height: 22px;
+            background: var(--teal);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .step-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        /* QR Code */
+        .qr-container {
+            text-align: center;
+            margin: 16px auto;
+        }
+
+        .qr-box {
+            width: 164px;
+            height: 164px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            background: white;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+        }
+
+        .qr-label {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--mid);
+            text-align: center;
+        }
+
+        /* Manual entry */
+        .manual-entry-link {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            text-align: center;
+            cursor: pointer;
+            text-decoration: underline;
+            margin: 12px 0;
+        }
+
+        .manual-entry-box {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 12px 16px;
+            text-align: center;
+            margin-bottom: 14px;
+            display: none;
+        }
+
+        .manual-entry-box.show {
+            display: block;
+        }
+
+        .manual-entry-label {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            color: var(--light);
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+
+        .manual-entry-key {
+            font-family: monospace;
+            font-size: 16px;
+            font-weight: 900;
+            color: var(--charcoal);
+            letter-spacing: 3px;
+            margin-bottom: 8px;
+        }
+
+        .copy-key-btn {
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            padding: 4px 14px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-key-btn:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* OTP inputs */
+        .otp-inputs {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .otp-box {
+            width: 44px;
+            height: 52px;
+            text-align: center;
+            font-family: 'Lato', sans-serif;
+            font-weight: 900;
+            font-size: 20px;
+            color: var(--charcoal);
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg);
+            transition: all 0.2s;
+        }
+
+        .otp-box:focus {
+            outline: none;
+            border-color: var(--teal);
+            background: white;
+            box-shadow: 0 0 0 3px rgba(0,107,94,0.08);
+        }
+
+        .otp-separator {
+            font-size: 18px;
+            color: var(--border);
+            margin: 0 4px;
+        }
+
+        /* Timer */
+        .timer-container {
+            margin-top: 12px;
+        }
+
+        .timer-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .timer-fill {
+            height: 100%;
+            background: var(--teal);
+            border-radius: 2px;
+            width: 100%;
+            animation: timer 30s linear infinite;
+        }
+
+        @keyframes timer {
+            from { width: 100%; }
+            to { width: 0%; }
+        }
+
+        .timer-label {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--light);
+            text-align: center;
+            margin-top: 4px;
+        }
+
+        /* Terms checkbox */
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 14px 0;
+            padding: 12px 14px;
+            background: var(--bg);
+            border-radius: 6px;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            width: 15px;
+            height: 15px;
+            accent-color: var(--teal);
+            margin-top: 2px;
+        }
+
+        .terms-label {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--charcoal);
+            line-height: 1.5;
+        }
+
+        .terms-link {
+            color: var(--teal);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Security note */
+        .security-note {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--light);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        /* User pill */
+        .user-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 999px;
+            padding: 6px 16px;
+            margin: 0 auto 18px;
+        }
+
+        .user-pill-icon {
+            width: 12px;
+            height: 12px;
+            color: var(--mid);
+        }
+
+        .user-pill-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        /* Attempt counter */
+        .attempt-counter {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            justify-content: center;
+            margin: 12px 0;
+        }
+
+        .attempt-counter-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--error);
+        }
+
+        .attempt-counter-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--error);
+        }
+
+        /* Lockout message */
+        .lockout-message {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--error);
+            text-align: center;
+        }
+
+        /* Back link */
+        .back-link {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            text-align: center;
+            margin-top: 12px;
+            cursor: pointer;
+        }
+
+        /* Accordion */
+        .accordion-trigger {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--mid);
+            text-align: center;
+            cursor: pointer;
+            margin: 12px 0;
+        }
+
+        .accordion-body {
+            background: var(--bg);
+            border-radius: 8px;
+            padding: 12px 14px;
+            margin-top: 8px;
+            display: none;
+        }
+
+        .accordion-body.show {
+            display: block;
+        }
+
+        .help-item {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--charcoal);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        /* Dashboard */
+        .dashboard-topbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 0 40px;
+            height: 52px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            display: none;
+        }
+
+        .dashboard-topbar.show {
+            display: flex;
+        }
+
+        .dashboard-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+
+        .dashboard-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dashboard-avatar {
+            width: 36px;
+            height: 36px;
+            background: var(--teal);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .dashboard-username {
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        .dashboard-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 36px 40px;
+            display: none;
+        }
+
+        .dashboard-content.show {
+            display: block;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+            border-radius: 12px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .welcome-banner::after {
+            content: '';
+            position: absolute;
+            right: -30px;
+            top: -30px;
+            width: 160px;
+            height: 160px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 50%;
+        }
+
+        .welcome-left {
+            flex: 1;
+        }
+
+        .welcome-greeting {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            color: white;
+        }
+
+        .welcome-name {
+            font-family: 'Forum', serif;
+            font-size: 26px;
+            color: white;
+            margin: 4px 0;
+        }
+
+        .welcome-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .welcome-status {
+            display: inline-block;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 999px;
+            padding: 4px 14px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: white;
+            margin-top: 8px;
+        }
+
+        .new-application-btn {
+            background: var(--gold);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 11px 24px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .new-application-btn:hover {
+            background: #b09020;
+        }
+
+        /* Dashboard cards */
+        .dashboard-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .dashboard-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 24px;
+            border-top: 4px solid transparent;
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+
+        .dashboard-card:hover {
+            border-top-color: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .card-icon.teal {
+            background: var(--teal-light);
+        }
+
+        .card-icon.gold {
+            background: #FDF6E3;
+        }
+
+        .card-title {
+            font-family: 'Forum', serif;
+            font-size: 20px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .card-description {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--mid);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-link {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+        }
+
+        .card-link.teal {
+            color: var(--teal);
+        }
+
+        .card-link.gold {
+            color: var(--gold);
+        }
+
+        /* Dashboard sections */
+        .dashboard-section {
+            display: none;
+        }
+
+        .dashboard-section.show {
+            display: block;
+        }
+
+        .section-header {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-family: 'Forum', serif;
+            font-size: 28px;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+
+        .section-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 14px;
+            color: var(--mid);
+        }
+
+        .section-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 20px;
+        }
+
+        .back-to-overview {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            cursor: pointer;
+            margin-bottom: 16px;
+            display: inline-block;
+        }
+
+        /* Profile section */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-avatar {
+            width: 64px;
+            height: 64px;
+            background: var(--teal);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Forum', serif;
+            font-size: 28px;
+        }
+
+        .profile-info h3 {
+            font-family: 'Forum', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+
+        .profile-badge {
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border-radius: 5px;
+            padding: 3px 10px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-bottom: 4px;
+        }
+
+        .profile-email {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--mid);
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .profile-item {
+            margin-bottom: 16px;
+        }
+
+        .profile-label {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+
+        .profile-value {
+            font-family: 'Lato', sans-serif;
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+
+        .profile-2fa {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-radius: 8px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-top: 20px;
+        }
+
+        .profile-2fa-icon {
+            width: 28px;
+            height: 28px;
+            color: var(--teal);
+        }
+
+        .profile-2fa-text h4 {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--teal-dark);
+            margin-bottom: 2px;
+        }
+
+        .profile-2fa-text p {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+        }
+
+        .profile-2fa-badge {
+            background: var(--teal);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            padding: 4px 12px;
+            border-radius: 999px;
+        }
+
+        /* License grid */
+        .license-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .license-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 20px;
+            border-top: 4px solid transparent;
+            transition: all 0.25s;
+            cursor: pointer;
+        }
+
+        .license-card:hover {
+            border-top-color: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+        }
+
+        .license-name {
+            font-family: 'Forum', serif;
+            font-size: 17px;
+            color: var(--charcoal);
+            margin-bottom: 6px;
+        }
+
+        .license-desc {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+
+        .license-time {
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        .license-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--teal);
+            color: white;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 3px;
+        }
+
+        .license-badge.gold {
+            background: var(--gold);
+        }
+
+        .apply-btn {
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 18px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .apply-btn:hover {
+            background: var(--teal-dark);
+        }
+
+        /* Application cards */
+        .application-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 24px 28px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+
+        .application-card:hover {
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+        }
+
+        .application-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .application-ref {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        .application-name {
+            font-family: 'Forum', serif;
+            font-size: 22px;
+            color: var(--charcoal);
+            margin-top: 4px;
+        }
+
+        .application-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0,107,94,0.1);
+            color: var(--teal-dark);
+            border-radius: 5px;
+            padding: 4px 10px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+        }
+
+        .application-status-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--teal);
+            border-radius: 50%;
+        }
+
+        .application-dates {
+            text-align: right;
+        }
+
+        .application-date {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 12px;
+            color: var(--mid);
+        }
+
+        .application-est {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--light);
+        }
+
+        .receipt-btn {
+            border: 1.5px solid var(--border);
+            color: var(--mid);
+            background: none;
+            padding: 6px 14px;
+            border-radius: 5px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 8px;
+            transition: all 0.2s;
+        }
+
+        .receipt-btn:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .application-progress {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 20px 0 8px;
+        }
+
+        .application-progress-fill {
+            height: 100%;
+            background: var(--teal);
+            border-radius: 2px;
+        }
+
+        .application-stages {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .application-stage {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 10px;
+            color: var(--teal-dark);
+        }
+
+        .application-stage.inactive {
+            color: var(--light);
+        }
+
+        .approved-message {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .approved-icon {
+            width: 16px;
+            height: 16px;
+            color: var(--teal);
+        }
+
+        .approved-text {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--teal-dark);
+            flex: 1;
+        }
+
+        .download-license-btn {
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 16px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin-left: auto;
+        }
+
+        .download-license-btn:hover {
+            background: var(--teal-dark);
+        }
+
+        /* Toast notifications */
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 9999;
+            background: white;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+            border-left: 4px solid var(--teal);
+            max-width: 320px;
+            animation: toastIn 0.3s ease forwards;
+        }
+
+        @keyframes toastIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .toast-icon {
+            width: 20px;
+            height: 20px;
+            color: var(--teal);
+            flex-shrink: 0;
+        }
+
+        .toast-message {
+            font-family: 'Lato', sans-serif;
+            font-weight: 400;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        /* Shake animation for OTP */
+        @keyframes otpShake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-4px); }
+            75% { transform: translateX(4px); }
+        }
+
+        .otp-shake {
+            animation: otpShake 0.5s ease-in-out;
+        }
+
+        /* Mobile responsive for dashboard */
+        @media (max-width: 600px) {
+            .dashboard-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .license-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-banner {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .welcome-banner::after {
+                display: none;
+            }
+
+            .new-application-btn {
+                margin-top: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <span>+267 3957755</span>
+            <span class="topbar-separator">|</span>
+            <span>info@bocra.org.bw</span>
+        </div>
+        <div class="topbar-right">
+            <a href="#">Setswana</a>
+            <span class="topbar-separator">|</span>
+            <a href="#">Site Map</a>
+            <span class="topbar-separator">|</span>
+            <a href="#">Accessibility</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="logo">
+            <div class="logo-divider"></div>
+            <div class="logo-text">
+                <div class="bocra">BOCRA</div>
+                <div class="full-name">Botswana Communications Regulatory Authority</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="index.html" class="btn-back">← Back to BOCRA Website</a>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="floating-card">
+            <!-- Card header -->
+            <div class="card-header">
+                <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="card-logo">
+                <div class="card-title">Licensing Portal</div>
+            </div>
+            <div class="card-divider"></div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('register')">Register</button>
+                <button class="tab" onclick="switchTab('login')">Log In</button>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-content active" id="registerView">
+                <h2 class="form-heading">Create your account</h2>
+                <p class="form-subtitle">Register to access BOCRA licensing services</p>
+
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" id="firstName" required>
+                            <div class="error-message">First name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" id="lastName" required>
+                            <div class="error-message">Last name is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="regEmail" required>
+                        <div class="error-message">Valid email address is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phoneNumber" placeholder="+267 7X XXX XXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Account Type</label>
+                        <div class="account-type-options">
+                            <div class="account-type-card" data-type="individual" onclick="selectAccountType('individual')">
+                                <div class="account-type-title">Individual</div>
+                                <div class="account-type-subtitle">Personal use</div>
+                            </div>
+                            <div class="account-type-card" data-type="company" onclick="selectAccountType('company')">
+                                <div class="account-type-title">Company</div>
+                                <div class="account-type-subtitle">Business / operator</div>
+                            </div>
+                            <div class="account-type-card" data-type="government" onclick="selectAccountType('government')">
+                                <div class="account-type-title">Government</div>
+                                <div class="account-type-subtitle">Gov entity</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="accountType" required>
+                        <div class="error-message">Please select an account type</div>
+                    </div>
+
+                    <div class="company-fields" id="companyFields">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" id="companyName">
+                            <div class="error-message">Company name is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="regPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('regPassword')">👁</button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Enter password</div>
+                        </div>
+                        <div class="error-message">Password must be at least 8 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="confirmPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">👁</button>
+                        </div>
+                        <div class="password-match" id="passwordMatch">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                            Passwords match
+                        </div>
+                        <div class="password-mismatch" id="passwordMismatch">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                            Passwords do not match
+                        </div>
+                        <div class="error-message">Please confirm your password</div>
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-register">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Login Form -->
+            <div class="form-content" id="loginView">
+                <h2 class="form-heading">Welcome back</h2>
+                <p class="form-subtitle">Sign in to your BOCRA licensing account</p>
+
+                <form id="loginFormElement">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="loginEmail" required>
+                        <div class="error-message">Valid email address is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="loginPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">👁</button>
+                        </div>
+                        <div class="error-message">Password is required</div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <div class="error-message" id="loginError" style="display: none; text-align: center; margin-bottom: 16px;">
+                        Invalid email or password. Please try again.
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-login">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Success Banner -->
+            <div class="success-banner" id="successBanner">
+                <div class="success-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                </div>
+                <div>Account created successfully! Please sign in to continue.</div>
+            </div>
+
+            <!-- 2FA Setup View -->
+            <div class="form-content view-content" id="setup2faView">
+                <!-- Card header -->
+                <div class="card-header">
+                    <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="card-logo">
+                    <div class="card-title">Licensing Portal</div>
+                </div>
+                <div class="card-divider"></div>
+
+                <!-- Progress indicator -->
+                <div class="progress-indicator">
+                    <div class="progress-pill completed">1</div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-pill active">2</div>
+                    <div class="progress-line"></div>
+                    <div class="progress-pill">3</div>
+                </div>
+
+                <!-- Shield icon -->
+                <div class="shield-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                </div>
+
+                <h2 class="form-heading">Secure your account</h2>
+                <p class="form-subtitle">Set up two-factor authentication using Microsoft Authenticator to protect your account.</p>
+
+                <!-- Download prompt -->
+                <div class="download-prompt">
+                    <div class="download-prompt-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <line x1="12" y1="16" x2="12" y2="12"/>
+                            <line x1="12" y1="8" x2="12.01" y2="8"/>
+                        </svg>
+                    </div>
+                    <div class="download-prompt-text">
+                        <div class="download-prompt-title">Don't have the app yet?</div>
+                        <div class="download-prompt-desc">Download Microsoft Authenticator (free):</div>
+                        <div class="download-buttons">
+                            <button class="download-btn">App Store (iOS)</button>
+                            <button class="download-btn">Google Play (Android)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instruction steps -->
+                <div class="instruction-step">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Open Microsoft Authenticator on your phone</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Tap + Add account then Other account</div>
+                </div>
+                <div class="instruction-step">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Scan the QR code below with your camera</div>
+                </div>
+
+                <!-- QR Code -->
+                <div class="qr-container">
+                    <div class="qr-box">
+                        <svg width="148" height="148" viewBox="0 0 148 148">
+                            <!-- QR Code Pattern -->
+                            <rect x="6" y="6" width="40" height="40" fill="black"/>
+                            <rect x="12" y="12" width="28" height="28" fill="white"/>
+                            <rect x="18" y="18" width="16" height="16" fill="black"/>
+                            
+                            <rect x="102" y="6" width="40" height="40" fill="black"/>
+                            <rect x="108" y="12" width="28" height="28" fill="white"/>
+                            <rect x="114" y="18" width="16" height="16" fill="black"/>
+                            
+                            <rect x="6" y="102" width="40" height="40" fill="black"/>
+                            <rect x="12" y="108" width="28" height="28" fill="white"/>
+                            <rect x="18" y="114" width="16" height="16" fill="black"/>
+                            
+                            <!-- Data area pattern -->
+                            <rect x="54" y="54" width="3" height="3" fill="black"/>
+                            <rect x="60" y="54" width="3" height="3" fill="black"/>
+                            <rect x="66" y="54" width="3" height="3" fill="black"/>
+                            <rect x="72" y="54" width="3" height="3" fill="black"/>
+                            <rect x="78" y="54" width="3" height="3" fill="black"/>
+                            <rect x="84" y="54" width="3" height="3" fill="black"/>
+                            
+                            <rect x="54" y="60" width="3" height="3" fill="black"/>
+                            <rect x="66" y="60" width="3" height="3" fill="black"/>
+                            <rect x="78" y="60" width="3" height="3" fill="black"/>
+                            <rect x="84" y="60" width="3" height="3" fill="black"/>
+                            
+                            <rect x="54" y="66" width="3" height="3" fill="black"/>
+                            <rect x="60" y="66" width="3" height="3" fill="black"/>
+                            <rect x="72" y="66" width="3" height="3" fill="black"/>
+                            <rect x="84" y="66" width="3" height="3" fill="black"/>
+                            
+                            <rect x="54" y="72" width="3" height="3" fill="black"/>
+                            <rect x="66" y="72" width="3" height="3" fill="black"/>
+                            <rect x="78" y="72" width="3" height="3" fill="black"/>
+                            <rect x="84" y="72" width="3" height="3" fill="black"/>
+                            
+                            <rect x="54" y="78" width="3" height="3" fill="black"/>
+                            <rect x="60" y="78" width="3" height="3" fill="black"/>
+                            <rect x="72" y="78" width="3" height="3" fill="black"/>
+                            <rect x="78" y="78" width="3" height="3" fill="black"/>
+                            <rect x="84" y="78" width="3" height="3" fill="black"/>
+                            
+                            <rect x="54" y="84" width="3" height="3" fill="black"/>
+                            <rect x="66" y="84" width="3" height="3" fill="black"/>
+                            <rect x="72" y="84" width="3" height="3" fill="black"/>
+                            <rect x="84" y="84" width="3" height="3" fill="black"/>
+                            
+                            <!-- Center area with BOCRA -->
+                            <rect x="58" y="58" width="32" height="20" fill="white"/>
+                            <text x="74" y="72" text-anchor="middle" font-family="Forum" font-size="8" fill="var(--teal)">BOCRA</text>
+                        </svg>
+                    </div>
+                    <div class="qr-label">Scan with Microsoft Authenticator</div>
+                </div>
+
+                <!-- Manual entry -->
+                <div class="manual-entry-link" onclick="toggleManualEntry()">Can't scan? Enter key manually</div>
+                <div class="manual-entry-box" id="manualEntryBox">
+                    <div class="manual-entry-label">MANUAL ENTRY KEY:</div>
+                    <div class="manual-entry-key">JBSW YYTK JBSW YYTK JBSW</div>
+                    <button class="copy-key-btn" onclick="copyKey()">Copy key</button>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="instruction-step">
+                    <div class="step-number">4</div>
+                    <div class="step-text">Enter the 6-digit code shown in the app to confirm your authenticator is linked.</div>
+                </div>
+
+                <!-- OTP inputs -->
+                <div class="otp-inputs">
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-1">
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-2">
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-3">
+                    <div class="otp-separator">—</div>
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-4">
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-5">
+                    <input type="text" class="otp-box" maxlength="1" id="setup-otp-6">
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-container">
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="setupTimer"></div>
+                    </div>
+                    <div class="timer-label">Code refreshes every 30 seconds</div>
+                </div>
+
+                <!-- Error message -->
+                <div class="error-message" id="setupError" style="display: none; text-align: center;">Invalid code. Please try again.</div>
+
+                <!-- Terms checkbox -->
+                <div class="terms-checkbox">
+                    <input type="checkbox" id="setupTerms">
+                    <div class="terms-label">
+                        I agree to BOCRA's <span class="terms-link">Terms of Use</span> and <span class="terms-link">Privacy Policy</span>
+                    </div>
+                </div>
+
+                <button type="button" class="btn-submit btn-register" onclick="verifySetup()">Verify and Complete Setup</button>
+                
+                <div class="security-note">Your account is protected with TOTP two-factor authentication.</div>
+            </div>
+
+            <!-- 2FA Verify View -->
+            <div class="form-content view-content" id="verify2faView">
+                <!-- Card header -->
+                <div class="card-header">
+                    <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="card-logo">
+                    <div class="card-title">Licensing Portal</div>
+                </div>
+                <div class="card-divider"></div>
+
+                <!-- Progress indicator -->
+                <div class="progress-indicator">
+                    <div class="progress-pill completed">1</div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-pill completed">2</div>
+                    <div class="progress-line completed"></div>
+                    <div class="progress-pill active">3</div>
+                </div>
+
+                <!-- Shield icon with checkmark -->
+                <div class="shield-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <polyline points="9,12 11,14 15,10"/>
+                    </svg>
+                </div>
+
+                <h2 class="form-heading">Two-factor authentication</h2>
+                <p class="form-subtitle">Open Microsoft Authenticator on your phone and enter the 6-digit code for BOCRA Nexus.</p>
+
+                <!-- User pill -->
+                <div class="user-pill">
+                    <svg class="user-pill-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--mid)" stroke-width="2">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                        <circle cx="12" cy="16" r="1"/>
+                        <path d="M7 11V7a5 5 0 0110 0v4"/>
+                    </svg>
+                    <div class="user-pill-text" id="verifyUserEmail">user@example.com</div>
+                </div>
+
+                <!-- OTP inputs -->
+                <div class="otp-inputs">
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-1">
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-2">
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-3">
+                    <div class="otp-separator">—</div>
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-4">
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-5">
+                    <input type="text" class="otp-box" maxlength="1" id="verify-otp-6">
+                </div>
+
+                <!-- Timer -->
+                <div class="timer-container">
+                    <div class="timer-bar">
+                        <div class="timer-fill" id="verifyTimer"></div>
+                    </div>
+                    <div class="timer-label">Code refreshes every 30 seconds</div>
+                </div>
+
+                <!-- Attempt counter -->
+                <div class="attempt-counter" id="attemptCounter" style="display: none;">
+                    <svg class="attempt-counter-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"/>
+                        <line x1="12" y1="8" x2="12" y2="12"/>
+                        <line x1="12" y1="16" x2="12.01" y2="16"/>
+                    </svg>
+                    <div class="attempt-counter-text">2 attempts remaining</div>
+                </div>
+
+                <!-- Lockout message -->
+                <div class="lockout-message" id="lockoutMessage" style="display: none;">
+                    Too many failed attempts. Please try again in <span id="lockoutTimer">10:00</span>.
+                </div>
+
+                <button type="button" class="btn-submit btn-login" onclick="verifyLogin()">Verify and Log In</button>
+                
+                <div class="back-link" onclick="switchView('login')">← Use a different account</div>
+
+                <!-- Accordion -->
+                <div class="accordion-trigger" onclick="toggleAccordion()">Having trouble? ▾</div>
+                <div class="accordion-body" id="helpAccordion">
+                    <div class="help-item">• Make sure your phone's time is set to automatic</div>
+                    <div class="help-item">• Open Microsoft Authenticator and look for BOCRA Nexus in your accounts list</div>
+                    <div class="help-item">• Lost access? Contact us at licensing@bocra.org.bw</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Dashboard Topbar (hidden by default) -->
+    <div class="dashboard-topbar" id="dashboardTopbar">
+        <div class="dashboard-title">Dashboard</div>
+        <div class="dashboard-user">
+            <div class="dashboard-avatar" id="dashAvatar">JD</div>
+            <div class="dashboard-username" id="dashUserName">John Doe</div>
+            <button class="btn-back" onclick="logout()">Log Out</button>
+        </div>
+    </div>
+
+    <!-- Dashboard Content (hidden by default) -->
+    <div class="dashboard-content" id="dashboardContent">
+        <!-- Welcome Banner -->
+        <div class="welcome-banner">
+            <div class="welcome-left">
+                <div class="welcome-greeting">Good morning,</div>
+                <div class="welcome-name" id="dashWelcomeName">John Doe</div>
+                <div class="welcome-subtitle">Your BOCRA Licensing Dashboard</div>
+                <div class="welcome-status">Active Account · 2FA Enabled</div>
+            </div>
+            <button class="new-application-btn" onclick="showSection('apply')">New Application</button>
+        </div>
+
+        <!-- Dashboard Cards -->
+        <div class="dashboard-cards">
+            <div class="dashboard-card" onclick="showSection('profile')">
+                <div class="card-icon teal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+                <div class="card-title">My Profile</div>
+                <div class="card-description">View and update your personal details, company information, and account settings.</div>
+                <div class="card-link teal">View Profile →</div>
+            </div>
+
+            <div class="dashboard-card" onclick="showSection('apply')">
+                <div class="card-icon gold">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                        <polyline points="14,2 14,8 20,8"/>
+                        <line x1="16" y1="13" x2="8" y2="13"/>
+                        <line x1="16" y1="17" x2="8" y2="17"/>
+                        <polyline points="10,9 9,9 8,9"/>
+                    </svg>
+                </div>
+                <div class="card-title">Apply for License</div>
+                <div class="card-description">Browse all 13 available BOCRA license types and start a guided application process.</div>
+                <div class="card-link gold">Apply Now →</div>
+            </div>
+
+            <div class="dashboard-card" onclick="showSection('track')">
+                <div class="card-icon teal">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9,22 9,12 15,12 15,22"/>
+                    </svg>
+                </div>
+                <div class="card-title">Track Applications</div>
+                <div class="card-description">View the real-time status of all your submitted license applications and download receipts.</div>
+                <div style="display: inline-block; margin-bottom: 6px; background: var(--teal-light); color: var(--teal-dark); border-radius: 999px; padding: 3px 10px; font-family: 'Lato', sans-serif; font-weight: 700; font-size: 11px;">1 active application</div>
+                <div class="card-link teal">View All →</div>
+            </div>
+        </div>
+
+        <!-- Profile Section -->
+        <div class="dashboard-section" id="section-profile">
+            <div class="back-to-overview" onclick="hideSection()">← Back to Overview</div>
+            <div class="section-header">
+                <div class="section-title">My Profile</div>
+                <div class="section-subtitle">Your account information</div>
+            </div>
+            <div class="section-card">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">JD</div>
+                    <div class="profile-info">
+                        <h3 id="profileName">John Doe</h3>
+                        <div class="profile-badge" id="profileAccountType">Individual</div>
+                        <div class="profile-email" id="profileEmail">john@example.com</div>
+                    </div>
+                </div>
+                <div class="profile-grid">
+                    <div class="profile-item">
+                        <div class="profile-label">First Name</div>
+                        <div class="profile-value" id="profileFirstName">John</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Last Name</div>
+                        <div class="profile-value" id="profileLastName">Doe</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Email Address</div>
+                        <div class="profile-value" id="profileEmailValue">john@example.com</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Phone Number</div>
+                        <div class="profile-value" id="profilePhone">+267 7X XXX XXX</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Account Type</div>
+                        <div class="profile-value" id="profileAccountTypeValue">Individual</div>
+                    </div>
+                    <div class="profile-item">
+                        <div class="profile-label">Member Since</div>
+                        <div class="profile-value">March 2026</div>
+                    </div>
+                </div>
+                <div class="profile-2fa">
+                    <svg class="profile-2fa-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                    </svg>
+                    <div class="profile-2fa-text">
+                        <h4>Two-Factor Authentication</h4>
+                        <p>Microsoft Authenticator is active on your account.</p>
+                    </div>
+                    <div class="profile-2fa-badge">Active</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Apply Section -->
+        <div class="dashboard-section" id="section-apply">
+            <div class="back-to-overview" onclick="hideSection()">← Back to Overview</div>
+            <div class="section-header">
+                <div class="section-title">Select a License Type</div>
+                <div class="section-subtitle">Choose the license that matches your need. Each application is guided step by step.</div>
+            </div>
+            <div class="license-grid">
+                <div class="license-card" onclick="startApplication('Aircraft Radio Licence')">
+                    <div class="license-name">Aircraft Radio Licence</div>
+                    <div class="license-desc">For aviation communication equipment in Botswana</div>
+                    <div class="license-time">21 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Amateur Radio Licence')">
+                    <div class="license-name">Amateur Radio Licence</div>
+                    <div class="license-desc">For individuals operating amateur radio stations</div>
+                    <div class="license-time">14 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Broadcasting Licence')">
+                    <div class="license-name">Broadcasting Licence</div>
+                    <div class="license-desc">For radio and television broadcasting services</div>
+                    <div class="license-time">45 days</div>
+                    <div class="license-badge">POPULAR</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Cellular Licence')">
+                    <div class="license-name">Cellular Licence</div>
+                    <div class="license-desc">For mobile network operators providing services</div>
+                    <div class="license-time">60 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Citizen Band Radio Licence')">
+                    <div class="license-name">Citizen Band Radio Licence</div>
+                    <div class="license-desc">For CB radio short-range communication</div>
+                    <div class="license-time">7 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Point-to-Multipoint Licence')">
+                    <div class="license-name">Point-to-Multipoint Licence</div>
+                    <div class="license-desc">For wireless networks to multiple stations</div>
+                    <div class="license-time">30 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Point-to-Point Licence')">
+                    <div class="license-name">Point-to-Point Licence</div>
+                    <div class="license-desc">For fixed wireless links between two points</div>
+                    <div class="license-time">21 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Private Radio Communication Licence')">
+                    <div class="license-name">Private Radio Communication Licence</div>
+                    <div class="license-desc">For private internal two-way radio networks</div>
+                    <div class="license-time">14 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Radio Dealers Licence')">
+                    <div class="license-name">Radio Dealers Licence</div>
+                    <div class="license-desc">For businesses selling radio equipment</div>
+                    <div class="license-time">10 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Radio Frequency Licence')">
+                    <div class="license-name">Radio Frequency Licence</div>
+                    <div class="license-desc">For spectrum frequency allocation requests</div>
+                    <div class="license-time">45 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Satellite Service Licence')">
+                    <div class="license-name">Satellite Service Licence</div>
+                    <div class="license-desc">For VSAT and satellite broadband operators</div>
+                    <div class="license-time">60 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('Type Approval Licence')">
+                    <div class="license-name">Type Approval Licence</div>
+                    <div class="license-desc">For telecom equipment imported into Botswana</div>
+                    <div class="license-time">30 days</div>
+                    <div class="license-badge gold">COMMON</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+                <div class="license-card" onclick="startApplication('VANS Licence')">
+                    <div class="license-name">VANS Licence</div>
+                    <div class="license-desc">For internet and value-added network services</div>
+                    <div class="license-time">30 days</div>
+                    <button class="apply-btn">Apply</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Track Section -->
+        <div class="dashboard-section" id="section-track">
+            <div class="back-to-overview" onclick="hideSection()">← Back to Overview</div>
+            <div class="section-header">
+                <div class="section-title">My Applications</div>
+                <div class="section-subtitle">Track your submitted license applications.</div>
+                <button class="new-application-btn" style="margin-left: auto;">New Application</button>
+            </div>
+            
+            <!-- Application Card 1 - Under Review -->
+            <div class="application-card">
+                <div class="application-header">
+                    <div>
+                        <div class="application-ref">APP-2026-0031</div>
+                        <div class="application-name">Cellular Licence</div>
+                        <div class="application-status">
+                            <div class="application-status-dot"></div>
+                            Under Review
+                        </div>
+                    </div>
+                    <div class="application-dates">
+                        <div class="application-date">Submitted 10 March 2026</div>
+                        <div class="application-est">Est. completion: 09 May 2026</div>
+                        <button class="receipt-btn">Download Receipt</button>
+                    </div>
+                </div>
+                <div class="application-progress">
+                    <div class="application-progress-fill" style="width: 55%;"></div>
+                </div>
+                <div class="application-stages">
+                    <div class="application-stage">Submitted</div>
+                    <div class="application-stage">Acknowledged</div>
+                    <div class="application-stage">Under Review</div>
+                    <div class="application-stage inactive">Decision</div>
+                </div>
+            </div>
+
+            <!-- Application Card 2 - Approved -->
+            <div class="application-card">
+                <div class="application-header">
+                    <div>
+                        <div class="application-ref">APP-2026-0028</div>
+                        <div class="application-name">Broadcasting Licence</div>
+                        <div class="application-status">
+                            <div class="application-status-dot"></div>
+                            Approved
+                        </div>
+                    </div>
+                    <div class="application-dates">
+                        <div class="application-date">Submitted 2 March 2026</div>
+                        <div class="application-est">Approved 18 March 2026</div>
+                        <button class="receipt-btn">Download Receipt</button>
+                    </div>
+                </div>
+                <div class="application-progress">
+                    <div class="application-progress-fill" style="width: 100%;"></div>
+                </div>
+                <div class="application-stages">
+                    <div class="application-stage">Submitted</div>
+                    <div class="application-stage">Acknowledged</div>
+                    <div class="application-stage">Under Review</div>
+                    <div class="application-stage">Decision</div>
+                </div>
+                <div class="approved-message">
+                    <svg class="approved-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                    <div class="approved-text">
+                        Licence approved. Download your official licence document below. Expires 18 March 2027.
+                    </div>
+                    <button class="download-license-btn">Download Licence</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let selectedAccountType = '';
+        let registrationData = {};
+        let currentView = 'register';
+        let userData = {};
+        let setupOtpBoxes = [];
+        let verifyOtpBoxes = [];
+        let verifyFailCount = 0;
+        let timerInterval = null;
+        let activeSection = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFormListeners();
+            setupPasswordStrength();
+            setupPasswordMatch();
+            setupOtpBoxes();
+            setupViewTransitions();
+        });
+
+        // View switching
+        function switchView(viewName) {
+            const currentViewElement = document.querySelector('.view-content.active');
+            const newViewElement = document.getElementById(viewName + 'View');
+            
+            if (!currentViewElement || !newViewElement) return;
+            
+            // Apply exit animation
+            currentViewElement.classList.add('exit');
+            
+            setTimeout(() => {
+                // Hide current view
+                currentViewElement.classList.remove('active', 'exit');
+                
+                // Show new view with entrance animation
+                newViewElement.classList.add('active', 'enter');
+                
+                setTimeout(() => {
+                    newViewElement.classList.remove('enter');
+                    newViewElement.classList.add('enter-active');
+                }, 50);
+                
+                // Update current view
+                currentView = viewName;
+                
+                // Handle dashboard view
+                if (viewName === 'dashboard') {
+                    showDashboard();
+                } else {
+                    hideDashboard();
+                }
+                
+                // Handle 2FA views
+                if (viewName === 'setup2fa' || viewName === 'verify2fa') {
+                    startTimer(viewName === 'setup2fa' ? 'setupTimer' : 'verifyTimer');
+                } else {
+                    stopTimer();
+                }
+                
+                // Fill user email for verify view
+                if (viewName === 'verify2fa') {
+                    document.getElementById('verifyUserEmail').textContent = userData.email || 'user@example.com';
+                }
+            }, 200);
+        }
+
+        // Setup view transitions
+        function setupViewTransitions() {
+            const style = document.createElement('style');
+            style.textContent = `
+                .view-content.enter-active {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        // Dashboard functions
+        function showDashboard() {
+            document.body.style.background = 'var(--bg)';
+            document.querySelector('.main-content').style.display = 'none';
+            document.querySelector('.dashboard-topbar').classList.add('show');
+            document.querySelector('.dashboard-content').classList.add('show');
+            fillDashboardData();
+        }
+
+        function hideDashboard() {
+            document.body.style.background = 'var(--bg)';
+            document.querySelector('.main-content').style.display = 'flex';
+            document.querySelector('.dashboard-topbar').classList.remove('show');
+            document.querySelector('.dashboard-content').classList.remove('show');
+        }
+
+        function fillDashboardData() {
+            if (!userData.firstName) return;
+            
+            const initials = userData.firstName.charAt(0) + userData.lastName.charAt(0);
+            const fullName = userData.firstName + ' ' + userData.lastName;
+            
+            // Update dashboard elements
+            document.getElementById('dashAvatar').textContent = initials;
+            document.getElementById('dashUserName').textContent = fullName;
+            document.getElementById('dashWelcomeName').textContent = fullName;
+            
+            // Update profile section
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('profileName').textContent = fullName;
+            document.getElementById('profileFirstName').textContent = userData.firstName;
+            document.getElementById('profileLastName').textContent = userData.lastName;
+            document.getElementById('profileEmail').textContent = userData.email;
+            document.getElementById('profileEmailValue').textContent = userData.email;
+            document.getElementById('profilePhone').textContent = userData.phone || '+267 7X XXX XXX';
+            document.getElementById('profileAccountType').textContent = userData.accountType;
+            document.getElementById('profileAccountTypeValue').textContent = userData.accountType;
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('show');
+            });
+            
+            // Show selected section
+            const section = document.getElementById('section-' + sectionName);
+            if (section) {
+                section.classList.add('show');
+                activeSection = sectionName;
+            }
+        }
+
+        function hideSection() {
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.remove('show');
+            });
+            activeSection = null;
+        }
+
+        function logout() {
+            // Clear all data
+            userData = {};
+            verifyFailCount = 0;
+            clearAllForms();
+            
+            // Switch to login view
+            switchView('login');
+            
+            // Hide success banners
+            document.getElementById('successBanner').classList.remove('show');
+        }
+
+        // OTP box functions
+        function setupOtpBoxes() {
+            // Setup OTP boxes
+            setupOtpBoxes = initOtpBoxes('setup-otp-');
+            verifyOtpBoxes = initOtpBoxes('verify-otp-');
+        }
+
+        function initOtpBoxes(prefix) {
+            const boxes = [];
+            for (let i = 1; i <= 6; i++) {
+                const box = document.getElementById(prefix + i);
+                if (box) {
+                    boxes.push(box);
+                    
+                    // Input event - auto advance
+                    box.addEventListener('input', (e) => {
+                        if (e.target.value.length === 1) {
+                            otpAdvance(i - 1, prefix);
+                        }
+                    });
+                    
+                    // Keydown event - backspace handling
+                    box.addEventListener('keydown', (e) => {
+                        if (e.key === 'Backspace' && e.target.value === '') {
+                            otpBack(e, i - 1, prefix);
+                        }
+                    });
+                    
+                    // Paste event
+                    box.addEventListener('paste', (e) => {
+                        e.preventDefault();
+                        otpPaste(e, prefix);
+                    });
+                }
+            }
+            return boxes;
+        }
+
+        function otpAdvance(index, prefix) {
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            if (index < boxes.length - 1) {
+                boxes[index + 1].focus();
+            }
+        }
+
+        function otpBack(event, index, prefix) {
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            if (index > 0) {
+                boxes[index - 1].focus();
+            }
+        }
+
+        function otpPaste(event, prefix) {
+            const pastedData = event.clipboardData.getData('text');
+            const digits = pastedData.replace(/\D/g, '').slice(0, 6);
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            
+            digits.split('').forEach((digit, index) => {
+                if (boxes[index]) {
+                    boxes[index].value = digit;
+                }
+            });
+            
+            // Focus last filled box
+            const lastFilledIndex = Math.min(digits.length - 1, boxes.length - 1);
+            if (lastFilledIndex >= 0) {
+                boxes[lastFilledIndex].focus();
+            }
+        }
+
+        function getOtpValue(prefix) {
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            return boxes.map(box => box.value).join('');
+        }
+
+        function clearOtp(prefix) {
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            boxes.forEach(box => box.value = '');
+            if (boxes[0]) boxes[0].focus();
+        }
+
+        function shakeOtpBoxes(prefix) {
+            const boxes = prefix === 'setup-otp-' ? setupOtpBoxes : verifyOtpBoxes;
+            boxes.forEach(box => box.classList.add('otp-shake'));
+            setTimeout(() => {
+                boxes.forEach(box => box.classList.remove('otp-shake'));
+            }, 500);
+        }
+
+        // Timer functions
+        function startTimer(timerId) {
+            stopTimer();
+            const timerElement = document.getElementById(timerId);
+            if (!timerElement) return;
+            
+            // Reset animation
+            timerElement.style.animation = 'none';
+            timerElement.offsetHeight; // Trigger reflow
+            timerElement.style.animation = 'timer 30s linear infinite';
+        }
+
+        function stopTimer() {
+            const timers = document.querySelectorAll('.timer-fill');
+            timers.forEach(timer => {
+                timer.style.animation = 'none';
+            });
+        }
+
+        // 2FA Setup functions
+        function verifySetup() {
+            const termsCheckbox = document.getElementById('setupTerms');
+            const otpValue = getOtpValue('setup-otp-');
+            const errorElement = document.getElementById('setupError');
+            
+            // Check terms
+            if (!termsCheckbox.checked) {
+                showToast('Please accept the terms to continue', 'error');
+                return;
+            }
+            
+            // Check OTP
+            if (otpValue.length !== 6) {
+                shakeOtpBoxes('setup-otp-');
+                errorElement.style.display = 'block';
+                errorElement.textContent = 'Please enter all 6 digits';
+                return;
+            }
+            
+            // Hide error
+            errorElement.style.display = 'none';
+            
+            // Show loading
+            const btn = event.target;
+            showLoading(btn);
+            
+            // Simulate verification
+            setTimeout(() => {
+                hideLoading(btn);
+                
+                // Store user data for dashboard
+                userData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('regEmail').value,
+                    phone: document.getElementById('phoneNumber').value,
+                    accountType: selectedAccountType,
+                    company: document.getElementById('companyName').value
+                };
+                
+                // Switch to login with success
+                switchView('login');
+                document.getElementById('loginEmail').value = userData.email;
+                
+                // Show success banner
+                document.getElementById('successBanner').classList.add('show');
+                setTimeout(() => {
+                    document.getElementById('successBanner').classList.remove('show');
+                }, 5000);
+            }, 1600);
+        }
+
+        // 2FA Verify functions
+        function verifyLogin() {
+            const otpValue = getOtpValue('verify-otp-');
+            const errorElement = document.getElementById('setupError');
+            
+            // Check OTP
+            if (otpValue.length !== 6) {
+                shakeOtpBoxes('verify-otp-');
+                errorElement.style.display = 'block';
+                errorElement.textContent = 'Please enter all 6 digits';
+                return;
+            }
+            
+            // Simulate wrong code for 000000
+            if (otpValue === '000000') {
+                handleVerifyFailure();
+                return;
+            }
+            
+            // Success
+            verifyFailCount = 0;
+            errorElement.style.display = 'none';
+            
+            // Show loading
+            const btn = event.target;
+            showLoading(btn);
+            
+            setTimeout(() => {
+                hideLoading(btn);
+                switchView('dashboard');
+            }, 1400);
+        }
+
+        function handleVerifyFailure() {
+            verifyFailCount++;
+            const attemptCounter = document.getElementById('attemptCounter');
+            const attemptText = attemptCounter.querySelector('.attempt-counter-text');
+            
+            clearOtp('verify-otp-');
+            shakeOtpBoxes('verify-otp-');
+            
+            if (verifyFailCount >= 3) {
+                // Lockout
+                document.getElementById('lockoutMessage').style.display = 'block';
+                attemptCounter.style.display = 'none';
+                event.target.disabled = true;
+                
+                // Start countdown
+                let seconds = 600;
+                const timerElement = document.getElementById('lockoutTimer');
+                
+                const countdown = setInterval(() => {
+                    const minutes = Math.floor(seconds / 60);
+                    const secs = seconds % 60;
+                    timerElement.textContent = `${minutes}:${secs.toString().padStart(2, '0')}`;
+                    
+                    if (seconds <= 0) {
+                        clearInterval(countdown);
+                        document.getElementById('lockoutMessage').style.display = 'none';
+                        event.target.disabled = false;
+                        verifyFailCount = 0;
+                    }
+                    seconds--;
+                }, 1000);
+            } else {
+                // Show attempt counter
+                attemptCounter.style.display = 'flex';
+                attemptText.textContent = `${3 - verifyFailCount} attempts remaining`;
+            }
+        }
+
+        // Utility functions
+        function toggleManualEntry() {
+            const box = document.getElementById('manualEntryBox');
+            box.classList.toggle('show');
+        }
+
+        function copyKey() {
+            const key = 'JBSW YYTK JBSW YYTK JBSW';
+            navigator.clipboard.writeText(key).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        }
+
+        function toggleAccordion() {
+            const accordion = document.getElementById('helpAccordion');
+            const trigger = event.target;
+            accordion.classList.toggle('show');
+            
+            if (accordion.classList.contains('show')) {
+                trigger.textContent = trigger.textContent.replace('▾', '▴');
+            } else {
+                trigger.textContent = trigger.textContent.replace('▴', '▾');
+            }
+        }
+
+        function startApplication(licenseName) {
+            showToast(`Application started for ${licenseName}. Full application flow coming soon.`, 'success');
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <svg class="toast-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                    <polyline points="20,6 9,17 4,12"/>
+                </svg>
+                <div class="toast-message">${message}</div>
+            `;
+            
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3500);
+        }
+
+        function clearAllForms() {
+            // Clear registration form
+            document.getElementById('registrationForm').reset();
+            document.getElementById('loginFormElement').reset();
+            clearOtp('setup-otp-');
+            clearOtp('verify-otp-');
+            
+            // Reset account type selection
+            document.querySelectorAll('.account-type-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            selectedAccountType = '';
+            
+            // Hide company fields
+            document.getElementById('companyFields').classList.remove('show');
+        }
+
+        // Tab switching (updated for new views)
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form-content');
+            
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tab === 'register' ? 1 : 2})`).classList.add('active');
+            
+            // Update active form
+            forms.forEach(f => f.classList.remove('active'));
+            document.getElementById(`${tab}View`).classList.add('active');
+            
+            // Update current view
+            currentView = tab;
+        }
+
+        // Account type selection (unchanged)
+        function selectAccountType(type) {
+            const cards = document.querySelectorAll('.account-type-card');
+            const companyFields = document.getElementById('companyFields');
+            const accountTypeInput = document.getElementById('accountType');
+            
+            cards.forEach(card => card.classList.remove('selected'));
+            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            
+            selectedAccountType = type;
+            accountTypeInput.value = type;
+            
+            if (type === 'company') {
+                companyFields.classList.add('show');
+            } else {
+                companyFields.classList.remove('show');
+            }
+            
+            hideError(accountTypeInput);
+        }
+
+        // Password strength meter (unchanged)
+        function setupPasswordStrength() {
+            const passwordInput = document.getElementById('regPassword');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                const strength = calculatePasswordStrength(password);
+                
+                strengthFill.style.width = strength.percentage + '%';
+                strengthFill.className = 'strength-fill strength-' + strength.level;
+                strengthText.textContent = strength.text;
+                strengthText.className = 'strength-text strength-' + strength.level;
+            });
+        }
+
+        function calculatePasswordStrength(password) {
+            if (password.length === 0) {
+                return { level: 'weak', percentage: 0, text: 'Enter password' };
+            }
+            
+            let strength = 0;
+            
+            // Length checks
+            if (password.length >= 1) strength += 10;
+            if (password.length >= 4) strength += 20;
+            if (password.length >= 7) strength += 25;
+            if (password.length >= 10) strength += 25;
+            
+            // Complexity checks
+            if (/[a-z]/.test(password)) strength += 5;
+            if (/[A-Z]/.test(password)) strength += 5;
+            if (/[0-9]/.test(password)) strength += 5;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 5;
+            
+            if (strength <= 20) {
+                return { level: 'weak', percentage: 20, text: 'Weak' };
+            } else if (strength <= 45) {
+                return { level: 'fair', percentage: 45, text: 'Fair' };
+            } else if (strength <= 70) {
+                return { level: 'good', percentage: 70, text: 'Good' };
+            } else {
+                return { level: 'strong', percentage: 100, text: 'Strong' };
+            }
+        }
+
+        // Password match checker (unchanged)
+        function setupPasswordMatch() {
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordMatch = document.getElementById('passwordMatch');
+            const passwordMismatch = document.getElementById('passwordMismatch');
+            
+            confirmPassword.addEventListener('input', () => {
+                const password = document.getElementById('regPassword').value;
+                const confirm = confirmPassword.value;
+                
+                if (confirm.length === 0) {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'none';
+                } else if (password === confirm) {
+                    passwordMatch.style.display = 'flex';
+                    passwordMismatch.style.display = 'none';
+                } else {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'flex';
+                }
+            });
+        }
+
+        // Password toggle (unchanged)
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '👁‍🗨';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁';
+            }
+        }
+
+        // Form listeners (updated)
+        function setupFormListeners() {
+            // Registration form
+            document.getElementById('registrationForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateRegistration()) {
+                    // Store registration data
+                    userData = {
+                        firstName: document.getElementById('firstName').value,
+                        lastName: document.getElementById('lastName').value,
+                        email: document.getElementById('regEmail').value,
+                        phone: document.getElementById('phoneNumber').value,
+                        accountType: selectedAccountType,
+                        company: document.getElementById('companyName').value
+                    };
+                    
+                    // Switch to 2FA setup
+                    switchView('setup2fa');
+                }
+            });
+            
+            // Login form
+            document.getElementById('loginFormElement').addEventListener('submit', (e) => {
+                e.preventDefault();
+                if (validateLogin()) {
+                    // Store email for verify view
+                    userData.email = document.getElementById('loginEmail').value;
+                    
+                    // Switch to 2FA verify
+                    switchView('verify2fa');
+                }
+            });
+        }
+
+        // Registration validation (unchanged)
+        function validateRegistration() {
+            let isValid = true;
+            
+            // First name
+            const firstName = document.getElementById('firstName');
+            if (!firstName.value.trim()) {
+                showError(firstName);
+                isValid = false;
+            } else {
+                hideError(firstName);
+            }
+            
+            // Last name
+            const lastName = document.getElementById('lastName');
+            if (!lastName.value.trim()) {
+                showError(lastName);
+                isValid = false;
+            } else {
+                hideError(lastName);
+            }
+            
+            // Email
+            const email = document.getElementById('regEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email);
+                isValid = false;
+            } else {
+                hideError(email);
+            }
+            
+            // Account type
+            if (!selectedAccountType) {
+                const accountTypeInput = document.getElementById('accountType');
+                showError(accountTypeInput);
+                isValid = false;
+            } else {
+                hideError(accountTypeInput);
+            }
+            
+            // Company name (if company selected)
+            if (selectedAccountType === 'company') {
+                const companyName = document.getElementById('companyName');
+                if (!companyName.value.trim()) {
+                    showError(companyName);
+                    isValid = false;
+                } else {
+                    hideError(companyName);
+                }
+            }
+            
+            // Password
+            const password = document.getElementById('regPassword');
+            if (password.value.length < 8) {
+                showError(password);
+                isValid = false;
+            } else {
+                hideError(password);
+            }
+            
+            // Confirm password
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword);
+                isValid = false;
+            } else {
+                hideError(confirmPassword);
+            }
+            
+            if (!isValid) {
+                const btn = document.querySelector('.btn-register');
+                btn.classList.add('shake');
+                setTimeout(() => btn.classList.remove('shake'), 300);
+            }
+            
+            return isValid;
+        }
+
+        // Login validation (unchanged)
+        function validateLogin() {
+            let isValid = true;
+            
+            // Email
+            const email = document.getElementById('loginEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email);
+                isValid = false;
+            } else {
+                hideError(email);
+            }
+            
+            // Password
+            const password = document.getElementById('loginPassword');
+            if (!password.value.trim()) {
+                showError(password);
+                isValid = false;
+            } else {
+                hideError(password);
+            }
+            
+            if (!isValid) {
+                const btn = document.querySelector('.btn-login');
+                btn.classList.add('shake');
+                setTimeout(() => btn.classList.remove('shake'), 300);
+                
+                // Show general error
+                document.getElementById('loginError').style.display = 'block';
+            } else {
+                document.getElementById('loginError').style.display = 'none';
+            }
+            
+            return isValid;
+        }
+
+        // Utility functions (unchanged)
+        function showError(input) {
+            input.classList.add('error');
+            const errorMsg = input.parentElement.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.classList.add('show');
+            }
+        }
+
+        function hideError(input) {
+            input.classList.remove('error');
+            const errorMsg = input.parentElement.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.classList.remove('show');
+            }
+        }
+
+        function showLoading(btn) {
+            btn.classList.add('loading');
+            btn.disabled = true;
+        }
+
+        function hideLoading(btn) {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

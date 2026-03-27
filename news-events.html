@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>News, Media & Events - BOCRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            line-height: 1.6;
+            background: var(--bg);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Forum', serif;
+            font-weight: 400;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            background: var(--teal-dark);
+            padding: 8px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+        }
+
+        .topbar-left {
+            display: flex;
+            gap: 20px;
+        }
+
+        .topbar-right {
+            display: flex;
+            gap: 15px;
+        }
+
+        .topbar a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .topbar a:hover {
+            color: white;
+        }
+
+        /* HEADER */
+        .header {
+            background: white;
+            padding: 15px 40px;
+            border-bottom: 2px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-section img {
+            height: 50px;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 40px;
+            background: var(--border);
+        }
+
+        .logo-text h1 {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--charcoal);
+            font-family: 'Lato', sans-serif;
+        }
+
+        .logo-text p {
+            font-size: 11px;
+            color: var(--mid);
+            font-weight: 300;
+        }
+
+        .search-bar {
+            position: relative;
+            width: 350px;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 10px 45px 10px 15px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-size: 13px;
+            font-family: 'Lato', sans-serif;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar input:focus {
+            border-color: var(--teal);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: var(--teal);
+            border: none;
+            padding: 0 15px;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* NAVIGATION */
+        .navbar {
+            background: var(--teal);
+            padding: 0 40px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .nav-menu li a {
+            display: block;
+            padding: 13px 18px;
+            color: rgba(255,255,255,0.85);
+            text-decoration: none;
+            font-size: 14px;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .nav-menu li a:hover,
+        .nav-menu li a.active {
+            color: white;
+            border-bottom-color: var(--gold);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            letter-spacing: -0.5px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        /* FILTERS SECTION */
+        .filters-section {
+            background: white;
+            padding: 25px 40px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 73px;
+            z-index: 90;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .filters-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-btn {
+            padding: 8px 18px;
+            border: 1.5px solid var(--border);
+            background: white;
+            color: var(--mid);
+            font-size: 13px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Lato', sans-serif;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+
+        .filter-btn.active {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        /* CONTENT SECTION */
+        .content-section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 50px 40px;
+        }
+
+        .results-info {
+            margin-bottom: 30px;
+            font-size: 14px;
+            color: var(--mid);
+        }
+
+        .results-info strong {
+            color: var(--teal);
+            font-weight: 700;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .news-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+            border-color: var(--teal);
+        }
+
+        .news-card-image {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            background: var(--bg);
+        }
+
+        .news-card-content {
+            padding: 25px;
+        }
+
+        .news-card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .news-category {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-radius: 4px;
+        }
+
+        .news-date {
+            font-size: 12px;
+            color: var(--light);
+        }
+
+        .news-card h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: var(--charcoal);
+            line-height: 1.3;
+        }
+
+        .news-card p {
+            font-size: 14px;
+            color: var(--mid);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        .news-card-footer {
+            padding: 0 25px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .read-more {
+            color: var(--teal);
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .read-more:hover {
+            color: var(--teal-dark);
+        }
+
+        /* DETAIL MODAL */
+        .detail-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1000;
+            overflow-y: auto;
+            padding: 40px 20px;
+        }
+
+        .detail-modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .detail-content {
+            background: white;
+            max-width: 900px;
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .detail-header {
+            position: relative;
+        }
+
+        .detail-image {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+        }
+
+        .detail-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            color: var(--charcoal);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .detail-close:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        .detail-body {
+            padding: 40px;
+        }
+
+        .detail-meta {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail-body h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: var(--charcoal);
+            line-height: 1.2;
+        }
+
+        .detail-body .content-text {
+            font-size: 16px;
+            line-height: 1.8;
+            color: var(--mid);
+            white-space: pre-line;
+        }
+
+        .detail-actions {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-print {
+            padding: 12px 24px;
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-print:hover {
+            background: var(--teal-dark);
+        }
+
+        .btn-close {
+            padding: 12px 24px;
+            background: white;
+            color: var(--teal);
+            border: 1.5px solid var(--teal);
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: 'Lato', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .btn-close:hover {
+            background: var(--teal-light);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: var(--charcoal);
+            color: rgba(255,255,255,0.5);
+            padding: 50px 40px 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding-bottom: 40px;
+        }
+
+        .footer-logo {
+            height: 40px;
+            filter: brightness(0) invert(1);
+            opacity: 0.85;
+            margin-bottom: 15px;
+        }
+
+        .footer h4 {
+            font-size: 16px;
+            color: white;
+            margin-bottom: 15px;
+        }
+
+        .footer ul {
+            list-style: none;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer ul li a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+
+        .footer ul li a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            background: rgba(0,0,0,0.25);
+            padding: 15px 40px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 300;
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--mid);
+        }
+
+        .no-results h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        /* PRINT STYLES */
+        @media print {
+            .topbar, .header, .navbar, .filters-section, .footer, .detail-close, .detail-actions {
+                display: none !important;
+            }
+            
+            .detail-modal {
+                position: static;
+                background: white;
+                padding: 0;
+            }
+            
+            .detail-content {
+                max-width: 100%;
+                box-shadow: none;
+            }
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .topbar {
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px 20px;
+            }
+
+            .header {
+                padding: 15px 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .search-bar {
+                width: 100%;
+            }
+
+            .navbar {
+                padding: 0 20px;
+                overflow-x: auto;
+            }
+
+            .nav-menu {
+                flex-wrap: nowrap;
+            }
+
+            .hero {
+                padding: 40px 20px;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .filters-section {
+                padding: 20px;
+            }
+
+            .filters-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .content-section {
+                padding: 30px 20px;
+            }
+
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .detail-body {
+                padding: 25px;
+            }
+
+            .detail-body h1 {
+                font-size: 28px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOPBAR -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <span>+267 3957755</span>
+            <span>|</span>
+            <span>info@bocra.org.bw</span>
+        </div>
+        <div class="topbar-right">
+            <a href="index.html">Setswana</a>
+            <span>|</span>
+            <a href="index.html">Site Map</a>
+            <span>|</span>
+            <a href="index.html">Accessibility</a>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo-section">
+                <img src="assets/images/bocra-logo.png" alt="BOCRA Logo">
+                <div class="logo-divider"></div>
+                <div class="logo-text">
+                    <h1>BOCRA</h1>
+                    <p>Botswana Communications Regulatory Authority</p>
+                </div>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search news, events, publications...">
+                <button>🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar">
+        <ul class="nav-menu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="index.html">About BOCRA</a></li>
+            <li><a href="simple-register.html">Licensing</a></li>
+            <li><a href="complaints.html">Complaints</a></li>
+            <li><a href="index.html">Regulations</a></li>
+            <li><a href="cyber-compliance.html">Cybersecurity</a></li>
+            <li><a href="index.html">Domain Registry</a></li>
+            <li><a href="index.html">Data & Insights</a></li>
+            <li><a href="news-events.html" class="active">News & Events</a></li>
+            <li><a href="index.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero">
+        <h1>News, Media & Events</h1>
+        <p>Stay informed with the latest updates, press releases, regulatory announcements, and upcoming events from BOCRA.</p>
+    </section>
+
+    <!-- FILTERS -->
+    <section class="filters-section">
+        <div class="filters-container">
+            <div class="filter-group">
+                <label>Category:</label>
+                <button class="filter-btn active" data-category="All">All</button>
+                <button class="filter-btn" data-category="Events">Events</button>
+                <button class="filter-btn" data-category="Media Releases">Media Releases</button>
+                <button class="filter-btn" data-category="Press Releases">Press Releases</button>
+                <button class="filter-btn" data-category="Consultations">Consultations</button>
+                <button class="filter-btn" data-category="Publications">Publications</button>
+                <button class="filter-btn" data-category="Statements">Statements</button>
+            </div>
+            <div class="filter-group">
+                <label>Year:</label>
+                <button class="filter-btn active" data-year="All">All</button>
+                <button class="filter-btn" data-year="2026">2026</button>
+                <button class="filter-btn" data-year="2025">2025</button>
+                <button class="filter-btn" data-year="2024">2024</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTENT -->
+    <section class="content-section">
+        <div class="results-info">
+            Showing <strong id="resultsCount">0</strong> results
+        </div>
+        <div class="news-grid" id="newsGrid">
+            <!-- News cards will be dynamically inserted here -->
+        </div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h3>No results found</h3>
+            <p>Try adjusting your filters to see more content.</p>
+        </div>
+    </section>
+
+    <!-- DETAIL MODAL -->
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-content">
+            <div class="detail-header">
+                <img id="detailImage" class="detail-image" src="" alt="">
+                <button class="detail-close" onclick="closeDetail()">×</button>
+            </div>
+            <div class="detail-body">
+                <div class="detail-meta">
+                    <span class="news-category" id="detailCategory"></span>
+                    <span class="news-date" id="detailDate"></span>
+                </div>
+                <h1 id="detailTitle"></h1>
+                <div class="content-text" id="detailContent"></div>
+                <div class="detail-actions">
+                    <button class="btn-print" onclick="window.print()">🖨️ Print</button>
+                    <button class="btn-close" onclick="closeDetail()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <img src="assets/images/bocra-logo.png" alt="BOCRA" class="footer-logo">
+                <p style="font-size: 13px; font-weight: 300; line-height: 1.6; max-width: 280px;">
+                    Botswana Communications Regulatory Authority — regulating telecommunications, internet, broadcasting and postal services for the benefit of all Batswana.
+                </p>
+            </div>
+            <div>
+                <h4>Services</h4>
+                <ul>
+                    <li><a href="simple-register.html">Licensing Portal</a></li>
+                    <li><a href="complaints.html">Consumer Complaints</a></li>
+                    <li><a href="index.html">Domain Registry</a></li>
+                    <li><a href="cyber-compliance.html">Cyber Incidents</a></li>
+                    <li><a href="index.html">Spectrum Map</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>About</h4>
+                <ul>
+                    <li><a href="index.html">About BOCRA</a></li>
+                    <li><a href="index.html">Board & Leadership</a></li>
+                    <li><a href="index.html">Strategic Plan</a></li>
+                    <li><a href="index.html">Annual Reports</a></li>
+                    <li><a href="index.html">Careers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>Resources</h4>
+                <ul>
+                    <li><a href="index.html">FAQ</a></li>
+                    <li><a href="index.html">Regulations Library</a></li>
+                    <li><a href="index.html">Open Data</a></li>
+                    <li><a href="index.html">Privacy Policy</a></li>
+                    <li><a href="news-events.html">News & Events</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 Botswana Communications Regulatory Authority. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="js/news-data.js"></script>
+    <script src="js/news-events.js"></script>
+
+</body>
+</html>

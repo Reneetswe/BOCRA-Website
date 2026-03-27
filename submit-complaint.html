@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submit Complaint - BOCRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --rose: #D4415E;
+            --rose-dark: #A8334A;
+            --rose-light: #FCE8EC;
+            --teal: #006B5E;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --success: #28A745;
+            --error: #DC3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Forum', serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--rose-dark);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--mid);
+            font-size: 1.1rem;
+        }
+
+        .form-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--rose);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--rose-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--charcoal);
+        }
+
+        label .required {
+            color: var(--error);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--rose);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--rose);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--rose-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--mid);
+            color: var(--white);
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--charcoal);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid var(--rose-light);
+            border-top: 3px solid var(--rose);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Submit a Complaint</h1>
+            <p>Report issues with telecommunications, broadcasting, or postal services</p>
+        </div>
+
+        <div id="alertSuccess" class="alert alert-success">
+            <strong>Success!</strong> Your complaint has been submitted successfully. 
+            <br>Complaint Number: <strong id="complaintNumber"></strong>
+            <br>Priority: <strong id="complaintPriority"></strong>
+            <br>You will receive updates via email.
+        </div>
+
+        <div id="alertError" class="alert alert-error">
+            <strong>Error!</strong> <span id="errorMessage"></span>
+        </div>
+
+        <div class="form-card">
+            <form id="complaintForm">
+                <!-- Complainant Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Your Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" name="complainant_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" name="complainant_email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone Number <span class="required">*</span></label>
+                        <input type="tel" name="complainant_phone" placeholder="+267 7XXXXXXX" required>
+                    </div>
+                </div>
+
+                <!-- Complaint Details -->
+                <div class="form-section">
+                    <h2 class="section-title">Complaint Details</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Complaint Type <span class="required">*</span></label>
+                            <select name="complaint_type" required>
+                                <option value="">Select type</option>
+                                <option value="service_quality">Service Quality</option>
+                                <option value="billing">Billing Issues</option>
+                                <option value="network_outage">Network Outage</option>
+                                <option value="customer_service">Customer Service</option>
+                                <option value="fraud">Fraud/Scam</option>
+                                <option value="data_privacy">Data Privacy</option>
+                                <option value="spam">Spam/Unsolicited Messages</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sector <span class="required">*</span></label>
+                            <select name="sector" required>
+                                <option value="">Select sector</option>
+                                <option value="telecommunications">Telecommunications</option>
+                                <option value="broadcasting">Broadcasting</option>
+                                <option value="postal">Postal Services</option>
+                                <option value="internet">Internet Services</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Service Provider</label>
+                        <input type="text" name="service_provider" placeholder="e.g., Mascom, Orange, BTCL">
+                    </div>
+                    <div class="form-group">
+                        <label>Subject <span class="required">*</span></label>
+                        <input type="text" name="subject" placeholder="Brief summary of your complaint" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Description <span class="required">*</span></label>
+                        <textarea name="description" placeholder="Provide detailed information about your complaint..." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Desired Outcome</label>
+                        <textarea name="desired_outcome" placeholder="What resolution are you seeking?"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit Complaint</button>
+                </div>
+            </form>
+
+            <div id="loadingIndicator" class="loading">
+                <div class="spinner"></div>
+                <p>Submitting your complaint...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('complaintForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Hide alerts
+            document.getElementById('alertSuccess').classList.remove('show');
+            document.getElementById('alertError').classList.remove('show');
+            
+            // Show loading
+            document.getElementById('loadingIndicator').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            this.style.display = 'none';
+            
+            try {
+                const response = await fetch('api/submit-complaint.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading
+                document.getElementById('loadingIndicator').classList.remove('show');
+                
+                if (result.success) {
+                    // Show success message
+                    document.getElementById('complaintNumber').textContent = result.complaint_number;
+                    document.getElementById('complaintPriority').textContent = result.priority.toUpperCase();
+                    document.getElementById('alertSuccess').classList.add('show');
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        this.reset();
+                        this.style.display = 'block';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    document.getElementById('errorMessage').textContent = result.message || 'An error occurred. Please try again.';
+                    document.getElementById('alertError').classList.add('show');
+                    this.style.display = 'block';
+                    document.getElementById('submitBtn').disabled = false;
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } catch (error) {
+                // Hide loading
+                document.getElementById('loadingIndicator').classList.remove('show');
+                
+                // Show error
+                document.getElementById('errorMessage').textContent = 'Network error. Please check your connection and try again.';
+                document.getElementById('alertError').classList.add('show');
+                this.style.display = 'block';
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>

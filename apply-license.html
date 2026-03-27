@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for License - BOCRA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --success: #28A745;
+            --error: #DC3545;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background: var(--bg);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Forum', serif;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--teal-dark);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--mid);
+            font-size: 1.1rem;
+        }
+
+        .form-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--teal);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--teal-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--charcoal);
+        }
+
+        label .required {
+            color: var(--error);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--teal);
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            border: none;
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--teal);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background: var(--teal-dark);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .btn-secondary {
+            background: var(--mid);
+            color: var(--white);
+            margin-right: 10px;
+        }
+
+        .btn-secondary:hover {
+            background: var(--charcoal);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .alert {
+            padding: 15px 20px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 3px solid var(--teal-light);
+            border-top: 3px solid var(--teal);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Apply for License</h1>
+            <p>Submit your application to BOCRA Licensing Department</p>
+        </div>
+
+        <div id="alertSuccess" class="alert alert-success">
+            <strong>Success!</strong> Your application has been submitted successfully. 
+            <br>Application Number: <strong id="applicationNumber"></strong>
+            <br>You will receive updates via email.
+        </div>
+
+        <div id="alertError" class="alert alert-error">
+            <strong>Error!</strong> <span id="errorMessage"></span>
+        </div>
+
+        <div class="form-card">
+            <form id="licenseApplicationForm">
+                <!-- Applicant Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Applicant Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <input type="text" name="applicant_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <input type="email" name="applicant_email" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone Number <span class="required">*</span></label>
+                            <input type="tel" name="applicant_phone" placeholder="+267 7XXXXXXX" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Business Type <span class="required">*</span></label>
+                            <select name="business_type" required>
+                                <option value="">Select type</option>
+                                <option value="individual">Individual</option>
+                                <option value="company">Company</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Company Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Company Information</h2>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Company Name</label>
+                            <input type="text" name="company_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Registration Number</label>
+                            <input type="text" name="registration_number" placeholder="BW00XXXXXXXXX">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Tax Number</label>
+                            <input type="text" name="tax_number" placeholder="CXXXXXXXXX">
+                        </div>
+                        <div class="form-group">
+                            <label>License Type <span class="required">*</span></label>
+                            <select name="license_type" required>
+                                <option value="">Select license type</option>
+                                <option value="telecommunications">Telecommunications</option>
+                                <option value="broadcasting">Broadcasting</option>
+                                <option value="internet_service">Internet Service Provider</option>
+                                <option value="postal">Postal Services</option>
+                                <option value="spectrum">Spectrum License</option>
+                                <option value="equipment_approval">Equipment Approval</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Address Information -->
+                <div class="form-section">
+                    <h2 class="section-title">Address Information</h2>
+                    <div class="form-group">
+                        <label>Physical Address <span class="required">*</span></label>
+                        <textarea name="physical_address" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Postal Address</label>
+                        <input type="text" name="postal_address" placeholder="P.O. Box XXXX, City">
+                    </div>
+                </div>
+
+                <!-- Business Details -->
+                <div class="form-section">
+                    <h2 class="section-title">Business Details</h2>
+                    <div class="form-group">
+                        <label>Business Description <span class="required">*</span></label>
+                        <textarea name="business_description" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Proposed Services <span class="required">*</span></label>
+                        <textarea name="proposed_services" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Technical Capacity</label>
+                        <textarea name="technical_capacity" placeholder="Describe your technical infrastructure and capabilities"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Financial Capacity</label>
+                        <textarea name="financial_capacity" placeholder="Describe your financial standing and investment capacity"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" onclick="window.history.back()">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">Submit Application</button>
+                </div>
+            </form>
+
+            <div id="loadingIndicator" class="loading">
+                <div class="spinner"></div>
+                <p>Submitting your application...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('licenseApplicationForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Hide alerts
+            document.getElementById('alertSuccess').classList.remove('show');
+            document.getElementById('alertError').classList.remove('show');
+            
+            // Show loading
+            document.getElementById('loadingIndicator').classList.add('show');
+            document.getElementById('submitBtn').disabled = true;
+            this.style.display = 'none';
+            
+            try {
+                const response = await fetch('api/submit-license-application.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                // Hide loading
+                document.getElementById('loadingIndicator').classList.remove('show');
+                
+                if (result.success) {
+                    // Show success message
+                    document.getElementById('applicationNumber').textContent = result.application_number;
+                    document.getElementById('alertSuccess').classList.add('show');
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    
+                    // Reset form after 3 seconds
+                    setTimeout(() => {
+                        this.reset();
+                        this.style.display = 'block';
+                    }, 3000);
+                } else {
+                    // Show error message
+                    document.getElementById('errorMessage').textContent = result.message || 'An error occurred. Please try again.';
+                    document.getElementById('alertError').classList.add('show');
+                    this.style.display = 'block';
+                    document.getElementById('submitBtn').disabled = false;
+                    
+                    // Scroll to top
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            } catch (error) {
+                // Hide loading
+                document.getElementById('loadingIndicator').classList.remove('show');
+                
+                // Show error
+                document.getElementById('errorMessage').textContent = 'Network error. Please check your connection and try again.';
+                document.getElementById('alertError').classList.add('show');
+                this.style.display = 'block';
+                document.getElementById('submitBtn').disabled = false;
+                
+                // Scroll to top
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+    </script>
+</body>
+</html>

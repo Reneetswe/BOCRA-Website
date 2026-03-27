@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOCRA Licensing Portal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --error: #CC2936;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            color: var(--charcoal);
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Topbar */
+        .topbar {
+            background: #003d35;
+            padding: 8px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: rgba(255,255,255,0.65);
+            position: relative;
+            z-index: 10;
+        }
+
+        .topbar-separator {
+            margin: 0 12px;
+            opacity: 0.5;
+        }
+
+        .topbar a {
+            color: rgba(255,255,255,0.65);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .topbar a:hover {
+            color: white;
+        }
+
+        /* Header */
+        .header {
+            background: var(--white);
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border);
+            position: relative;
+            z-index: 10;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo {
+            height: 40px;
+            width: auto;
+        }
+
+        .logo-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+
+        .logo-text .bocra {
+            font-family: 'Forum', serif;
+            font-size: 20px;
+            color: var(--charcoal);
+            font-weight: 400;
+        }
+
+        .logo-text .full-name {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            color: var(--mid);
+            font-weight: 300;
+        }
+
+        .header-right {
+            margin-left: auto;
+        }
+
+        .btn-back {
+            padding: 8px 20px;
+            border: 1.5px solid var(--teal);
+            color: var(--teal);
+            border-radius: 5px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-back:hover {
+            background: var(--teal);
+            color: white;
+        }
+
+        /* Main content area */
+        .main-content {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        /* Floating card */
+        .floating-card {
+            background: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.06);
+            width: 100%;
+            max-width: 480px;
+            padding: 32px 36px;
+            position: relative;
+            animation: cardIn 0.4s ease forwards;
+        }
+
+        @keyframes cardIn {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Card header */
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-logo {
+            height: 32px;
+            width: auto;
+        }
+
+        .card-title {
+            font-family: 'Forum', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+        }
+
+        .card-divider {
+            height: 1px;
+            background: var(--border);
+            margin-bottom: 20px;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .tab {
+            padding: 12px 0;
+            border: none;
+            background: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            color: var(--light);
+            cursor: pointer;
+            transition: all 0.2s;
+            border-bottom: 2px solid transparent;
+            margin-right: 24px;
+        }
+
+        .tab.active {
+            color: var(--teal);
+            border-bottom-color: var(--teal);
+        }
+
+        /* Forms */
+        .form-content {
+            display: none;
+        }
+
+        .form-content.active {
+            display: block;
+        }
+
+        /* Form heading inside card */
+        .form-heading {
+            font-family: 'Forum', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--mid);
+            margin-bottom: 20px;
+        }
+
+        /* Form fields */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-label {
+            display: block;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--charcoal);
+            margin-bottom: 6px;
+        }
+
+        .form-input {
+            width: 100%;
+            border: 1.5px solid var(--border);
+            border-radius: 7px;
+            padding: 11px 14px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            color: var(--charcoal);
+            background: var(--bg);
+            transition: border-color 0.2s, background 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--teal);
+            background: white;
+        }
+
+        .form-input.error {
+            border-color: var(--error);
+        }
+
+        .error-message {
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+            color: var(--error);
+            margin-top: 4px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        /* Account type cards */
+        .account-type-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .account-type-card {
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            padding: 12px 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: var(--bg);
+        }
+
+        .account-type-card:hover {
+            border-color: var(--teal);
+        }
+
+        .account-type-card.selected {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+
+        .account-type-title {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--charcoal);
+            margin-bottom: 2px;
+        }
+
+        .account-type-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 9px;
+            color: var(--mid);
+        }
+
+        /* Company fields */
+        .company-fields {
+            display: none;
+            margin-bottom: 16px;
+        }
+
+        .company-fields.show {
+            display: block;
+        }
+
+        /* Password input */
+        .password-input {
+            position: relative;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--light);
+            transition: color 0.2s;
+        }
+
+        .password-toggle:hover {
+            color: var(--teal);
+        }
+
+        /* Password strength */
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 3px;
+            background: var(--border);
+            border-radius: 2px;
+            margin-bottom: 4px;
+            overflow: hidden;
+        }
+
+        .strength-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+        }
+
+        .strength-weak { background: var(--error); }
+        .strength-fair { background: #ff9800; }
+        .strength-good { background: var(--gold); }
+        .strength-strong { background: var(--teal); }
+
+        .strength-text {
+            font-family: 'Lato', sans-serif;
+            font-size: 10px;
+            color: var(--mid);
+        }
+
+        /* Password match/mismatch */
+        .password-match, .password-mismatch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 11px;
+        }
+
+        .password-match {
+            color: var(--teal);
+        }
+
+        .password-mismatch {
+            color: var(--error);
+        }
+
+        /* Form options */
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        /* Checkbox */
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--charcoal);
+            cursor: pointer;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkmark {
+            width: 16px;
+            height: 16px;
+            border: 1.5px solid var(--border);
+            border-radius: 3px;
+            position: relative;
+            transition: all 0.2s;
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark {
+            background: var(--teal);
+            border-color: var(--teal);
+        }
+
+        .checkbox-label input[type="checkbox"]:checked + .checkmark::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 4px;
+            width: 4px;
+            height: 8px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        /* Links */
+        .forgot-password {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--teal);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .forgot-password:hover {
+            color: var(--teal-dark);
+        }
+
+        /* Submit buttons */
+        .btn-submit {
+            width: 100%;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 7px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 8px;
+        }
+
+        .btn-register {
+            background: var(--teal);
+            color: white;
+        }
+
+        .btn-register:hover:not(:disabled) {
+            background: var(--teal-dark);
+        }
+
+        .btn-login {
+            background: var(--gold);
+            color: white;
+        }
+
+        .btn-login:hover:not(:disabled) {
+            background: #b89122;
+        }
+
+        .btn-submit:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Success banner */
+        .success-banner {
+            background: var(--teal-light);
+            border-left: 4px solid var(--teal);
+            border-radius: 6px;
+            padding: 12px 14px;
+            margin-top: 20px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .success-banner.show {
+            display: flex;
+        }
+
+        .success-icon {
+            width: 20px;
+            height: 20px;
+            background: var(--teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .success-banner div {
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+
+        /* Shake animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .shake {
+            animation: shake 0.3s ease-in-out;
+        }
+
+        /* Loading state */
+        .btn-submit.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn-submit.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .topbar {
+                padding: 8px 20px;
+                font-size: 11px;
+            }
+
+            .header {
+                padding: 12px 20px;
+            }
+
+            .main-content {
+                padding: 20px 16px;
+            }
+
+            .floating-card {
+                padding: 24px 20px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+                margin-bottom: 0;
+            }
+
+            .account-type-options {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+
+            .form-options {
+                flex-direction: column;
+                gap: 12px;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Topbar -->
+    <div class="topbar">
+        <div class="topbar-left">
+            <span>+267 3957755</span>
+            <span class="topbar-separator">|</span>
+            <span>info@bocra.org.bw</span>
+        </div>
+        <div class="topbar-right">
+            <a href="#">Setswana</a>
+            <span class="topbar-separator">|</span>
+            <a href="#">Site Map</a>
+            <span class="topbar-separator">|</span>
+            <a href="#">Accessibility</a>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="logo">
+            <div class="logo-divider"></div>
+            <div class="logo-text">
+                <div class="bocra">BOCRA</div>
+                <div class="full-name">Botswana Communications Regulatory Authority</div>
+            </div>
+        </div>
+        <div class="header-right">
+            <a href="index.html" class="btn-back">← Back to BOCRA Website</a>
+        </div>
+    </header>
+
+    <!-- Main content -->
+    <main class="main-content">
+        <div class="floating-card">
+            <!-- Card header -->
+            <div class="card-header">
+                <img src="assets/images/bocra logo.png" alt="BOCRA Logo" class="card-logo">
+                <div class="card-title">Licensing Portal</div>
+            </div>
+            <div class="card-divider"></div>
+
+            <!-- Tabs -->
+            <div class="tabs">
+                <button class="tab active" onclick="switchTab('register')">Register</button>
+                <button class="tab" onclick="switchTab('login')">Log In</button>
+            </div>
+
+            <!-- Register Form -->
+            <div class="form-content active" id="registerView">
+                <h2 class="form-heading">Create your account</h2>
+                <p class="form-subtitle">Register to access BOCRA licensing services</p>
+
+                <form id="registrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" id="firstName" required>
+                            <div class="error-message">First name is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" id="lastName" required>
+                            <div class="error-message">Last name is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="regEmail" required>
+                        <div class="error-message">Valid email address is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" class="form-input" id="phoneNumber" placeholder="+267 7X XXX XXX">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Account Type</label>
+                        <div class="account-type-options">
+                            <div class="account-type-card" data-type="individual" onclick="selectAccountType('individual')">
+                                <div class="account-type-title">Individual</div>
+                                <div class="account-type-subtitle">Personal use</div>
+                            </div>
+                            <div class="account-type-card" data-type="company" onclick="selectAccountType('company')">
+                                <div class="account-type-title">Company</div>
+                                <div class="account-type-subtitle">Business / operator</div>
+                            </div>
+                            <div class="account-type-card" data-type="government" onclick="selectAccountType('government')">
+                                <div class="account-type-title">Government</div>
+                                <div class="account-type-subtitle">Gov entity</div>
+                            </div>
+                        </div>
+                        <input type="hidden" id="accountType" required>
+                        <div class="error-message">Please select an account type</div>
+                    </div>
+
+                    <div class="company-fields" id="companyFields">
+                        <div class="form-group">
+                            <label class="form-label">Company Name</label>
+                            <input type="text" class="form-input" id="companyName">
+                            <div class="error-message">Company name is required</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="regPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('regPassword')">👁</button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar">
+                                <div class="strength-fill" id="strengthFill"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Enter password</div>
+                        </div>
+                        <div class="error-message">Password must be at least 8 characters</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="confirmPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('confirmPassword')">👁</button>
+                        </div>
+                        <div class="password-match" id="passwordMatch">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                                <polyline points="20,6 9,17 4,12"/>
+                            </svg>
+                            Passwords match
+                        </div>
+                        <div class="password-mismatch" id="passwordMismatch">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--error)" stroke-width="2">
+                                <line x1="18" y1="6" x2="6" y2="18"/>
+                                <line x1="6" y1="6" x2="18" y2="18"/>
+                            </svg>
+                            Passwords do not match
+                        </div>
+                        <div class="error-message">Please confirm your password</div>
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-register">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Login Form -->
+            <div class="form-content" id="loginView">
+                <h2 class="form-heading">Welcome back</h2>
+                <p class="form-subtitle">Sign in to your BOCRA licensing account</p>
+
+                <form id="loginFormElement">
+                    <div class="form-group">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-input" id="loginEmail" required>
+                        <div class="error-message">Valid email address is required</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <div class="password-input">
+                            <input type="password" class="form-input" id="loginPassword" required>
+                            <button type="button" class="password-toggle" onclick="togglePassword('loginPassword')">👁</button>
+                        </div>
+                        <div class="error-message">Password is required</div>
+                    </div>
+
+                    <div class="form-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+
+                    <div class="error-message" id="loginError" style="display: none; text-align: center; margin-bottom: 16px;">
+                        Invalid email or password. Please try again.
+                    </div>
+
+                    <button type="submit" class="btn-submit btn-login">Sign In</button>
+                </form>
+            </div>
+
+            <!-- Success Banner -->
+            <div class="success-banner" id="successBanner">
+                <div class="success-icon">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                        <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                </div>
+                <div>Account created successfully! Please sign in to continue.</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Global variables
+        let selectedAccountType = '';
+        let registrationData = {};
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            setupFormListeners();
+            setupPasswordStrength();
+            setupPasswordMatch();
+        });
+
+        // Tab switching
+        function switchTab(tab) {
+            const tabs = document.querySelectorAll('.tab');
+            const forms = document.querySelectorAll('.form-content');
+            
+            // Update active tab
+            tabs.forEach(t => t.classList.remove('active'));
+            document.querySelector(`.tab:nth-child(${tab === 'register' ? 1 : 2})`).classList.add('active');
+            
+            // Update active form
+            forms.forEach(f => f.classList.remove('active'));
+            document.getElementById(`${tab}View`).classList.add('active');
+        }
+
+        // Account type selection
+        function selectAccountType(type) {
+            const cards = document.querySelectorAll('.account-type-card');
+            const companyFields = document.getElementById('companyFields');
+            const accountTypeInput = document.getElementById('accountType');
+            
+            cards.forEach(card => card.classList.remove('selected'));
+            document.querySelector(`[data-type="${type}"]`).classList.add('selected');
+            
+            selectedAccountType = type;
+            accountTypeInput.value = type;
+            
+            if (type === 'company') {
+                companyFields.classList.add('show');
+            } else {
+                companyFields.classList.remove('show');
+            }
+            
+            hideError(accountTypeInput);
+        }
+
+        // Password strength meter
+        function setupPasswordStrength() {
+            const passwordInput = document.getElementById('regPassword');
+            const strengthFill = document.getElementById('strengthFill');
+            const strengthText = document.getElementById('strengthText');
+            
+            passwordInput.addEventListener('input', () => {
+                const password = passwordInput.value;
+                const strength = calculatePasswordStrength(password);
+                
+                strengthFill.style.width = strength.percentage + '%';
+                strengthFill.className = 'strength-fill strength-' + strength.level;
+                strengthText.textContent = strength.text;
+                strengthText.className = 'strength-text strength-' + strength.level;
+            });
+        }
+
+        function calculatePasswordStrength(password) {
+            if (password.length === 0) {
+                return { level: 'weak', percentage: 0, text: 'Enter password' };
+            }
+            
+            let strength = 0;
+            
+            // Length checks
+            if (password.length >= 1) strength += 10;
+            if (password.length >= 4) strength += 20;
+            if (password.length >= 7) strength += 25;
+            if (password.length >= 10) strength += 25;
+            
+            // Complexity checks
+            if (/[a-z]/.test(password)) strength += 5;
+            if (/[A-Z]/.test(password)) strength += 5;
+            if (/[0-9]/.test(password)) strength += 5;
+            if (/[^a-zA-Z0-9]/.test(password)) strength += 5;
+            
+            if (strength <= 20) {
+                return { level: 'weak', percentage: 20, text: 'Weak' };
+            } else if (strength <= 45) {
+                return { level: 'fair', percentage: 45, text: 'Fair' };
+            } else if (strength <= 70) {
+                return { level: 'good', percentage: 70, text: 'Good' };
+            } else {
+                return { level: 'strong', percentage: 100, text: 'Strong' };
+            }
+        }
+
+        // Password match checker
+        function setupPasswordMatch() {
+            const confirmPassword = document.getElementById('confirmPassword');
+            const passwordMatch = document.getElementById('passwordMatch');
+            const passwordMismatch = document.getElementById('passwordMismatch');
+            
+            confirmPassword.addEventListener('input', () => {
+                const password = document.getElementById('regPassword').value;
+                const confirm = confirmPassword.value;
+                
+                if (confirm.length === 0) {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'none';
+                } else if (password === confirm) {
+                    passwordMatch.style.display = 'flex';
+                    passwordMismatch.style.display = 'none';
+                } else {
+                    passwordMatch.style.display = 'none';
+                    passwordMismatch.style.display = 'flex';
+                }
+            });
+        }
+
+        // Password toggle
+        function togglePassword(inputId) {
+            const input = document.getElementById(inputId);
+            const button = input.nextElementSibling;
+            
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.textContent = '👁‍🗨';
+            } else {
+                input.type = 'password';
+                button.textContent = '👁';
+            }
+        }
+
+        // Form listeners
+        function setupFormListeners() {
+            // Registration form
+            document.getElementById('registrationForm').addEventListener('submit', handleRegistration);
+            
+            // Login form
+            document.getElementById('loginFormElement').addEventListener('submit', handleLogin);
+        }
+
+        // Registration handler
+        async function handleRegistration(e) {
+            e.preventDefault();
+            
+            if (!validateRegistration()) {
+                return;
+            }
+            
+            const btn = e.target.querySelector('.btn-submit');
+            showLoading(btn);
+            
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1500));
+            
+            // Store registration data
+            registrationData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('regEmail').value,
+                accountType: selectedAccountType
+            };
+            
+            hideLoading(btn);
+            
+            // Switch to login with success
+            switchToLoginWithSuccess();
+        }
+
+        // Registration validation
+        function validateRegistration() {
+            let isValid = true;
+            
+            // First name
+            const firstName = document.getElementById('firstName');
+            if (!firstName.value.trim()) {
+                showError(firstName);
+                isValid = false;
+            } else {
+                hideError(firstName);
+            }
+            
+            // Last name
+            const lastName = document.getElementById('lastName');
+            if (!lastName.value.trim()) {
+                showError(lastName);
+                isValid = false;
+            } else {
+                hideError(lastName);
+            }
+            
+            // Email
+            const email = document.getElementById('regEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email);
+                isValid = false;
+            } else {
+                hideError(email);
+            }
+            
+            // Account type
+            if (!selectedAccountType) {
+                const accountTypeInput = document.getElementById('accountType');
+                showError(accountTypeInput);
+                isValid = false;
+            } else {
+                hideError(accountTypeInput);
+            }
+            
+            // Company name (if company selected)
+            if (selectedAccountType === 'company') {
+                const companyName = document.getElementById('companyName');
+                if (!companyName.value.trim()) {
+                    showError(companyName);
+                    isValid = false;
+                } else {
+                    hideError(companyName);
+                }
+            }
+            
+            // Password
+            const password = document.getElementById('regPassword');
+            if (password.value.length < 8) {
+                showError(password);
+                isValid = false;
+            } else {
+                hideError(password);
+            }
+            
+            // Confirm password
+            const confirmPassword = document.getElementById('confirmPassword');
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword);
+                isValid = false;
+            } else {
+                hideError(confirmPassword);
+            }
+            
+            if (!isValid) {
+                const btn = document.querySelector('.btn-register');
+                btn.classList.add('shake');
+                setTimeout(() => btn.classList.remove('shake'), 300);
+            }
+            
+            return isValid;
+        }
+
+        // Login handler
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            if (!validateLogin()) {
+                return;
+            }
+            
+            const btn = e.target.querySelector('.btn-submit');
+            showLoading(btn);
+            
+            // Simulate API call
+            await new Promise(resolve => setTimeout(resolve, 1400));
+            
+            hideLoading(btn);
+            
+            // Show success state
+            showLoginSuccess();
+        }
+
+        // Login validation
+        function validateLogin() {
+            let isValid = true;
+            
+            // Email
+            const email = document.getElementById('loginEmail');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email.value)) {
+                showError(email);
+                isValid = false;
+            } else {
+                hideError(email);
+            }
+            
+            // Password
+            const password = document.getElementById('loginPassword');
+            if (!password.value.trim()) {
+                showError(password);
+                isValid = false;
+            } else {
+                hideError(password);
+            }
+            
+            if (!isValid) {
+                const btn = document.querySelector('.btn-login');
+                btn.classList.add('shake');
+                setTimeout(() => btn.classList.remove('shake'), 300);
+                
+                // Show general error
+                document.getElementById('loginError').style.display = 'block';
+            } else {
+                document.getElementById('loginError').style.display = 'none';
+            }
+            
+            return isValid;
+        }
+
+        // Switch to login with success banner
+        function switchToLoginWithSuccess() {
+            switchTab('login');
+            
+            // Pre-fill email
+            document.getElementById('loginEmail').value = registrationData.email;
+            
+            // Show success banner
+            document.getElementById('successBanner').classList.add('show');
+            
+            // Hide banner after 5 seconds
+            setTimeout(() => {
+                document.getElementById('successBanner').classList.remove('show');
+            }, 5000);
+        }
+
+        // Show login success state
+        function showLoginSuccess() {
+            // For now, just show an alert
+            alert('Login successful! Welcome to your BOCRA Licensing Dashboard.');
+        }
+
+        // Utility functions
+        function showError(input) {
+            input.classList.add('error');
+            const errorMsg = input.parentElement.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.classList.add('show');
+            }
+        }
+
+        function hideError(input) {
+            input.classList.remove('error');
+            const errorMsg = input.parentElement.querySelector('.error-message');
+            if (errorMsg) {
+                errorMsg.classList.remove('show');
+            }
+        }
+
+        function showLoading(btn) {
+            btn.classList.add('loading');
+            btn.disabled = true;
+        }
+
+        function hideLoading(btn) {
+            btn.classList.remove('loading');
+            btn.disabled = false;
+        }
+    </script>
+</body>
+</html>

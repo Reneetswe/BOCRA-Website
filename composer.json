@@ -1,0 +1,19 @@
+{
+    "name": "bocra/website",
+    "description": "BOCRA Website - Botswana Communications Regulatory Authority",
+    "version": "1.0.0",
+    "require": {
+        "robthree/twofactorauth": "^2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "BOCRA\\": "src/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}

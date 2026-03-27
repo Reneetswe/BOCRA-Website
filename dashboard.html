@@ -1,0 +1,2748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BOCRA License Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --gold-light: #FDF6E3;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --error: #CC2936;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--charcoal);
+        }
+        
+        /* TOP NAVIGATION */
+        .topnav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: 64px;
+            background: var(--white);
+            border-bottom: 2px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+        
+        .topnav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .topnav-logo {
+            height: 40px;
+        }
+        
+        .topnav-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border);
+        }
+        
+        .topnav-text .bocra {
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--charcoal);
+        }
+        
+        .topnav-text .subtitle {
+            font-family: 'Lato', sans-serif;
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--mid);
+        }
+        
+        .topnav-search {
+            position: relative;
+            max-width: 360px;
+            flex: 1;
+        }
+        
+        .topnav-search input {
+            width: 100%;
+            padding: 9px 40px 9px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 13px;
+        }
+        
+        .topnav-search input:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(0,107,94,0.08);
+        }
+        
+        .topnav-search button {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 36px;
+            background: var(--teal);
+            border: none;
+            border-radius: 0 6px 6px 0;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .topnav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .topnav-bell {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .topnav-bell-badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 16px;
+            height: 16px;
+            background: var(--error);
+            border-radius: 50%;
+            color: white;
+            font-size: 9px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .topnav-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 14px;
+        }
+        
+        .topnav-user {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .topnav-dropdown {
+            position: relative;
+        }
+        
+        .topnav-dropdown-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: var(--mid);
+        }
+        
+        .topnav-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 52px;
+            right: 0;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            min-width: 160px;
+            z-index: 1000;
+        }
+        
+        .topnav-dropdown-menu.active {
+            display: block;
+        }
+        
+        .topnav-dropdown-item {
+            padding: 10px 18px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .topnav-dropdown-item:hover {
+            background: var(--bg);
+        }
+        
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 64px;
+            width: 230px;
+            height: calc(100vh - 64px);
+            background: var(--charcoal);
+            overflow-y: auto;
+            padding-top: 8px;
+        }
+        
+        .sidebar-section-label {
+            font-weight: 700;
+            font-size: 10px;
+            color: rgba(255,255,255,0.3);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 14px 24px 5px;
+        }
+        
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 24px;
+            color: rgba(255,255,255,0.6);
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .sidebar-item:hover {
+            color: white;
+            background: rgba(255,255,255,0.06);
+        }
+        
+        .sidebar-item.active {
+            color: white;
+            background: rgba(0,107,94,0.2);
+            border-left-color: var(--teal);
+        }
+        
+        .sidebar-icon {
+            width: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .sidebar-badge {
+            margin-left: auto;
+            background: var(--gold);
+            color: var(--charcoal);
+            font-weight: 700;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 999px;
+        }
+        
+        .sidebar-footer {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 16px 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: auto;
+        }
+        
+        .sidebar-footer-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        
+        .sidebar-footer-name {
+            font-weight: 600;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .sidebar-footer-type {
+            font-weight: 300;
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+        }
+        
+        /* MAIN CONTENT */
+        .main-content {
+            margin-left: 230px;
+            padding: 32px 36px;
+            min-height: calc(100vh - 64px);
+        }
+        
+        .section {
+            display: none;
+            animation: fadeIn 0.24s ease;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .section-header {
+            margin-bottom: 28px;
+        }
+        
+        .section-title {
+            font-family: 'Forum', serif;
+            font-size: 28px;
+            color: var(--charcoal);
+            margin-bottom: 4px;
+        }
+        
+        .section-subtitle {
+            font-weight: 300;
+            font-size: 14px;
+            color: var(--mid);
+        }
+        
+        .section-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 28px;
+        }
+        
+        /* BUTTONS */
+        .btn {
+            padding: 10px 22px;
+            border-radius: 6px;
+            border: none;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .btn-primary {
+            background: var(--gold);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #b09020;
+        }
+        
+        .btn-outline {
+            background: none;
+            border: 1.5px solid var(--teal);
+            color: var(--teal);
+        }
+        
+        .btn-outline:hover {
+            background: var(--teal);
+            color: white;
+        }
+        
+        /* CARDS */
+        .card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-family: 'Forum', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+        }
+        
+        .card-link {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            cursor: pointer;
+        }
+        
+        /* GRID */
+        .grid {
+            display: grid;
+            gap: 16px;
+        }
+        
+        .grid-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+        
+        .grid-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+        
+        .grid-2 {
+            grid-template-columns: 1.4fr 1fr;
+        }
+        
+        /* STAT CARDS */
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 22px 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.25s;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        .stat-card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 14px;
+        }
+        
+        .stat-card-label {
+            font-weight: 500;
+            font-size: 12px;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 6px;
+        }
+        
+        .stat-card-value {
+            font-family: 'Forum', serif;
+            font-size: 30px;
+            color: var(--charcoal);
+        }
+        
+        .stat-card-trend {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            margin-top: 6px;
+        }
+        
+        /* WELCOME BANNER */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+            border-radius: 14px;
+            padding: 28px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-banner::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            pointer-events: none;
+        }
+        
+        .welcome-greeting {
+            font-weight: 300;
+            font-size: 14px;
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .welcome-name {
+            font-family: 'Forum', serif;
+            font-size: 26px;
+            color: white;
+            margin: 4px 0;
+        }
+        
+        .welcome-desc {
+            font-weight: 300;
+            font-size: 13px;
+            color: rgba(255,255,255,0.6);
+            margin-top: 6px;
+        }
+        
+        .welcome-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 999px;
+            padding: 5px 14px;
+            margin-top: 16px;
+        }
+        
+        .welcome-status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #7FFFD4;
+        }
+        
+        .welcome-status-text {
+            font-weight: 700;
+            font-size: 11px;
+            color: white;
+        }
+        
+        /* STATUS BADGE */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 9px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        
+        .status-badge-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+        
+        .status-submitted {
+            background: rgba(136,136,136,0.1);
+            color: var(--mid);
+        }
+        
+        .status-submitted .status-badge-dot {
+            background: var(--light);
+        }
+        
+        .status-review {
+            background: rgba(201,162,39,0.12);
+            color: #7a5800;
+        }
+        
+        .status-review .status-badge-dot {
+            background: var(--gold);
+        }
+        
+        .status-approved {
+            background: rgba(0,107,94,0.1);
+            color: var(--teal-dark);
+        }
+        
+        .status-approved .status-badge-dot {
+            background: var(--teal);
+        }
+        
+        /* TABLE */
+        .table {
+            width: 100%;
+        }
+        
+        .table-header {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+        
+        .table-row {
+            display: grid;
+            grid-template-columns: 1.2fr 1.5fr 1fr 1fr;
+            padding: 13px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .table-row:last-child {
+            border-bottom: none;
+        }
+        
+        /* QUICK ACTIONS */
+        .action-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 14px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.2s;
+        }
+        
+        .action-item:hover {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+        
+        .action-item:hover .action-arrow {
+            color: var(--teal);
+        }
+        
+        .action-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .action-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .action-desc {
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--mid);
+        }
+        
+        .action-arrow {
+            margin-left: auto;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--light);
+            transition: color 0.2s;
+        }
+        
+        /* TOAST */
+        .toast-container {
+            position: fixed;
+            bottom: 28px;
+            right: 28px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 10px;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 10px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.13);
+            max-width: 320px;
+            min-width: 260px;
+            animation: toastIn 0.3s ease;
+        }
+        
+        @keyframes toastIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .toast-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .toast-content {
+            flex: 1;
+        }
+        
+        .toast-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .toast-message {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            margin-top: 2px;
+        }
+        
+        .toast-close {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        .toast-close:hover {
+            color: var(--charcoal);
+        }
+        
+        /* NOTIFICATION PANEL */
+        .notif-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.2);
+            z-index: 199;
+        }
+        
+        .notif-overlay.active {
+            display: block;
+        }
+        
+        .notif-panel {
+            position: fixed;
+            right: 0;
+            top: 64px;
+            width: 320px;
+            height: calc(100vh - 64px);
+            background: white;
+            border-left: 1px solid var(--border);
+            box-shadow: -4px 0 24px rgba(0,0,0,0.1);
+            z-index: 200;
+            transform: translateX(100%);
+            transition: transform 0.28s ease;
+        }
+        
+        .notif-panel.active {
+            transform: translateX(0);
+        }
+        
+        .notif-header {
+            padding: 20px 20px 14px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .notif-title {
+            font-family: 'Forum', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+        }
+        
+        .notif-mark-read {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        .notif-close {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--light);
+            cursor: pointer;
+        }
+        
+        .notif-item {
+            padding: 14px 20px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .notif-item:hover {
+            background: var(--bg);
+        }
+        
+        .notif-item.unread {
+            background: rgba(0,107,94,0.02);
+        }
+        
+        .notif-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+        
+        .notif-dot.unread {
+            background: var(--teal);
+        }
+        
+        .notif-dot.read {
+            background: var(--border);
+        }
+        
+        .notif-content-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .notif-content-body {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            line-height: 1.5;
+            margin-top: 2px;
+        }
+        
+        .notif-content-time {
+            font-weight: 300;
+            font-size: 10px;
+            color: var(--light);
+            margin-top: 4px;
+        }
+        
+        /* MODAL */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(3px);
+            z-index: 500;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-overlay.active {
+            display: flex;
+        }
+        
+        .modal {
+            background: white;
+            border-radius: 14px;
+            max-width: 500px;
+            width: 90%;
+            padding: 36px;
+            box-shadow: 0 24px 60px rgba(0,0,0,0.18);
+            position: relative;
+            animation: modalIn 0.3s ease;
+        }
+        
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.96); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--light);
+            cursor: pointer;
+        }
+        
+        .modal-close:hover {
+            color: var(--charcoal);
+        }
+        
+        .modal-title {
+            font-family: 'Forum', serif;
+            font-size: 24px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+        
+        .modal-desc {
+            font-weight: 300;
+            font-size: 13px;
+            color: var(--mid);
+            margin-bottom: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 16px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+            margin-bottom: 6px;
+        }
+        
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            background: var(--bg);
+        }
+        
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(0,107,94,0.08);
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        
+        .form-checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 12px 14px;
+            background: var(--bg);
+            border-radius: 6px;
+            margin-top: 4px;
+        }
+        
+        .form-checkbox {
+            accent-color: var(--teal);
+            margin-top: 2px;
+        }
+        
+        .form-checkbox-label {
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        /* LICENSE CARDS */
+        .license-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 22px 20px;
+            border-top: 4px solid transparent;
+            transition: all 0.25s;
+            position: relative;
+        }
+        
+        .license-card:hover {
+            border-top-color: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.07);
+        }
+        
+        .license-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--teal-light);
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .license-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-weight: 700;
+            font-size: 9px;
+            padding: 2px 7px;
+            border-radius: 3px;
+            color: white;
+        }
+        
+        .license-name {
+            font-family: 'Forum', serif;
+            font-size: 17px;
+            color: var(--charcoal);
+            margin: 12px 0 6px;
+        }
+        
+        .license-desc {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .license-time {
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border-radius: 4px;
+            padding: 3px 9px;
+            font-weight: 700;
+            font-size: 10px;
+            display: inline-block;
+            margin-bottom: 16px;
+        }
+        
+        .license-apply {
+            width: 100%;
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            padding: 9px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .license-apply:hover {
+            background: var(--teal-dark);
+        }
+        
+        /* FILTER PILLS */
+        .filter-pills {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-pill {
+            padding: 6px 18px;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: white;
+            color: var(--mid);
+            transition: all 0.2s;
+        }
+        
+        .filter-pill:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+        
+        .filter-pill.active {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+        
+        /* APPLICATION CARD */
+        .app-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 26px 30px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+        }
+        
+        .app-card:hover {
+            box-shadow: 0 6px 20px rgba(0,0,0,0.07);
+        }
+        
+        .app-card-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 22px;
+        }
+        
+        .app-card-ref {
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--mid);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        
+        .app-card-type {
+            font-family: 'Forum', serif;
+            font-size: 22px;
+            color: var(--charcoal);
+            margin-top: 4px;
+        }
+        
+        .app-card-right {
+            text-align: right;
+        }
+        
+        .app-card-date {
+            font-size: 12px;
+            color: var(--mid);
+        }
+        
+        .app-card-est {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--light);
+            margin-top: 2px;
+        }
+        
+        .app-card-download {
+            border: 1.5px solid var(--border);
+            background: none;
+            color: var(--mid);
+            padding: 6px 14px;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+        
+        .app-card-download:hover {
+            border-color: var(--teal);
+            color: var(--teal);
+        }
+        
+        /* PROGRESS TRACKER */
+        .progress-tracker {
+            display: flex;
+            margin: 22px 0 8px;
+        }
+        
+        .progress-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .progress-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+        
+        .progress-circle.done {
+            background: var(--teal);
+            color: white;
+        }
+        
+        .progress-circle.active {
+            background: white;
+            border: 2px solid var(--teal);
+            color: var(--teal);
+            box-shadow: 0 0 0 4px rgba(0,107,94,0.1);
+        }
+        
+        .progress-circle.pending {
+            background: white;
+            border: 2px solid var(--border);
+            color: var(--light);
+        }
+        
+        .progress-line {
+            position: absolute;
+            top: 16px;
+            left: 50%;
+            right: -50%;
+            height: 2px;
+            z-index: 0;
+        }
+        
+        .progress-line.done {
+            background: var(--teal);
+        }
+        
+        .progress-line.pending {
+            background: var(--border);
+        }
+        
+        .progress-stage:last-child .progress-line {
+            display: none;
+        }
+        
+        .progress-label {
+            font-weight: 700;
+            font-size: 11px;
+            margin-top: 7px;
+        }
+        
+        .progress-label.done, .progress-label.active {
+            color: var(--teal-dark);
+        }
+        
+        .progress-label.pending {
+            color: var(--light);
+        }
+        
+        .progress-date {
+            font-weight: 300;
+            font-size: 10px;
+            color: var(--light);
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background: var(--border);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 10px 0 4px;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: var(--teal);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        /* UPDATES ACCORDION */
+        .updates-trigger {
+            border-top: 1px solid var(--border);
+            margin-top: 16px;
+            padding-top: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .updates-trigger-text {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+        }
+        
+        .updates-chevron {
+            transition: transform 0.3s;
+        }
+        
+        .updates-chevron.open {
+            transform: rotate(180deg);
+        }
+        
+        .updates-list {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease;
+        }
+        
+        .updates-list.open {
+            max-height: 280px;
+            padding-top: 12px;
+        }
+        
+        .update-item {
+            display: flex;
+            gap: 12px;
+            padding-bottom: 16px;
+            position: relative;
+        }
+        
+        .update-item::after {
+            content: '';
+            position: absolute;
+            left: 13px;
+            top: 28px;
+            width: 1px;
+            height: calc(100% - 10px);
+            background: var(--border);
+        }
+        
+        .update-item:last-child::after {
+            display: none;
+        }
+        
+        .update-icon {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--teal-light);
+            color: var(--teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .update-title {
+            font-weight: 700;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .update-desc {
+            font-weight: 300;
+            font-size: 12px;
+            color: var(--mid);
+            line-height: 1.5;
+            margin-top: 2px;
+        }
+        
+        .update-time {
+            font-weight: 300;
+            font-size: 10px;
+            color: var(--light);
+            margin-top: 3px;
+        }
+        
+        /* PROFILE */
+        .profile-header {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .profile-avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: var(--teal);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Forum', serif;
+            font-size: 28px;
+        }
+        
+        .profile-name {
+            font-family: 'Forum', serif;
+            font-size: 22px;
+            color: var(--charcoal);
+        }
+        
+        .profile-type-badge {
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border-radius: 5px;
+            padding: 4px 12px;
+            font-weight: 700;
+            font-size: 11px;
+            text-transform: uppercase;
+            display: inline-block;
+            margin-top: 4px;
+        }
+        
+        .profile-email {
+            font-size: 13px;
+            color: var(--mid);
+            margin-top: 4px;
+        }
+        
+        .profile-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 20px 0;
+        }
+        
+        .profile-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 18px;
+        }
+        
+        .profile-detail-label {
+            font-weight: 700;
+            font-size: 11px;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 4px;
+        }
+        
+        .profile-detail-value {
+            font-weight: 500;
+            font-size: 14px;
+            color: var(--charcoal);
+        }
+        
+        /* SETTINGS */
+        .setting-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .setting-row:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-label {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .setting-action {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--teal);
+            cursor: pointer;
+        }
+        
+        /* TOGGLE SWITCH */
+        .toggle-switch {
+            position: relative;
+            width: 40px;
+            height: 22px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ccc;
+            border-radius: 999px;
+            transition: 0.25s;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background: white;
+            border-radius: 50%;
+            transition: 0.25s;
+        }
+        
+        .toggle-switch input:checked + .toggle-slider {
+            background: var(--teal);
+        }
+        
+        .toggle-switch input:checked + .toggle-slider:before {
+            transform: translateX(18px);
+        }
+        
+        /* ACTIVITY LIST */
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-top: 5px;
+        }
+        
+        .activity-action {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .activity-time {
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--light);
+            margin-top: 2px;
+        }
+        
+        /* INFO BOX */
+        .info-box {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-left: 4px solid var(--teal);
+            border-radius: 8px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+        
+        .info-box-text {
+            font-size: 13px;
+            color: var(--teal-dark);
+            line-height: 1.6;
+        }
+        
+        /* FORM DOWNLOAD CARD */
+        .form-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.25s;
+        }
+        
+        .form-card:hover {
+            border-color: var(--teal);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(0,0,0,0.07);
+        }
+        
+        .form-type {
+            font-weight: 700;
+            font-size: 10px;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin: 10px 0 4px;
+        }
+        
+        .form-title {
+            font-family: 'Forum', serif;
+            font-size: 16px;
+            color: var(--charcoal);
+            line-height: 1.3;
+            margin-bottom: 4px;
+        }
+        
+        .form-size {
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--light);
+        }
+        
+        .form-download-btn {
+            width: 100%;
+            margin-top: 14px;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            border: none;
+            border-radius: 6px;
+            padding: 9px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        
+        .form-download-btn:hover {
+            background: var(--teal);
+            color: white;
+        }
+        
+        /* APPROVED MESSAGE */
+        .approved-message {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-radius: 8px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 12px;
+        }
+        
+        .approved-text {
+            font-size: 13px;
+            color: var(--teal-dark);
+            flex: 1;
+        }
+        
+        .approved-download {
+            background: var(--teal);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 7px 16px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        
+        .approved-download:hover {
+            background: var(--teal-dark);
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+        
+        @media (max-width: 900px) {
+            .sidebar { width: 60px; }
+            .main-content { margin-left: 60px; }
+            .sidebar-section-label, .sidebar-item span, .sidebar-footer-info { display: none; }
+            .grid-4 { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 700px) {
+            .sidebar { transform: translateX(-100%); }
+            .main-content { margin-left: 0; }
+            .grid-4, .grid-3 { grid-template-columns: repeat(2, 1fr); }
+        }
+        
+        @media (max-width: 480px) {
+            .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+            .main-content { padding: 16px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <div class="topnav">
+        <div class="topnav-left">
+            <img src="assets/images/bocra-logo.png" alt="BOCRA" class="topnav-logo">
+            <div class="topnav-divider"></div>
+            <div class="topnav-text">
+                <div class="bocra">BOCRA</div>
+                <div class="subtitle">Botswana Communications Regulatory Authority</div>
+            </div>
+        </div>
+        <div class="topnav-search">
+            <input type="text" placeholder="Search licenses, applications...">
+            <button>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.35-4.35"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="topnav-right">
+            <button class="topnav-bell" onclick="toggleNotificationPanel()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <span class="topnav-bell-badge" id="bellBadge">2</span>
+            </button>
+            <div class="topnav-divider"></div>
+            <div class="topnav-avatar" id="navAvatar">JD</div>
+            <span class="topnav-user" id="navUserName">John Doe</span>
+            <div class="topnav-dropdown">
+                <button class="topnav-dropdown-toggle" onclick="toggleUserMenu()">▾</button>
+                <div class="topnav-dropdown-menu" id="userMenu">
+                    <div class="topnav-dropdown-item" onclick="showSection('profile')">My Profile</div>
+                    <div class="topnav-dropdown-item" onclick="handleLogout()">Log Out</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-section-label">MAIN</div>
+        <div class="sidebar-item active" onclick="showSection('dashboard')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="3" width="7" height="7"></rect>
+                    <rect x="14" y="14" width="7" height="7"></rect>
+                    <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+            </span>
+            <span>Dashboard</span>
+        </div>
+
+        <div class="sidebar-section-label">LICENSING</div>
+        <div class="sidebar-item" onclick="showSection('apply-license')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                    <line x1="12" y1="18" x2="12" y2="12"></line>
+                    <line x1="9" y1="15" x2="15" y2="15"></line>
+                </svg>
+            </span>
+            <span>Apply for License</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('my-applications')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"></line>
+                    <line x1="8" y1="12" x2="21" y2="12"></line>
+                    <line x1="8" y1="18" x2="21" y2="18"></line>
+                    <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                    <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                    <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                </svg>
+            </span>
+            <span>My Applications</span>
+            <span class="sidebar-badge">3</span>
+        </div>
+        <div class="sidebar-item" onclick="showSection('download-forms')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+            </span>
+            <span>Download Forms</span>
+        </div>
+
+        <div class="sidebar-section-label">SERVICES</div>
+        <div class="sidebar-item" onclick="showToast('Complaint portal coming soon.', 'info')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                    <line x1="12" y1="9" x2="12" y2="13"></line>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </span>
+            <span>File a Complaint</span>
+        </div>
+        <div class="sidebar-item" onclick="showToast('Domain registry coming soon.', 'info')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                </svg>
+            </span>
+            <span>Domain Registry</span>
+        </div>
+        <div class="sidebar-item" onclick="showToast('Cyber incident portal coming soon.', 'info')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
+            </span>
+            <span>Cyber Incidents</span>
+        </div>
+
+        <div class="sidebar-section-label">ACCOUNT</div>
+        <div class="sidebar-item" onclick="showSection('profile')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+            </span>
+            <span>My Profile</span>
+        </div>
+        <div class="sidebar-item" onclick="showToast('Help centre coming soon.', 'info')">
+            <span class="sidebar-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+                    <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                </svg>
+            </span>
+            <span>Help & FAQ</span>
+        </div>
+
+        <div class="sidebar-footer">
+            <div class="sidebar-footer-avatar" id="sidebarAvatar">JD</div>
+            <div>
+                <div class="sidebar-footer-name" id="sidebarName">John Doe</div>
+                <div class="sidebar-footer-type" id="sidebarType">Applicant</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- SECTION 1: DASHBOARD -->
+        <div id="section-dashboard" class="section active">            <div class="section-header-row">
+                <div>
+                    <h1 class="section-title">Dashboard</h1>
+                    <p class="section-subtitle">Welcome back, <span id="dashboardFirstName">John</span></p>
+                </div>
+                <button class="btn btn-primary" onclick="showSection('apply-license')">New Application</button>
+            </div>
+
+            <div class="welcome-banner">
+                <div>
+                    <div class="welcome-greeting">Good morning,</div>
+                    <div class="welcome-name" id="bannerName">John Doe</div>
+                    <div class="welcome-desc">Your BOCRA licensing account is active.</div>
+                    <div class="welcome-status">
+                        <span class="welcome-status-dot"></span>
+                        <span class="welcome-status-text">Active Account</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-4" style="margin-bottom: 28px;">
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: var(--teal-light); color: var(--teal);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <div class="stat-card-label">Active Applications</div>
+                    <div class="stat-card-value" id="statApplications">3</div>
+                    <div class="stat-card-trend">3 in progress this quarter</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: var(--gold-light); color: var(--gold);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </div>
+                    <div class="stat-card-label">License Types</div>
+                    <div class="stat-card-value">13</div>
+                    <div class="stat-card-trend">All categories available</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: var(--teal-light); color: var(--teal);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                            <path d="M12 18v-6"></path>
+                            <path d="M9 15l3 3 3-3"></path>
+                        </svg>
+                    </div>
+                    <div class="stat-card-label">Documents Uploaded</div>
+                    <div class="stat-card-value" id="statDocuments">2</div>
+                    <div class="stat-card-trend">Across all applications</div>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-card-icon" style="background: #FFF0F0; color: var(--error);">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                            <line x1="16" y1="2" x2="16" y2="6"></line>
+                            <line x1="8" y1="2" x2="8" y2="6"></line>
+                            <line x1="3" y1="10" x2="21" y2="10"></line>
+                        </svg>
+                    </div>
+                    <div class="stat-card-label">Member Since</div>
+                    <div class="stat-card-value" id="statMember">Mar 2026</div>
+                    <div class="stat-card-trend">Account in good standing</div>
+                </div>
+            </div>
+
+            <div class="grid grid-2" style="margin-bottom: 24px;">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Recent Applications</div>
+                        <div class="card-link" onclick="showSection('my-applications')">View all →</div>
+                    </div>
+                    <div class="table">
+                        <div class="table-header">
+                            <div>Reference</div>
+                            <div>License</div>
+                            <div>Date</div>
+                            <div>Status</div>
+                        </div>
+                        <div class="table-row">
+                            <div>APP-2026-0001</div>
+                            <div>Cellular Licence</div>
+                            <div>15 Mar 2026</div>
+                            <div>
+                                <span class="status-badge status-review">
+                                    <span class="status-badge-dot"></span>
+                                    Under Review
+                                </span>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div>APP-2026-0002</div>
+                            <div>Broadcasting Licence</div>
+                            <div>2 Mar 2026</div>
+                            <div>
+                                <span class="status-badge status-approved">
+                                    <span class="status-badge-dot"></span>
+                                    Approved
+                                </span>
+                            </div>
+                        </div>
+                        <div class="table-row">
+                            <div>APP-2026-0003</div>
+                            <div>Type Approval</div>
+                            <div>22 Feb 2026</div>
+                            <div>
+                                <span class="status-badge status-submitted">
+                                    <span class="status-badge-dot"></span>
+                                    Submitted
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Quick Actions</div>
+                    </div>
+                    <div class="action-item" onclick="showSection('apply-license')">
+                        <div class="action-icon" style="background: var(--teal-light);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                                <line x1="12" y1="18" x2="12" y2="12"></line>
+                                <line x1="9" y1="15" x2="15" y2="15"></line>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="action-title">Apply for New License</div>
+                            <div class="action-desc">Browse 13 license categories</div>
+                        </div>
+                        <div class="action-arrow">›</div>
+                    </div>
+                    <div class="action-item" onclick="showSection('download-forms')">
+                        <div class="action-icon" style="background: var(--gold-light);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="7 10 12 15 17 10"></polyline>
+                                <line x1="12" y1="15" x2="12" y2="3"></line>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="action-title">Download Application Forms</div>
+                            <div class="action-desc">Get official BOCRA PDF forms</div>
+                        </div>
+                        <div class="action-arrow">›</div>
+                    </div>
+                    <div class="action-item" onclick="showSection('my-applications')">
+                        <div class="action-icon" style="background: var(--teal-light);">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                                <line x1="8" y1="6" x2="21" y2="6"></line>
+                                <line x1="8" y1="12" x2="21" y2="12"></line>
+                                <line x1="8" y1="18" x2="21" y2="18"></line>
+                                <line x1="3" y1="6" x2="3.01" y2="6"></line>
+                                <line x1="3" y1="12" x2="3.01" y2="12"></line>
+                                <line x1="3" y1="18" x2="3.01" y2="18"></line>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="action-title">Track My Applications</div>
+                            <div class="action-desc">View real-time status updates</div>
+                        </div>
+                        <div class="action-arrow">›</div>
+                    </div>
+                    <div class="action-item" onclick="showToast('Complaint portal coming soon.', 'info')">
+                        <div class="action-icon" style="background: #FFF0EB;">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#CC5500" stroke-width="2">
+                                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                                <line x1="12" y1="9" x2="12" y2="13"></line>
+                                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+                            </svg>
+                        </div>
+                        <div style="flex: 1;">
+                            <div class="action-title">File a Complaint</div>
+                            <div class="action-desc">Report service issues to BOCRA</div>
+                        </div>
+                        <div class="action-arrow">›</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Application Activity</div>
+                    <div class="section-subtitle">Last 6 months</div>
+                </div>
+                <canvas id="activityChart" style="max-height: 280px;"></canvas>
+            </div>
+        </div>
+
+        <!-- SECTION 2: APPLY FOR LICENSE -->
+        <div id="section-apply-license" class="section">
+            <div class="section-header">
+                <h1 class="section-title">Apply for a License</h1>
+                <p class="section-subtitle">Select the license type that matches your need.</p>
+            </div>
+
+            <div class="filter-pills">
+                <button class="filter-pill active" onclick="filterLicenses('all')">All</button>
+                <button class="filter-pill" onclick="filterLicenses('radio')">Radio</button>
+                <button class="filter-pill" onclick="filterLicenses('telecom')">Telecom</button>
+                <button class="filter-pill" onclick="filterLicenses('broadcasting')">Broadcasting</button>
+                <button class="filter-pill" onclick="filterLicenses('internet')">Internet</button>
+                <button class="filter-pill" onclick="filterLicenses('equipment')">Equipment</button>
+            </div>
+
+            <div class="grid grid-3" id="licenseGrid"></div>
+        </div>
+
+        <!-- SECTION 3: MY APPLICATIONS -->
+        <div id="section-my-applications" class="section">
+            <div class="section-header-row">
+                <div>
+                    <h1 class="section-title">My Applications</h1>
+                    <p class="section-subtitle">Track the status of all your submitted license applications.</p>
+                </div>
+                <button class="btn btn-primary" onclick="showSection('apply-license')">New Application</button>
+            </div>
+
+            <div class="filter-pills">
+                <button class="filter-pill active" onclick="filterApplications('all')">All</button>
+                <button class="filter-pill" onclick="filterApplications('submitted')">Submitted</button>
+                <button class="filter-pill" onclick="filterApplications('review')">Under Review</button>
+                <button class="filter-pill" onclick="filterApplications('approved')">Approved</button>
+            </div>
+
+            <div id="applicationsContainer"></div>
+        </div>
+
+        <!-- SECTION 4: MY PROFILE -->
+        <div id="section-profile" class="section">
+            <div class="section-header">
+                <h1 class="section-title">My Profile</h1>
+                <p class="section-subtitle">View and manage your account information.</p>
+            </div>
+
+            <div class="grid grid-2">
+                <div class="card">
+                    <div class="profile-header">
+                        <div class="profile-avatar" id="profileAvatar">JD</div>
+                        <div>
+                            <div class="profile-name" id="profileFullName">John Doe</div>
+                            <span class="profile-type-badge" id="profileType">APPLICANT</span>
+                            <div class="profile-email" id="profileEmail">john@example.com</div>
+                        </div>
+                    </div>
+                    <div class="profile-divider"></div>
+                    <div class="profile-details">
+                        <div>
+                            <div class="profile-detail-label">First Name</div>
+                            <div class="profile-detail-value" id="profileFirstName">John</div>
+                        </div>
+                        <div>
+                            <div class="profile-detail-label">Last Name</div>
+                            <div class="profile-detail-value" id="profileLastName">Doe</div>
+                        </div>
+                        <div>
+                            <div class="profile-detail-label">Email Address</div>
+                            <div class="profile-detail-value" id="profileEmailDetail">john@example.com</div>
+                        </div>
+                        <div>
+                            <div class="profile-detail-label">Phone Number</div>
+                            <div class="profile-detail-value" id="profilePhone">+267 123 4567</div>
+                        </div>
+                        <div>
+                            <div class="profile-detail-label">Account Type</div>
+                            <div class="profile-detail-value" id="profileAccountType">Applicant</div>
+                        </div>
+                        <div>
+                            <div class="profile-detail-label">Member Since</div>
+                            <div class="profile-detail-value" id="profileMemberSince">Mar 2026</div>
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" style="margin-top: 20px;" onclick="showToast('Profile editing coming soon.', 'info')">Edit Profile</button>
+                </div>
+
+                <div>
+                    <div class="card" style="margin-bottom: 16px;">
+                        <div class="card-header">
+                            <div class="card-title">Account Settings</div>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-label">Password</span>
+                            <span class="setting-action" onclick="showToast('Password change coming soon.', 'info')">Change</span>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-label">Email Notifications</span>
+                            <label class="toggle-switch">
+                                <input type="checkbox" checked>
+                                <span class="toggle-slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-row">
+                            <span class="setting-label">Account Status</span>
+                            <span class="status-badge status-approved">Active</span>
+                        </div>
+                        <button class="btn" style="width: 100%; margin-top: 16px; border: 1.5px solid var(--error); background: none; color: var(--error);" onclick="handleLogout()">Log Out</button>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Recent Activity</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--teal);"></div>
+                            <div>
+                                <div class="activity-action">Logged in successfully</div>
+                                <div class="activity-time">Just now</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--teal);"></div>
+                            <div>
+                                <div class="activity-action">Application submitted</div>
+                                <div class="activity-time">Today</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--gold);"></div>
+                            <div>
+                                <div class="activity-action">Broadcasting Licence approved</div>
+                                <div class="activity-time">18 Mar 2026</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot" style="background: var(--light);"></div>
+                            <div>
+                                <div class="activity-action">Account created</div>
+                                <div class="activity-time">Mar 2026</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 5: DOWNLOAD FORMS -->
+        <div id="section-download-forms" class="section">
+            <div class="section-header">
+                <h1 class="section-title">Download Application Forms</h1>
+                <p class="section-subtitle">Download the official BOCRA PDF form for your chosen license.</p>
+            </div>
+
+            <div class="info-box">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                <div class="info-box-text">Complete forms digitally using Adobe Acrobat, or print, sign by hand, and scan as PDF before uploading with your application.</div>
+            </div>
+
+            <div class="grid grid-3" id="formsGrid"></div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Notification Panel -->
+    <div class="notif-overlay" id="notifOverlay" onclick="toggleNotificationPanel()"></div>
+    <div class="notif-panel" id="notifPanel">
+        <div class="notif-header">
+            <div class="notif-title">Notifications</div>
+            <span class="notif-mark-read" onclick="markAllRead()">Mark all read</span>
+            <button class="notif-close" onclick="toggleNotificationPanel()">×</button>
+        </div>
+        <div class="notif-item unread">
+            <div class="notif-dot unread"></div>
+            <div>
+                <div class="notif-content-title">Application Under Review</div>
+                <div class="notif-content-body">Your Cellular Licence application APP-2026-0001 has been assigned for technical review.</div>
+                <div class="notif-content-time">2 hours ago</div>
+            </div>
+        </div>
+        <div class="notif-item unread">
+            <div class="notif-dot unread"></div>
+            <div>
+                <div class="notif-content-title">Broadcasting Licence Approved</div>
+                <div class="notif-content-body">Your Broadcasting Licence has been approved. Download it from your applications page.</div>
+                <div class="notif-content-time">5 days ago</div>
+            </div>
+        </div>
+        <div class="notif-item">
+            <div class="notif-dot read"></div>
+            <div>
+                <div class="notif-content-title">Welcome to BOCRA Website</div>
+                <div class="notif-content-body">Your account has been successfully created.</div>
+                <div class="notif-content-time">Today</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Application Modal -->
+    <div class="modal-overlay" id="appModal">
+        <div class="modal">
+            <button class="modal-close" onclick="closeApplicationModal()">×</button>
+            <h2 class="modal-title" id="modalLicenseName">License Application</h2>
+            <p class="modal-desc">Complete the form below to begin your application.</p>
+            <form id="applicationForm" onsubmit="submitApplication(event)">
+                <div class="form-group">
+                    <label class="form-label">Phone Number (Optional)</label>
+                    <input type="tel" class="form-input" id="appPhone" placeholder="+267">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Intended Use / Description</label>
+                    <textarea class="form-textarea" id="appPurpose" placeholder="Briefly describe your intended use for this license..." required></textarea>
+                </div>
+                <div class="form-checkbox-row">
+                    <input type="checkbox" id="appAgree" class="form-checkbox" required>
+                    <label for="appAgree" class="form-checkbox-label">I confirm all information is accurate and I agree to BOCRA's Terms and Conditions.</label>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 16px;">Submit Application</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
+    <script>
+        const API_BASE = 'http://localhost/bocra-website/backend/api';
+        let currentSection = 'dashboard';
+        let userData = {};
+        let notifPanelOpen = false;
+        let applicationCount = 3;
+        let currentLicenseName = '';
+
+        const licenses = [
+            {name: 'Aircraft Radio Licence', category: 'radio', desc: 'For aviation communication equipment used in or from Botswana', time: '21 business days'},
+            {name: 'Amateur Radio Licence', category: 'radio', desc: 'For individuals operating amateur radio stations for non-commercial purposes', time: '14 business days'},
+            {name: 'Broadcasting Licence', category: 'broadcasting', desc: 'For radio and television broadcasting services, both free-to-air and subscription', time: '45 business days', badge: 'POPULAR'},
+            {name: 'Cellular Licence', category: 'telecom', desc: 'For mobile network operators providing cellular voice and data services', time: '60 business days'},
+            {name: 'Citizen Band Radio Licence', category: 'radio', desc: 'For CB radio short-range communication by individuals and businesses', time: '7 business days'},
+            {name: 'Point-to-Multipoint Licence', category: 'telecom', desc: 'For wireless networks transmitting from a single point to multiple stations', time: '30 business days'},
+            {name: 'Point-to-Point Licence', category: 'telecom', desc: 'For fixed wireless microwave links connecting two geographic points', time: '21 business days'},
+            {name: 'Private Radio Communication Licence', category: 'radio', desc: 'For businesses operating private two-way radio networks internally', time: '14 business days'},
+            {name: 'Radio Dealers Licence', category: 'equipment', desc: 'For businesses selling renting or repairing radio communication equipment', time: '10 business days'},
+            {name: 'Radio Frequency Licence', category: 'radio', desc: 'For organisations requiring specific radio frequency spectrum allocation', time: '45 business days'},
+            {name: 'Satellite Service Licence', category: 'telecom', desc: 'For operators providing VSAT and satellite broadband services', time: '60 business days'},
+            {name: 'Type Approval Licence', category: 'equipment', desc: 'For all telecom equipment imported or sold in Botswana', time: '30 business days', badge: 'COMMON'},
+            {name: 'VANS Licence', category: 'internet', desc: 'Value Added Network Services for internet and enhanced telecom services', time: '30 business days'}
+        ];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const token = localStorage.getItem('bocra_website_token');
+            if (!token) {
+                window.location.href = 'simple-register.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/me.php`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const data = await response.json(); userData = data.user || data;
+                    populateUI();
+                    renderLicenses();
+                    renderForms();
+                    renderApplications();
+                    initChart();
+                } else {
+                    localStorage.removeItem('bocra_website_token');
+                    window.location.href = 'simple-register.html';
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+                localStorage.removeItem('bocra_website_token');
+                window.location.href = 'simple-register.html';
+            }
+        });
+
+        function populateUI() {
+            const initials = (userData.first_name?.[0] || '') + (userData.last_name?.[0] || '');
+            const fullName = `${userData.first_name || ''} ${userData.last_name || ''}`.trim();
+            const accountType = (userData.account_type || 'applicant').charAt(0).toUpperCase() + (userData.account_type || 'applicant').slice(1);
+
+            document.getElementById('navAvatar').textContent = initials.toUpperCase();
+            document.getElementById('navUserName').textContent = fullName;
+            document.getElementById('sidebarAvatar').textContent = initials.toUpperCase();
+            document.getElementById('sidebarName').textContent = fullName;
+            document.getElementById('sidebarType').textContent = accountType;
+            document.getElementById('bannerName').textContent = fullName;
+            document.getElementById('dashboardFirstName').textContent = userData.first_name || 'User';
+            document.getElementById('profileAvatar').textContent = initials.toUpperCase();
+            document.getElementById('profileFullName').textContent = fullName;
+            document.getElementById('profileType').textContent = accountType.toUpperCase();
+            document.getElementById('profileEmail').textContent = userData.email || '';
+            document.getElementById('profileFirstName').textContent = userData.first_name || '';
+            document.getElementById('profileLastName').textContent = userData.last_name || '';
+            document.getElementById('profileEmailDetail').textContent = userData.email || '';
+            document.getElementById('profilePhone').textContent = userData.phone || 'Not provided';
+            document.getElementById('profileAccountType').textContent = accountType;
+            
+            if (userData.created_at) {
+                const date = new Date(userData.created_at);
+                const monthYear = date.toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+                document.getElementById('statMember').textContent = monthYear;
+                document.getElementById('profileMemberSince').textContent = monthYear;
+            }
+        }
+
+        function showSection(name) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(`section-${name}`).classList.add('active');
+            document.querySelectorAll('.sidebar-item').forEach(i => i.classList.remove('active'));
+            document.querySelector(`.sidebar-item[onclick*="${name}"]`)?.classList.add('active');
+            currentSection = name;
+        }
+
+        function toggleUserMenu() {
+            document.getElementById('userMenu').classList.toggle('active');
+        }
+
+        function toggleNotificationPanel() {
+            notifPanelOpen = !notifPanelOpen;
+            document.getElementById('notifPanel').classList.toggle('active');
+            document.getElementById('notifOverlay').classList.toggle('active');
+        }
+
+        function markAllRead() {
+            document.querySelectorAll('.notif-item').forEach(item => {
+                item.classList.remove('unread');
+                item.querySelector('.notif-dot').classList.remove('unread');
+                item.querySelector('.notif-dot').classList.add('read');
+            });
+            document.getElementById('bellBadge').style.display = 'none';
+        }
+
+        async function handleLogout() {
+            const token = localStorage.getItem('bocra_website_token');
+            try {
+                await fetch(`${API_BASE}/logout.php`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+            } catch (e) {}
+            localStorage.removeItem('bocra_website_token');
+            window.location.href = 'simple-register.html';
+        }
+
+        function renderLicenses() {
+            const grid = document.getElementById('licenseGrid');
+            grid.innerHTML = licenses.map(lic => `
+                <div class="license-card" data-category="${lic.category}">
+                    ${lic.badge ? `<span class="license-badge" style="background: ${lic.badge === 'POPULAR' ? 'var(--teal)' : 'var(--gold)'}">${lic.badge}</span>` : ''}
+                    <div class="license-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <div class="license-name">${lic.name}</div>
+                    <div class="license-desc">${lic.desc}</div>
+                    <div class="license-time">${lic.time}</div>
+                    <button class="license-apply" onclick="window.location.href='application.html?type='">Apply Now</button>
+                </div>
+            `).join('');
+        }
+
+        function renderForms() {
+            const grid = document.getElementById('formsGrid');
+            grid.innerHTML = licenses.map(lic => `
+                <div class="form-card">
+                    <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#CC2936" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                    <div class="form-type">${lic.category}</div>
+                    <div class="form-title">${lic.name}</div>
+                    <div class="form-size">PDF · approx 180 KB</div>
+                    <button class="form-download-btn" onclick="downloadForm('${lic.name}')">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Form
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        async function renderApplications() {
+            const container = document.getElementById('applicationsContainer');
+            
+            // Fetch real applications from database
+            try {
+                console.log('Fetching applications for email:', userData.email);
+                const response = await fetch(`api/get-my-applications.php?email=${encodeURIComponent(userData.email)}`);
+                console.log('API Response status:', response.status);
+                const result = await response.json();
+                console.log('API Result:', result);
+                
+                if (result.success && result.applications && result.applications.length > 0) {
+                    console.log('Found', result.applications.length, 'applications');
+                    // Update stats
+                    document.getElementById('statApplications').textContent = result.applications.length;
+                    
+                    // Render applications
+                    container.innerHTML = result.applications.map(app => {
+                        const statusClass = app.status.replace('_', '-');
+                        const statusLabel = app.status.replace('_', ' ').split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                        const submittedDate = new Date(app.submission_date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+                        
+                        return `
+                            <div class="app-card" data-status="${app.status}">
+                                <div class="app-card-top">
+                                    <div>
+                                        <div class="app-card-ref">${app.application_number}</div>
+                                        <div class="app-card-type">${app.license_type}</div>
+                                        <span class="status-badge status-${statusClass}"><span class="status-badge-dot"></span>${statusLabel}</span>
+                                    </div>
+                                    <div class="app-card-right">
+                                        <div class="app-card-date">Submitted: ${submittedDate}</div>
+                                        <div class="app-card-est">Status: ${statusLabel}</div>
+                                    </div>
+                                </div>
+                                <div class="progress-tracker">
+                                    <div class="progress-stage">
+                                        <div class="progress-circle ${app.status !== 'draft' ? 'done' : 'pending'}">${app.status !== 'draft' ? '✓' : '1'}</div>
+                                        <div class="progress-line ${app.status !== 'draft' && app.status !== 'submitted' ? 'done' : 'pending'}"></div>
+                                        <div class="progress-label ${app.status !== 'draft' ? 'done' : 'pending'}">Submitted</div>
+                                    </div>
+                                    <div class="progress-stage">
+                                        <div class="progress-circle ${app.status === 'under_review' || app.status === 'approved' || app.status === 'rejected' ? 'done' : 'pending'}">${app.status === 'under_review' || app.status === 'approved' || app.status === 'rejected' ? '✓' : '2'}</div>
+                                        <div class="progress-line ${app.status === 'approved' || app.status === 'rejected' ? 'done' : 'pending'}"></div>
+                                        <div class="progress-label ${app.status === 'under_review' || app.status === 'approved' || app.status === 'rejected' ? 'active' : 'pending'}">Under Review</div>
+                                    </div>
+                                    <div class="progress-stage">
+                                        <div class="progress-circle ${app.status === 'approved' || app.status === 'rejected' ? 'done' : 'pending'}">${app.status === 'approved' || app.status === 'rejected' ? '✓' : '3'}</div>
+                                        <div class="progress-label ${app.status === 'approved' || app.status === 'rejected' ? 'done' : 'pending'}">Decision</div>
+                                    </div>
+                                </div>
+                                <div class="progress-bar"><div class="progress-bar-fill" style="width: ${app.status === 'submitted' ? '33' : app.status === 'under_review' ? '66' : app.status === 'approved' || app.status === 'rejected' ? '100' : '0'}%;"></div></div>
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    // No applications found
+                    container.innerHTML = `
+                        <div style="text-align: center; padding: 3rem; color: #888;">
+                            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="margin-bottom: 1rem; opacity: 0.3;">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                            <h3 style="margin-bottom: 0.5rem; color: #555;">No Applications Yet</h3>
+                            <p>You haven't submitted any license applications. Click "Apply for New License" to get started.</p>
+                        </div>
+                    `;
+                    document.getElementById('statApplications').textContent = '0';
+                }
+            } catch (error) {
+                console.error('Error loading applications:', error);
+                container.innerHTML = `
+                    <div class="app-card" data-status="review">
+                        <div class="app-card-top">
+                            <div>
+                                <div class="app-card-ref">APP-2026-0001</div>
+                                <div class="app-card-type">Cellular Licence</div>
+                                <span class="status-badge status-review"><span class="status-badge-dot"></span>Under Review</span>
+                            </div>
+                            <div class="app-card-right">
+                                <div class="app-card-date">Submitted: 15 March 2026</div>
+                                <div class="app-card-est">Est. completion: 14 May 2026</div>
+                                <button class="app-card-download">Download Receipt</button>
+                            </div>
+                        </div>
+                    <div class="progress-tracker">
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line done"></div>
+                            <div class="progress-label done">Submitted</div>
+                            <div class="progress-date">15 Mar</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line done"></div>
+                            <div class="progress-label done">Acknowledged</div>
+                            <div class="progress-date">15 Mar</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle active">3</div>
+                            <div class="progress-line pending"></div>
+                            <div class="progress-label active">Under Review</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle pending">4</div>
+                            <div class="progress-label pending">Decision</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 60%;"></div></div>
+                    <div class="updates-trigger" onclick="toggleUpdates(this)">
+                        <span class="updates-trigger-text">View Updates</span>
+                        <svg class="updates-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </div>
+                    <div class="updates-list">
+                        <div class="update-item">
+                            <div class="update-icon">✓</div>
+                            <div>
+                                <div class="update-title">Technical review in progress</div>
+                                <div class="update-desc">Assigned to spectrum compliance team.</div>
+                                <div class="update-time">15 Mar 2026 · 10:22 AM</div>
+                            </div>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-icon">✓</div>
+                            <div>
+                                <div class="update-title">Documents verified</div>
+                                <div class="update-desc">All uploaded documents confirmed complete.</div>
+                                <div class="update-time">12 Mar 2026 · 02:45 PM</div>
+                            </div>
+                        </div>
+                        <div class="update-item">
+                            <div class="update-icon">✓</div>
+                            <div>
+                                <div class="update-title">Application received</div>
+                                <div class="update-desc">Reference APP-2026-0001 has been assigned.</div>
+                                <div class="update-time">10 Mar 2026 · 09:00 AM</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="app-card" data-status="approved">
+                    <div class="app-card-top">
+                        <div>
+                            <div class="app-card-ref">APP-2026-0002</div>
+                            <div class="app-card-type">Broadcasting Licence</div>
+                            <span class="status-badge status-approved"><span class="status-badge-dot"></span>Approved</span>
+                        </div>
+                        <div class="app-card-right">
+                            <div class="app-card-date">Submitted: 2 March 2026</div>
+                            <div class="app-card-est">Approved: 18 March 2026</div>
+                            <button class="app-card-download">Download Receipt</button>
+                        </div>
+                    </div>
+                    <div class="progress-tracker">
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line done"></div>
+                            <div class="progress-label done">Submitted</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line done"></div>
+                            <div class="progress-label done">Acknowledged</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line done"></div>
+                            <div class="progress-label done">Under Review</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-label done">Decision</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 100%;"></div></div>
+                    <div class="approved-message">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <div class="approved-text">Licence approved and valid until 18 March 2027.</div>
+                        <button class="approved-download" onclick="showToast('Licence document downloaded.', 'success')">Download Licence</button>
+                    </div>
+                </div>
+
+                <div class="app-card" data-status="submitted">
+                    <div class="app-card-top">
+                        <div>
+                            <div class="app-card-ref">APP-2026-0003</div>
+                            <div class="app-card-type">Type Approval Licence</div>
+                            <span class="status-badge status-submitted"><span class="status-badge-dot"></span>Submitted</span>
+                        </div>
+                        <div class="app-card-right">
+                            <div class="app-card-date">Submitted: 22 February 2026</div>
+                            <div class="app-card-est">Est. completion: 22 March 2026</div>
+                            <button class="app-card-download">Download Receipt</button>
+                        </div>
+                    </div>
+                    <div class="progress-tracker">
+                        <div class="progress-stage">
+                            <div class="progress-circle done">✓</div>
+                            <div class="progress-line pending"></div>
+                            <div class="progress-label done">Submitted</div>
+                            <div class="progress-date">22 Feb</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle pending">2</div>
+                            <div class="progress-line pending"></div>
+                            <div class="progress-label pending">Acknowledged</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle pending">3</div>
+                            <div class="progress-line pending"></div>
+                            <div class="progress-label pending">Under Review</div>
+                        </div>
+                        <div class="progress-stage">
+                            <div class="progress-circle pending">4</div>
+                            <div class="progress-label pending">Decision</div>
+                        </div>
+                    </div>
+                    <div class="progress-bar"><div class="progress-bar-fill" style="width: 15%;"></div></div>
+                </div>
+            `;
+            }
+        }
+
+        function filterLicenses(category) {
+            document.querySelectorAll('#section-apply-license .filter-pill').forEach(p => p.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.license-card').forEach(card => {
+                card.style.display = (category === 'all' || card.dataset.category === category) ? 'block' : 'none';
+            });
+        }
+
+        function filterApplications(status) {
+            document.querySelectorAll('#section-my-applications .filter-pill').forEach(p => p.classList.remove('active'));
+            event.target.classList.add('active');
+            document.querySelectorAll('.app-card').forEach(card => {
+                card.style.display = (status === 'all' || card.dataset.status === status) ? 'block' : 'none';
+            });
+        }
+
+        function toggleUpdates(trigger) {
+            const list = trigger.nextElementSibling;
+            const chevron = trigger.querySelector('.updates-chevron');
+            const text = trigger.querySelector('.updates-trigger-text');
+            list.classList.toggle('open');
+            chevron.classList.toggle('open');
+            text.textContent = list.classList.contains('open') ? 'Hide Updates' : 'View Updates';
+        }
+
+        function openApplicationModal(licenseName) {
+            currentLicenseName = licenseName;
+            document.getElementById('modalLicenseName').textContent = licenseName;
+            document.getElementById('applicationForm').reset();
+            document.getElementById('appModal').classList.add('active');
+        }
+
+        function closeApplicationModal() {
+            document.getElementById('appModal').classList.remove('active');
+        }
+
+        function submitApplication(e) {
+            e.preventDefault();
+            if (!document.getElementById('appAgree').checked) {
+                return;
+            }
+            closeApplicationModal();
+            applicationCount++;
+            document.getElementById('statApplications').textContent = applicationCount;
+            const ref = `APP-2026-${String(applicationCount).padStart(4, '0')}`;
+            showToast(`Application for ${currentLicenseName} submitted. Reference: ${ref}`, 'success', 'Application Submitted');
+        }
+
+        function downloadForm(formName) {
+            showToast(`Downloading ${formName}...`, 'success');
+        }
+
+        function showToast(message, type = 'info', title = null) {
+            const titles = { success: 'Done', error: 'Error', info: 'Note' };
+            const colors = {
+                success: { bg: 'var(--teal-light)', color: 'var(--teal)' },
+                error: { bg: '#FFF0F0', color: 'var(--error)' },
+                info: { bg: 'var(--gold-light)', color: 'var(--gold)' }
+            };
+            const icons = {
+                success: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>',
+                error: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+                info: '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>'
+            };
+
+            const toast = document.createElement('div');
+            toast.className = 'toast';
+            toast.innerHTML = `
+                <div class="toast-icon" style="background: ${colors[type].bg}; color: ${colors[type].color};">
+                    ${icons[type]}
+                </div>
+                <div class="toast-content">
+                    <div class="toast-title">${title || titles[type]}</div>
+                    <div class="toast-message">${message}</div>
+                </div>
+                <button class="toast-close" onclick="this.parentElement.remove()">×</button>
+            `;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function initChart() {
+            const ctx = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'],
+                    datasets: [{
+                        label: 'Applications Submitted',
+                        data: [0, 1, 0, 2, 1, 3],
+                        borderColor: '#006B5E',
+                        backgroundColor: 'rgba(0,107,94,0.07)',
+                        tension: 0.4,
+                        fill: true,
+                        pointRadius: 5,
+                        pointBackgroundColor: '#006B5E',
+                        pointBorderColor: 'white',
+                        pointBorderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true, aspectRatio: 3,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { min: 0, max: 5, ticks: { stepSize: 1 }, grid: { color: 'rgba(0,0,0,0.04)' } },
+                        x: { grid: { color: 'rgba(0,0,0,0.04)' } }
+                    }
+                }
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.topnav-dropdown')) {
+                document.getElementById('userMenu').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
+

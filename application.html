@@ -1,0 +1,1185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apply for License - BOCRA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Forum&family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --teal: #006B5E;
+            --teal-dark: #004D43;
+            --teal-light: #E8F4F2;
+            --gold: #C9A227;
+            --gold-light: #FDF6E3;
+            --charcoal: #2C2C2C;
+            --mid: #555555;
+            --light: #888888;
+            --border: #DDDDDD;
+            --bg: #F7F7F5;
+            --white: #FFFFFF;
+            --success: #006B5E;
+            --warning: #C9A227;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Lato', sans-serif;
+            background: var(--bg);
+            color: var(--charcoal);
+        }
+        
+        /* HEADER */
+        .header {
+            background: var(--white);
+            border-bottom: 2px solid var(--border);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo {
+            height: 40px;
+        }
+        
+        .logo-divider {
+            width: 1px;
+            height: 32px;
+            background: var(--border);
+        }
+        
+        .logo-text .bocra {
+            font-weight: 700;
+            font-size: 12px;
+            color: var(--charcoal);
+        }
+        
+        .logo-text .subtitle {
+            font-weight: 300;
+            font-size: 11px;
+            color: var(--mid);
+        }
+        
+        .back-link {
+            color: var(--teal);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+        
+        /* CONTAINER */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        /* PROGRESS STEPS */
+        .progress-header {
+            background: white;
+            border-radius: 12px;
+            padding: 32px;
+            margin-bottom: 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .progress-line-bg {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--border);
+            z-index: 0;
+        }
+        
+        .progress-line-fill {
+            height: 100%;
+            background: var(--teal);
+            transition: width 0.4s ease;
+        }
+        
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+            flex: 1;
+        }
+        
+        .step-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--light);
+            margin-bottom: 10px;
+            transition: all 0.3s;
+        }
+        
+        .step.active .step-circle {
+            border-color: var(--teal);
+            background: var(--teal);
+            color: white;
+            box-shadow: 0 0 0 4px rgba(0,107,94,0.1);
+        }
+        
+        .step.completed .step-circle {
+            border-color: var(--teal);
+            background: var(--teal);
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--light);
+            text-align: center;
+        }
+        
+        .step.active .step-label,
+        .step.completed .step-label {
+            color: var(--teal-dark);
+        }
+        
+        /* CONTENT CARD */
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        
+        .step-content {
+            display: none;
+        }
+        
+        .step-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .step-title {
+            font-family: 'Forum', serif;
+            font-size: 28px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+        }
+        
+        .step-subtitle {
+            font-size: 14px;
+            color: var(--mid);
+            margin-bottom: 32px;
+        }
+        
+        /* FORM */
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-row.full {
+            grid-template-columns: 1fr;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 11px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            background: var(--bg);
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--teal);
+            box-shadow: 0 0 0 3px rgba(0,107,94,0.08);
+            background: white;
+        }
+        
+        .form-input:disabled {
+            background: #f5f5f5;
+            color: var(--mid);
+        }
+        
+        /* DOWNLOAD SECTION */
+        .download-box {
+            background: var(--charcoal);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            margin: 32px 0;
+        }
+        
+        .download-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .download-title {
+            font-family: 'Forum', serif;
+            font-size: 22px;
+            color: white;
+            margin-bottom: 8px;
+        }
+        
+        .download-desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 24px;
+        }
+        
+        .download-meta {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 24px;
+        }
+        
+        .info-box {
+            background: var(--teal-light);
+            border: 1px solid rgba(0,107,94,0.2);
+            border-left: 4px solid var(--teal);
+            border-radius: 8px;
+            padding: 14px 18px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 24px 0;
+        }
+        
+        .info-box-text {
+            font-size: 13px;
+            color: var(--teal-dark);
+            line-height: 1.6;
+        }
+        
+        /* UPLOAD SECTION */
+        .upload-area {
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            padding: 48px;
+            text-align: center;
+            background: var(--bg);
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 24px 0;
+        }
+        
+        .upload-area:hover {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+        
+        .upload-area.dragover {
+            border-color: var(--teal);
+            background: var(--teal-light);
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            color: var(--mid);
+        }
+        
+        .upload-text {
+            font-size: 15px;
+            color: var(--charcoal);
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        
+        .upload-hint {
+            font-size: 12px;
+            color: var(--mid);
+        }
+        
+        .file-list {
+            margin-top: 24px;
+        }
+        
+        .file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 16px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+        
+        .file-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--teal-light);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal);
+        }
+        
+        .file-name {
+            font-weight: 600;
+            font-size: 13px;
+            color: var(--charcoal);
+        }
+        
+        .file-size {
+            font-size: 11px;
+            color: var(--mid);
+        }
+        
+        .file-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .file-status.verified {
+            color: var(--success);
+        }
+        
+        .file-remove {
+            background: none;
+            border: none;
+            color: var(--light);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        
+        .file-remove:hover {
+            color: #CC2936;
+        }
+        
+        /* REVIEW SECTION */
+        .review-section {
+            margin-bottom: 32px;
+        }
+        
+        .review-section-title {
+            font-family: 'Forum', serif;
+            font-size: 18px;
+            color: var(--charcoal);
+            margin-bottom: 16px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--border);
+        }
+        
+        .review-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+        
+        .review-item {
+            padding: 12px 0;
+        }
+        
+        .review-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--light);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            margin-bottom: 4px;
+        }
+        
+        .review-value {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--charcoal);
+        }
+        
+        .declaration-box {
+            background: var(--gold-light);
+            border: 1px solid rgba(201,162,39,0.3);
+            border-left: 4px solid var(--gold);
+            border-radius: 8px;
+            padding: 18px 20px;
+            margin: 24px 0;
+        }
+        
+        .declaration-text {
+            font-size: 13px;
+            color: var(--charcoal);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+        
+        .checkbox-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .checkbox {
+            accent-color: var(--teal);
+            margin-top: 2px;
+            width: 18px;
+            height: 18px;
+        }
+        
+        .checkbox-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--charcoal);
+        }
+        
+        /* BUTTONS */
+        .btn-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border);
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+        
+        .btn-back {
+            background: none;
+            border: 1.5px solid var(--border);
+            color: var(--mid);
+        }
+        
+        .btn-back:hover {
+            border-color: var(--charcoal);
+            color: var(--charcoal);
+        }
+        
+        .btn-primary {
+            background: var(--gold);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #b09020;
+        }
+        
+        .btn-primary:disabled {
+            background: var(--border);
+            cursor: not-allowed;
+        }
+        
+        .btn-download {
+            background: var(--gold);
+            color: white;
+            padding: 14px 32px;
+            font-size: 15px;
+        }
+        
+        .btn-download:hover {
+            background: #b09020;
+        }
+        
+        /* SUCCESS MESSAGE */
+        .success-message {
+            text-align: center;
+            padding: 60px 40px;
+        }
+        
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--teal-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        
+        .success-title {
+            font-family: 'Forum', serif;
+            font-size: 32px;
+            color: var(--charcoal);
+            margin-bottom: 12px;
+        }
+        
+        .success-text {
+            font-size: 15px;
+            color: var(--mid);
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+        
+        .reference-box {
+            background: var(--teal-light);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 24px auto;
+            max-width: 400px;
+        }
+        
+        .reference-label {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--teal-dark);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+        
+        .reference-number {
+            font-family: 'Forum', serif;
+            font-size: 28px;
+            color: var(--teal-dark);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <img src="assets/images/bocra-logo.png" alt="BOCRA" class="logo">
+            <div class="logo-divider"></div>
+            <div class="logo-text">
+                <div class="bocra">BOCRA</div>
+                <div class="subtitle">Botswana Communications Regulatory Authority</div>
+            </div>
+        </div>
+        <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Progress Header -->
+        <div class="progress-header">
+            <div class="progress-steps">
+                <div class="progress-line-bg">
+                    <div class="progress-line-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                <div class="step active" data-step="1">
+                    <div class="step-circle">1</div>
+                    <div class="step-label">Applicant</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-circle">2</div>
+                    <div class="step-label">Download Form</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-circle">3</div>
+                    <div class="step-label">Upload Docs</div>
+                </div>
+                <div class="step" data-step="4">
+                    <div class="step-circle">4</div>
+                    <div class="step-label">Submit</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content Card -->
+        <div class="content-card">
+            <!-- STEP 1: Applicant Information -->
+            <div class="step-content active" id="step1">
+                <h1 class="step-title">Applicant Information</h1>
+                <p class="step-subtitle">Your details are pre-filled from your account. Please verify and update if needed.</p>
+
+                <form id="applicantForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" id="firstName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" id="lastName" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label class="form-label">Company / Organisation Name</label>
+                            <input type="text" class="form-input" id="companyName" placeholder="Leave blank if applying as individual">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email Address</label>
+                            <input type="email" class="form-input" id="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone Number</label>
+                            <input type="tel" class="form-input" id="phone" placeholder="+267" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row full">
+                        <div class="form-group">
+                            <label class="form-label">Physical Address</label>
+                            <input type="text" class="form-input" id="address" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Company Registration No.</label>
+                            <input type="text" class="form-input" id="companyReg" placeholder="e.g., BW-REG-2024-0045">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Tax Identification Number (TIN)</label>
+                            <input type="text" class="form-input" id="tinNumber" placeholder="Enter your TIN" required>
+                        </div>
+                    </div>
+
+                    <div class="btn-row">
+                        <button type="button" class="btn btn-back" onclick="window.location.href='dashboard.html'">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="nextStep()">Continue →</button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- STEP 2: Download Form -->
+            <div class="step-content" id="step2">
+                <h1 class="step-title">Download Official BOCRA Form</h1>
+                <p class="step-subtitle">Download the official application form, complete it by hand or digitally, then upload it with your supporting documents in the next step.</p>
+
+                <div class="download-box">
+                    <div class="download-icon">
+                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </div>
+                    <div class="download-title">Official BOCRA Application Form</div>
+                    <div class="download-desc" id="formDescription">Type Approval Licence — Form TA-001</div>
+                    <div class="download-meta">(PDF, 248 KB) · Ensure all fields are completed in full before uploading.</div>
+                    <button class="btn btn-download" onclick="downloadForm()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: inline; margin-right: 8px;">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="7 10 12 15 17 10"></polyline>
+                            <line x1="12" y1="15" x2="12" y2="3"></line>
+                        </svg>
+                        Download Official BOCRA Form (PDF)
+                    </button>
+                </div>
+
+                <div class="info-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div class="info-box-text">You can complete the form digitally using Adobe Acrobat, or print it, sign by hand, then scan it as PDF before uploading. The form must be signed before uploading.</div>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-back" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" onclick="nextStep()">I've completed the form →</button>
+                </div>
+            </div>
+
+            <!-- STEP 3: Upload Documents -->
+            <div class="step-content" id="step3">
+                <h1 class="step-title">Upload Supporting Documents</h1>
+                <p class="step-subtitle">Upload all required documents below. Accepted formats: PDF, JPG, PNG. Maximum 10MB per file.</p>
+
+                <input type="file" id="fileInput" multiple accept=".pdf,.jpg,.jpeg,.png" style="display: none;" onchange="handleFileSelect(event)">
+                
+                <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                    <div class="upload-icon">📎</div>
+                    <div class="upload-text">Drag & drop files here</div>
+                    <div class="upload-hint">or click to browse — PDF, JPG, PNG up to 10MB each</div>
+                </div>
+
+                <div class="file-list" id="fileList"></div>
+
+                <div class="info-box">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="16" x2="12" y2="12"></line>
+                        <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                    </svg>
+                    <div class="info-box-text">Required: Completed application form (signed), Company registration certificate, TIN certificate, ID copies of directors/owners, Proof of address.</div>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-back" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" id="continueBtn3" disabled onclick="nextStep()">Continue →</button>
+                </div>
+            </div>
+
+            <!-- STEP 4: Review & Submit -->
+            <div class="step-content" id="step4">
+                <h1 class="step-title">Application Summary</h1>
+                <p class="step-subtitle">Review all information before submitting your application.</p>
+
+                <div class="review-section">
+                    <div class="review-section-title">License Type</div>
+                    <div class="review-item">
+                        <div class="review-label">License Type</div>
+                        <div class="review-value" id="reviewLicenseType">Type Approval Licence</div>
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Applicant Information</div>
+                    <div class="review-grid">
+                        <div class="review-item">
+                            <div class="review-label">Applicant Name</div>
+                            <div class="review-value" id="reviewName">-</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Company</div>
+                            <div class="review-value" id="reviewCompany">-</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Email</div>
+                            <div class="review-value" id="reviewEmail">-</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Phone</div>
+                            <div class="review-value" id="reviewPhone">-</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Company Registration No.</div>
+                            <div class="review-value" id="reviewCompanyReg">-</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-label">Tax Identification Number</div>
+                            <div class="review-value" id="reviewTIN">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Documents Uploaded</div>
+                    <div class="review-item">
+                        <div class="review-label">Documents Uploaded</div>
+                        <div class="review-value" id="reviewDocs">0 files</div>
+                    </div>
+                </div>
+
+                <div class="review-section">
+                    <div class="review-section-title">Application Fee</div>
+                    <div class="review-item">
+                        <div class="review-label">Application Fee</div>
+                        <div class="review-value">BWP 500.00 (payable on approval)</div>
+                    </div>
+                    <div class="review-item">
+                        <div class="review-label">Estimated Processing</div>
+                        <div class="review-value" id="reviewProcessing">30 business days</div>
+                    </div>
+                </div>
+
+                <div class="declaration-box">
+                    <div class="declaration-text">
+                        By submitting, you confirm that all information provided is accurate and that all uploaded documents are genuine. False declarations may result in rejection and legal action under the CRA Act 2012.
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="agreeCheckbox" class="checkbox" onchange="toggleSubmit()">
+                        <label for="agreeCheckbox" class="checkbox-label">I confirm all information is accurate and I agree to BOCRA's terms and conditions</label>
+                    </div>
+                </div>
+
+                <div class="btn-row">
+                    <button type="button" class="btn btn-back" onclick="prevStep()">← Back</button>
+                    <button type="button" class="btn btn-primary" id="submitBtn" disabled onclick="submitApplication()">Submit Application</button>
+                </div>
+            </div>
+
+            <!-- SUCCESS MESSAGE -->
+            <div class="step-content" id="stepSuccess">
+                <div class="success-message">
+                    <div class="success-icon">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                    </div>
+                    <h1 class="success-title">Application Submitted Successfully!</h1>
+                    <p class="success-text">Your application has been received and is being processed. You will receive email updates at each stage of the review process.</p>
+                    
+                    <div class="reference-box">
+                        <div class="reference-label">Application Reference</div>
+                        <div class="reference-number" id="referenceNumber">APP-2026-0004</div>
+                    </div>
+
+                    <button class="btn btn-primary" onclick="window.location.href='dashboard.html'" style="margin-top: 24px;">Go to Dashboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost/bocra-website/backend/api';
+        let currentStep = 1;
+        let uploadedFiles = [];
+        let applicationData = {
+            licenseType: '',
+            licenseName: '',
+            formCode: '',
+            processingDays: '30 business days'
+        };
+
+        // License form mappings
+        const licenseForms = {
+            'Aircraft Radio Licence': { code: 'AR-001', days: '21 business days' },
+            'Amateur Radio Licence': { code: 'AM-001', days: '14 business days' },
+            'Broadcasting Licence': { code: 'BC-001', days: '45 business days' },
+            'Cellular Licence': { code: 'CL-001', days: '60 business days' },
+            'Citizen Band Radio Licence': { code: 'CB-001', days: '7 business days' },
+            'Point-to-Multipoint Licence': { code: 'PM-001', days: '30 business days' },
+            'Point-to-Point Licence': { code: 'PP-001', days: '21 business days' },
+            'Private Radio Communication Licence': { code: 'PR-001', days: '14 business days' },
+            'Radio Dealers Licence': { code: 'RD-001', days: '10 business days' },
+            'Radio Frequency Licence': { code: 'RF-001', days: '45 business days' },
+            'Satellite Service Licence': { code: 'SS-001', days: '60 business days' },
+            'Type Approval Licence': { code: 'TA-001', days: '30 business days' },
+            'VANS Licence': { code: 'VN-001', days: '30 business days' }
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Get license type from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const licenseType = urlParams.get('type') || 'Type Approval Licence';
+            
+            applicationData.licenseName = licenseType;
+            applicationData.licenseType = licenseType;
+            applicationData.formCode = licenseForms[licenseType]?.code || 'TA-001';
+            applicationData.processingDays = licenseForms[licenseType]?.days || '30 business days';
+
+            document.getElementById('formDescription').textContent = `${licenseType} — Form ${applicationData.formCode}`;
+            document.getElementById('reviewLicenseType').textContent = licenseType;
+            document.getElementById('reviewProcessing').textContent = applicationData.processingDays;
+
+            // Load user data
+            const token = localStorage.getItem('bocra_website_token');
+            if (!token) {
+                window.location.href = 'simple-register.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/me.php`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                if (response.ok) {
+                    const userData = await response.json();
+                    document.getElementById('firstName').value = userData.first_name || '';
+                    document.getElementById('lastName').value = userData.last_name || '';
+                    document.getElementById('email').value = userData.email || '';
+                    document.getElementById('phone').value = userData.phone || '';
+                } else {
+                    localStorage.removeItem('bocra_website_token');
+                    window.location.href = 'simple-register.html';
+                }
+            } catch (error) {
+                console.error('Auth error:', error);
+            }
+
+            // Setup drag and drop
+            const uploadArea = document.getElementById('uploadArea');
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                handleFileSelect({ target: { files: e.dataTransfer.files } });
+            });
+        });
+
+        function nextStep() {
+            if (currentStep === 1) {
+                // Validate form
+                const form = document.getElementById('applicantForm');
+                if (!form.checkValidity()) {
+                    form.reportValidity();
+                    return;
+                }
+                // Store data
+                applicationData.firstName = document.getElementById('firstName').value;
+                applicationData.lastName = document.getElementById('lastName').value;
+                applicationData.companyName = document.getElementById('companyName').value;
+                applicationData.email = document.getElementById('email').value;
+                applicationData.phone = document.getElementById('phone').value;
+                applicationData.address = document.getElementById('address').value;
+                applicationData.companyReg = document.getElementById('companyReg').value;
+                applicationData.tinNumber = document.getElementById('tinNumber').value;
+            }
+
+            if (currentStep < 4) {
+                currentStep++;
+                updateSteps();
+            }
+        }
+
+        function prevStep() {
+            if (currentStep > 1) {
+                currentStep--;
+                updateSteps();
+            }
+        }
+
+        function updateSteps() {
+            // Update step indicators
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                    step.querySelector('.step-circle').innerHTML = '✓';
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                    step.querySelector('.step-circle').textContent = stepNum;
+                } else {
+                    step.querySelector('.step-circle').textContent = stepNum;
+                }
+            });
+
+            // Update progress bar
+            const progress = ((currentStep - 1) / 3) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            // Show current step content
+            document.querySelectorAll('.step-content').forEach((content, index) => {
+                content.classList.remove('active');
+            });
+            document.getElementById('step' + currentStep).classList.add('active');
+
+            // Update review data
+            if (currentStep === 4) {
+                document.getElementById('reviewName').textContent = `${applicationData.firstName} ${applicationData.lastName}`;
+                document.getElementById('reviewCompany').textContent = applicationData.companyName || 'Individual';
+                document.getElementById('reviewEmail').textContent = applicationData.email;
+                document.getElementById('reviewPhone').textContent = applicationData.phone;
+                document.getElementById('reviewCompanyReg').textContent = applicationData.companyReg || 'N/A';
+                document.getElementById('reviewTIN').textContent = applicationData.tinNumber;
+                document.getElementById('reviewDocs').textContent = uploadedFiles.length + ' files';
+            }
+        }
+
+        function downloadForm() {
+            // In production, this would download the actual PDF
+            alert(`Downloading ${applicationData.licenseName} form (${applicationData.formCode}.pdf)...`);
+            // Simulate download
+            console.log('Form downloaded:', applicationData.formCode);
+        }
+
+        function handleFileSelect(event) {
+            const files = Array.from(event.target.files);
+            
+            files.forEach(file => {
+                // Validate file
+                if (file.size > 10 * 1024 * 1024) {
+                    alert(`File ${file.name} is too large. Maximum size is 10MB.`);
+                    return;
+                }
+                
+                const validTypes = ['application/pdf', 'image/jpeg', 'image/jpg', 'image/png'];
+                if (!validTypes.includes(file.type)) {
+                    alert(`File ${file.name} has invalid format. Only PDF, JPG, PNG allowed.`);
+                    return;
+                }
+
+                uploadedFiles.push(file);
+            });
+
+            renderFileList();
+            updateContinueButton();
+        }
+
+        function renderFileList() {
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = uploadedFiles.map((file, index) => `
+                <div class="file-item">
+                    <div class="file-info">
+                        <div class="file-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                                <polyline points="14 2 14 8 20 8"></polyline>
+                            </svg>
+                        </div>
+                        <div>
+                            <div class="file-name">${file.name}</div>
+                            <div class="file-size">${(file.size / 1024).toFixed(1)} KB</div>
+                        </div>
+                    </div>
+                    <div class="file-status verified">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="20 6 9 17 4 12"></polyline>
+                        </svg>
+                        Verified
+                    </div>
+                    <button class="file-remove" onclick="removeFile(${index})">×</button>
+                </div>
+            `).join('');
+        }
+
+        function removeFile(index) {
+            uploadedFiles.splice(index, 1);
+            renderFileList();
+            updateContinueButton();
+        }
+
+        function updateContinueButton() {
+            const btn = document.getElementById('continueBtn3');
+            btn.disabled = uploadedFiles.length === 0;
+        }
+
+        function toggleSubmit() {
+            const checkbox = document.getElementById('agreeCheckbox');
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = !checkbox.checked;
+        }
+
+        async function submitApplication() {
+            const token = localStorage.getItem('bocra_website_token');
+            
+            // Re-collect form data to ensure we have latest values
+            applicationData.firstName = document.getElementById('firstName').value;
+            applicationData.lastName = document.getElementById('lastName').value;
+            applicationData.companyName = document.getElementById('companyName').value;
+            applicationData.email = document.getElementById('email').value;
+            applicationData.phone = document.getElementById('phone').value;
+            applicationData.address = document.getElementById('address').value;
+            applicationData.companyReg = document.getElementById('companyReg').value;
+            applicationData.tinNumber = document.getElementById('tinNumber').value;
+            
+            // Prepare application data
+            const formData = {
+                applicant_name: `${applicationData.firstName} ${applicationData.lastName}`,
+                applicant_email: applicationData.email,
+                applicant_phone: applicationData.phone,
+                business_type: applicationData.companyName ? 'company' : 'individual',
+                company_name: applicationData.companyName || '',
+                registration_number: applicationData.companyReg || '',
+                tax_number: applicationData.tinNumber || '',
+                license_type: applicationData.licenseName,
+                physical_address: applicationData.address || 'Provided in uploaded documents',
+                postal_address: '',
+                business_description: `Application for ${applicationData.licenseName}`,
+                proposed_services: applicationData.licenseName,
+                technical_capacity: 'As per uploaded documentation',
+                financial_capacity: 'As per uploaded documentation'
+            };
+
+            console.log('Submitting application:', formData);
+
+            try {
+                const response = await fetch('api/submit-license-application.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                });
+                
+                const result = await response.json();
+                console.log('API Response:', result);
+                
+                if (result.success) {
+                    // Use the application number from API
+                    document.getElementById('referenceNumber').textContent = result.application_number;
+                    
+                    // Show success
+                    document.querySelectorAll('.step-content').forEach(c => c.classList.remove('active'));
+                    document.getElementById('stepSuccess').classList.add('active');
+                    
+                    // Update progress to 100%
+                    document.getElementById('progressFill').style.width = '100%';
+                    document.querySelectorAll('.step').forEach(s => {
+                        s.classList.remove('active');
+                        s.classList.add('completed');
+                        s.querySelector('.step-circle').innerHTML = '✓';
+                    });
+                } else {
+                    alert('Error: ' + (result.message || 'Failed to submit application'));
+                    console.error('API Error:', result.message);
+                }
+            } catch (error) {
+                alert('Error submitting application. Please try again.');
+                console.error('Submit error:', error);
+            }
+        }
+    </script>
+</body>
+</html>
+
